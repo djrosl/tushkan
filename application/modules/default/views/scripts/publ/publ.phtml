@@ -1,0 +1,128 @@
+<?php
+$this->headTitle(" - Каталог статей - Смотреть онлайн фильмы бесплатно и без регистрации");
+echo $this->headTitle($this->title, 'PREPEND');
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+?>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tbody><tr>
+        <td width="30%"><!--<s5222>-->В категории материалов<!--</s>-->: <b><?=$this->category['num_data']; ?></b><br><!--<s5220>-->Показано материалов<!--</s>-->: <b><span class="numShown73">1-10</span></b></td>
+        <td align="right"><?php echo $this->paginationControl($this->publs, 'Sliding',
+                'partials/paginator_publ.phtml'); ?></td>
+    </tr>
+    </tbody>
+</table>
+<hr>
+<? $user_online = Zend_Registry::get("user"); ?>
+<div id="allEntries" style="width: 656px;">
+    <? foreach ($this->publs as $key=>$value){ 
+        if( ($value['hide_on_site'] == 0) || 
+            ($value['hide_on_site'] == 1 && 
+              ($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8" || $user_online->data['group_id'] == "9")
+            )
+        ){
+    ?>
+        <div id="entryID_<? echo $value['id']; ?>">
+            <script type="text/javascript">
+                function toggleMe(a){
+                    var e=document.getElementById(a);
+                    if(!e)return true;
+                    if(e.style.display=="none"){
+                        e.style.display="block"
+                    } else {
+                        e.style.display="none"
+                    }
+                    return true;
+                }
+            </script>
+            <table style="width: 100%; border-collapse: collapse" cellspacing="1" cellpadding="1">
+                <tbody>
+                <tr>
+                    <td style="padding-left: 5px; letter-spacing: 0px; word-spacing: 0px" align="left">
+                        <div class="news_title">
+                        <a href="/publ/<?if($this->category['password'] != ""){ echo $this->category['password']."/";}?><? echo $value['url'].'/'.$value['catID'].'-1-0-'.$value['id']; ?>"> <font face="Arial"><h3><? echo $value['title']; ?></h3></font> </a></div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table style="width: 100%; border-collapse: collapse" cellspacing="1" cellpadding="1">
+                <tbody>
+                <tr></tr>
+                <?php if(strpos($_SERVER['REQUEST_URI'], 'recenzii_na_filmy') === false) { ?>
+                <tr>
+                    <td>
+                        <? if($value['asite'] != "") {?>
+                            <hr>
+                            <div align="center">
+                                <a href="/publ/<?if($this->category['password'] != ""){ echo $this->category['password']."/";}?><? echo $value['url'].'/'.$value['catID'].'-1-0-'.$value['id']; ?>" alt="<? echo str_replace('"', "'", $value['title']); ?>" title="<? echo str_replace('"', "'", $value['title']); ?>" class="highslide" onclick="return hs.expand(this, {captionId: 'caption1'})">
+                                    <img width="300" border="1" align="center" vspace="4" hspace="10" src="<? echo $value['asite']; ?>"></a>
+                            </div>
+                        <? } ?>
+                    </td>
+                </tr>
+                <?php } ?>
+                <tr>
+                    <td style="vertical-align: top; letter-spacing: 0px; word-spacing: 0px; padding-left: 5px; padding-top: 3px; text-align: justify">
+
+                <span style="font-size:12pt; font-family: Times New Roman; color:#2e2e2e">
+                    <?
+                    $item_message = str_replace("\\", "", $value['brief']);
+                    echo $item_message;
+                    ?>
+                </span> <br><br>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table style="width: 100%; border-collapse: collapse" border="0">
+                <tbody>
+                <tr style="background-image: url(&quot;/lis/ramka_ny.png&quot;); background-repeat: no-repeat; background-position: 50% 100%;">
+
+                    <td width="90%" style="clear:none !important; height: 23px; letter-spacing: 0px; word-spacing: 0px; padding-left: 3px; padding-top: 3px;" align="left">
+                        <div class="news_descr" style="clear:right;">
+                            <!--<a href="/publ/<? //if($this->category['password'] != ""){ echo $this->category['password']."/";} echo $this->category['id'];?>">-->
+                            <? echo $this->category['name'];?>
+                            <!--</a>-->
+                            <? if($user_online->data['is_registered']){echo "| Просмотров: ".$value['reads1']; } ?>
+                            | Комментарии (<!--<a href="/publ/<?if($this->category['password'] != ""){ echo $this->category['password']."/";}?><? echo $value['url']; ?>/<? echo $value['catID']; ?>-1-0-<? echo $value['id']; ?>#comments">--><? if($value['num_com'] > 0){ echo $value['num_com']; }else{ echo "0"; } ?><!--</a>-->) | Добавлен: <?
+                            $date_now = time();
+                            $date_time_array = getdate($date_now);
+                            $month = $date_time_array['mon'];
+                            $day = $date_time_array['mday'];
+                            $year = $date_time_array['year'];
+                            $date_time_array = getdate($value['addtime']);
+                            $month_2 = $date_time_array['mon'];
+                            $day_2 = $date_time_array['mday'];
+                            $year_2 = $date_time_array['year'];
+                            $date_1 = mktime(0,0,0,$month,$day,$year);
+                            $date_2 = mktime(0,0,0,$month_2,$day_2,$year_2);
+                            $date_3 = mktime(0,0,0,$month,$day-1,$year);
+                            if($date_1 == $date_2){
+                                echo "Сегодня ".date('H:i', $value['addtime']);
+                            }elseif($date_2 == $date_3){
+                                echo "Вчера ".date('H:i', $value['addtime']);
+                            }else{
+                                echo date('d.m.Y, H:i', $value['addtime']);
+                            }
+                            ?>
+                        </div>
+                    </td>
+                    <? if($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8" || $user_online->data['group_id'] == "9"){ echo '<td><a href="/tncontrol/editpubl/id/'.$value['id'].'" style="color:red;float:right;" title="Редактировать"><span class="edit_item_film_img"></span></a></td>'; }?>
+                    <!--<td width="17%" style="clear:none !important; height: 23px;">
+                        <div class="dalee">
+                            <a class="dalee" href="/publ/<? /* if($this->category['password'] != ""){ echo $this->category['password']."/";}?><? echo $value['url']; ?>/<? echo $value['catID']; ?>-1-0-<? echo $value['id']; */ ?>">Подробнее</a>
+                        </div>
+                    </td>-->
+
+                </tr>
+                </tbody>
+            </table><br>
+        </div>
+    <? } ?>
+    <? } ?>
+</div>
+<div style="text-align:center;">
+    <?php echo $this->paginationControl($this->publs, 'Sliding',
+                'partials/paginator_publ_2.phtml'); ?>
+</div>

@@ -1,0 +1,18 @@
+<style>#facebox #wrapper{padding-left:0} #facebox .body{  padding: 20px 10px 10px;}</style>
+<script>
+    $(document).ready(function(){
+        $('.save_comment').click(function(){
+            var idc = $(this).attr('idc');
+            var text = $('#mess').val();
+            if(idc && text){
+                $.post('/tncontrol/ajax/fl/editcomment/id/'+idc, {message:text}, function(e){
+                    location.href = e;
+                });
+            }
+        });
+    });
+</script>
+<h4>Редактирование комментария</h4>
+<p><? echo $this->comment->user;?> (<b><? echo $this->comment->name;?></b>)</p>
+<textarea id="mess" class="form-control" style="height: 100px"><? echo $this->comment->message?></textarea>
+<button idc="<? echo $this->comment->commentID;?>" class="btn btn-success save_comment">Изменить</button>

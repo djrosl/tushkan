@@ -1,0 +1,33 @@
+<? $category = Zend_Controller_Front::getInstance()->getRequest()->getParam("cat"); ?>
+<?php if ($this->pageCount): ?>
+<span dir="ltr" class="pagesBlock1">
+<!-- Previous page link -->
+<?php if (isset($this->previous)): ?>
+    <a href="<?php echo "/index/avatarsavatars/cat/".$category."/page/".$this->previous; ?>">
+    <span>«</span>
+    </a>
+<?php else: ?>
+  <span class="disabled" style="display: none;">«</span>
+<?php endif; ?>
+
+<!-- Numbered page links -->
+<?php foreach ($this->pagesInRange as $page): ?>
+  <?php if ($page != $this->current): ?>
+    <a href="<?php echo "/index/avatarsavatars/cat/".$category."/page/".$page; ?>">
+    <span><?php echo $page; ?></span>
+    </a>
+  <?php else: ?>
+        <b class="swchItemA"><span>[<?php echo $page; ?>]</span></b>
+  <?php endif; ?>
+<?php endforeach; ?>
+
+<!-- Next page link -->
+<?php if (isset($this->next)): ?>
+    <a href="<?php echo "/index/avatarsavatars/cat/".$category."/page/".$this->next; ?>">
+        <span>»</span>
+    </a>
+<?php else: ?>
+  <span class="disabled" style="display: none;">»</span>
+<?php endif; ?>
+</span>
+<?php endif; ?>

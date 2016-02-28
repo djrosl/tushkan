@@ -1,0 +1,24 @@
+<script>$(document).ready(function(){$('li .active').removeClass('active');$('#settings').addClass('active');});</script>
+<script src="/admins/banners.js"></script>
+<div class="banner">
+        <h3>Редактирование сео блока</h3>
+    <label>Название блока:</label><input type="text" disabled class="form-control" value="<? echo $this->seo->nw_name;?>" id="title">
+    <div class="separator"></div>
+    <label>title_main:</label>
+    <textarea id="title_main" class="form-control"><? echo $this->seo->title_main;?></textarea>
+
+    <label>title_up:</label>
+    <textarea id="title_up" class="form-control"><? echo $this->seo->title_up?></textarea>
+
+    <label>title_down:</label>
+    <textarea id="title_down" class="form-control"><? echo $this->seo->title_down?></textarea>
+
+    <label>meta_keywords:</label>
+    <textarea id="meta_keywords" class="form-control"><? echo $this->seo->meta_keywords;?></textarea>
+
+    <label>meta_description:</label>
+    <textarea id="meta_description" class="form-control"><? echo $this->seo->meta_description;?></textarea>
+
+    <input type="hidden" id="idseo" value="<? echo $this->seo->id;?>">
+    <button class="btn btn-large btn-success save_seo">Сохранить</button>
+</div>

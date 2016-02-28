@@ -1,0 +1,10 @@
+<?
+$title = $this->headTitle();
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+echo $this->banner['code'];
+?>
+<style>
+body{margin: 5px;}
+</style>

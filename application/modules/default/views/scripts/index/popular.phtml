@@ -1,0 +1,34 @@
+<?
+$title = $this->headTitle("Popular");
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+?>
+<html>
+<head>
+<link type="text/css" rel="StyleSheet" href="/css/main.css">
+</head>
+
+<body>
+
+<div class="box2">
+<div id="inf_2">
+<ul class="menu_inf">
+    <? foreach($this->popular as $item){?>
+    <li> <a href="/news/<? echo $item['sbscr']; ?>/<? echo date('Y-m-d', $item['urltime']); ?>-<? echo $item['id']; ?>">
+        <img src="<? echo $item['other1']; ?>" alt="" border="0" width="60" height="77" class="img_slaider"></a> <div class="menu_inf_info">
+        <a href="/news/<? echo $item['sbscr']; ?>/<? echo date('Y-m-d', $item['urltime']); ?>-<? echo $item['id']; ?>">
+        <script type="text/javascript"> var str = '<? echo $item['title']; ?>'; str = str.replace(/Смотреть онлайн бесплатно в хорошем качестве/," "); str = str.replace(/Смотреть фильм онлайн/," "); str = str.replace(/(\(2015\))/," "); str = str.replace(/(\(2014\))/," "); str = str.replace(/(\(2013\))/," "); str = str.replace(/(\(2012\))/," "); str = str.replace(/(\(2011\))/," "); str = str.replace(/(\(2010\))/," "); document.write(str); </script></a>
+        <br> <? echo date('d.m.Y', $item['addtime']); ?>
+        <br>  Комментариев:
+        <b>
+        <a href="/news/<? echo $item['sbscr']; ?>/<? echo date('Y-m-d', $item['urltime']); ?>-<? echo $item['id']; ?>#comments"><? echo $item['num_com']; ?></a>
+        </b><br>  Рейтинг: <b> <? echo $item['rating']; ?> / 5.0</b><br> </div> 
+    </li>        
+    <? } ?>
+</ul>
+</div>
+</div>
+
+</body>
+</html>

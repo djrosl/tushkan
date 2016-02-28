@@ -1,0 +1,163 @@
+<? $this->headTitle($this->search_text." - Поиск"); 
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+?>
+<!--noindex--><center>
+<?
+$memcache = Zend_Registry::get("memcache");
+$key = 'above_news_banner';
+if(($result = $memcache->get($key)) === false ) {
+    $banner = Model_Banners::getBannerByCat('above_news');
+    $memcache->set($key, $banner, false, 3600);
+} else {
+    $banner = $result;
+}
+echo $banner['code'];
+?>
+</center><!--/noindex-->
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tbody><tr>
+        <td align="right">
+        <? if($this->totalCount>16){ ?>
+            <?php echo $this->paginationControl($this->results, 'Sliding',
+                'partials/paginator_search.phtml'); ?>
+        <?}?>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div id="searchText">
+<? $user_online = Zend_Registry::get("user"); ?>
+<? if(count($this->results)>0){?> 
+<? foreach($this->results as $item){?>
+<? if( ($item['hide_on_site'] == 0) || 
+    ($item['hide_on_site'] == 1 && 
+      ($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8" || $user_online->data['group_id'] == "9")
+    )
+) {
+    $key = md5($item['tags']);
+    if(($tags = $memcache->get($key)) === false) {
+        $tags = Model_News::getNewsTagsInfo($item['tags']);
+        $memcache->set($key, $tags, false, 3600 * 24 * 7);
+    }
+?>
+ <table border="0" cellpadding="0" cellspacing="0" width="100%" class="eBlock">
+ <tbody>
+ <tr>
+   <td style="width: 39px; height: 37px; letter-spacing: 0px; word-spacing: 0px" class="film-kadr" rowspan="1"><br></td>
+   <td style="width: 600px; letter-spacing: 0px; word-spacing: 0px" align="left">
+      <div class="news_title">
+          <?php $titleStr = getTitleTagText($item['title'], $item['catID']); ?>
+          <h3 title="<? echo $titleStr; ?>"><font face="Arial"><a href="/news/<? echo $item['sbscr']; ?>/<? echo date('Y-m-d', $item['urltime']); ?>-<? echo $item['id']; ?>"><? echo $this->cutTitle($item['title']); ?></a></font></h3></div>
+   </td>
+ </tr>
+ <tr>
+ <td colspan="2" style="vertical-align: top; letter-spacing: 0px; word-spacing: 0px; padding-top: 3px; text-align: justify">
+
+<div class="eMessage" style="text-align:left;clear:both;padding-bottom:2px;">
+<table style="width:650px; border-collapse: collapse;" border="0">
+    <tr>
+        <? if($item['other1'] != ""){ ?>
+        <td style="letter-spacing: 0px; word-spacing: 0px; width: 150px; text-align: center; vertical-align: middle" rowspan="1" align="center">
+            <a href="/news/<? echo $item['sbscr']; ?>/<? echo date('Y-m-d', $item['urltime']); ?>-<? echo $item['id']; ?>" title="<? echo $titleStr; ?>" class="highslide" onclick="return hs.expand(this, {captionId: 'caption1'})">
+                <img style="border:2px solid #d5d5d5;-moz-border-radius:4px;border-radius:4px;" width="150" height="210" align="left" vspace="5" hspace="5" alt="<? echo $titleStr; ?>" src="<? if(file_exists(CACHE_DIR.'/one_news_'.$item['id'].'.jpg')){ echo "/images_cached/one_news_".$item['id'].".jpg"; }else{ echo $item['other1']; } ?>">
+            </a>
+        </td>
+        <?}?>
+        <td style="vertical-align: top; background: #F0F0F0; letter-spacing: 0px; word-spacing: 0px; padding-left: 5px; padding-top: 3px; text-align: justify">
+            <span class="item_player short_descr" style="font-size:12pt; font-family: Calibri, Arial, Helvetica, sans-serif; color:#020204; line-height: 1.2;"><?
+                $item_message = str_replace("\\", "", $item['message']);
+                $pos_1 = strpos($item_message,"\$CUT$");
+                if($pos_1 === false){
+                    $str_2 = $item_message;
+                }else{
+                    $str_2 = substr($item_message,0,$pos_1);
+                }
+                $item_message = str_replace("<hr>", "", $str_2);
+                $item_message = str_replace("<hr />", "", $item_message);
+                $item_message = str_replace('<hr size="2" width="100%">', '', $item_message);
+                $item_message = $this->showFilmTags($tags, $item_message);
+                echo "<hr>".$item_message;
+                ?><span class="entDots">... </span>
+                 <span class="entryReadAll"><a class="entryReadAllLink" href="/news/<? echo $item['sbscr']; ?>/<? echo date('Y-m-d', $item['urltime']); ?>-<? echo $item['id']; ?>">.</a>
+                 </span>
+             </span>
+        </td>
+    </tr>
+</table>
+ </div>
+ </td></tr></tbody>
+ </table>
+
+<table style="height: 23px; width: 650px; border-collapse: collapse" border="0"><tbody>
+  <tr style="background-color: #D7DCE2; border: 1px solid #82A2BB; height: 23px; width: 650px; background-repeat: no-repeat; background-position: 50% 100%;">
+
+      <td width="80%" style="clear:none !important; height: 23px; letter-spacing: 0px; word-spacing: 0px; padding-left: 3px; padding-top: 0px;" align="left">
+          <div class="news_descr" style="clear:right;">
+              <? echo $item['cat_name']; ?>
+              <? if($user_online->data['is_registered']){echo "| Просмотров: ".$item['reads1']; } ?>
+              | Комментарии (<? if($item['num_com'] > 0){ echo $item['num_com']; }else{ echo "0"; } ?>) | Добавлен: <?
+              $date_now = time();
+              $date_time_array = getdate($date_now);
+              $month = $date_time_array['mon'];
+              $day = $date_time_array['mday'];
+              $year = $date_time_array['year'];
+              $date_time_array = getdate($item['addtime']);
+              $month_2 = $date_time_array['mon'];
+              $day_2 = $date_time_array['mday'];
+              $year_2 = $date_time_array['year'];
+              $date_1 = mktime(0,0,0,$month,$day,$year);
+              $date_2 = mktime(0,0,0,$month_2,$day_2,$year_2);
+              $date_3 = mktime(0,0,0,$month,$day-1,$year);
+              if($date_1 == $date_2){
+                  echo "Сегодня ".date('H:i', $item['addtime']);
+              }elseif($date_2 == $date_3){
+                  echo "Вчера ".date('H:i', $item['addtime']);
+              }else{
+                  echo date('d.m.Y, H:i', $item['addtime']);
+              }
+              ?>
+          </div></td>
+      <? if($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8" || $user_online->data['group_id'] == "9"){ echo '<td><a href="/tncontrol/editnews/id/'.$item['id'].'" style="color:red;float:right;" title="Редактировать"><span class="edit_item_film_img"></span></a></td>'; }?>
+      <td width="17%" style="padding-right: 2px;" align="right">
+          <div class="photo_block">
+
+              <a href="#" title="Минуснуть" onclick="uplusminusrating(2,<? echo $item['id']; ?>,1);return false">
+                  <div class="photo_m"></div></a>
+
+
+              <a href="#" title="Плюсануть" onclick="uplusminusrating(2,<? echo $item['id']; ?>,4);return false">
+                  <div class="photo_p"></div></a>
+
+
+              <div class="photo_plus">
+
+  <span title="Голосов: <? $tmp_1 = round($item['rating']*$item['rate_num']);
+     $tmp_2 = 2*$item['rate_num'];
+     $tmp_3 = $tmp_1 - $tmp_2;
+     echo $tmp_3; ?>" id="rate_<? echo $item['id']; ?>"><? echo $tmp_3; ?></span>
+              </div>
+          </div>
+      </td>
+  </tr>
+  </tbody>
+</table>
+
+
+<? } ?>
+<? } ?>
+<? }else {?>
+ <div style="text-align:center;padding:20px">По запросу ничего не найдено</div>
+ <? } ?>
+</div>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tbody><tr>
+        <td align="right">
+        <? if($this->totalCount>16){ ?>
+            <?php echo $this->paginationControl($this->results, 'Sliding',
+                'partials/paginator_search.phtml'); ?>
+        <?}?>
+        </td>
+    </tr>
+    </tbody>
+</table>

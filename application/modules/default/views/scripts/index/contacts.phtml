@@ -1,0 +1,15 @@
+<?php
+echo $this->headTitle("Смотреть фильмы онлайн, фильмы онлайн в хорошем качестве, фильмы онлайн бесплатно, сериалы смотреть онлайн");
+$meta_arr = Model_MetaTags::getMetaTagsByLocation("contacts");
+$meta = "";
+foreach($meta_arr as $item){
+    $meta .= '<meta name="'.$item['name'].'" content="'.$item['content'].'" />
+';
+}
+$meta .= $this->headMeta();
+Zend_Registry::set("meta",$meta);
+
+$page = (array) Model_StaticPages::getPageById(17803);
+echo $page['message'];
+?>
+<style>.breadcrumbs_tv{display: none;}</style>

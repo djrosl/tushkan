@@ -1,0 +1,62 @@
+<?php
+$title = $this->headTitle();
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+error_reporting(E_ALL);
+ini_set('display_errors',1);
+
+?>
+<link type="text/css" rel="StyleSheet" href="/css/main.css">
+
+<div id="allEntries">
+<? $count_first_comments = count($this->comments); ?>
+<? if($count_first_comments > 0 ){
+   foreach($this->comments as $comment){
+   $tmp = $this->commentsSubTree($comment['commentID'],0,2154,2);// вивести після основного коментаря.
+   //var_dump($this->comments);die;
+?>
+<div class="comEnt report-spam-target<? // if($this->comments_keys[$comment['commentID']]['spam'] == true){echo " report-spam-hidden";}?>" id="comEnt<? echo $comment['commentID'];?>" comment_id="<? echo $comment['commentID'];?>">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="cBlock1">
+<tbody>
+<tr>
+<td style="padding:3px;">
+<div style="float:right;font-size:11px;font-family:Arial,sans-serif;">
+<span id="report-spam-wrap-<? echo $comment['commentID'];?>" class="report-spam-wrap">
+<a class="report-spam-btn report-spam-handled" data-message-id="<? echo $comment['commentID'];?>" href="javascript://" module_id="2" ip="<? echo $this->ip; ?>" data-not-spam="<?// if($this->comments_keys[$comment['commentID']]['spam'] == true){echo 1;}else{echo 0;} ?>"><? // if($this->comments_keys[$comment['commentID']]['spam'] == true){echo "Не спам";}else{echo "Спам";} ?></a>
+</span>
+<span <? if($comment['rate'] > 0){ echo 'class="myWinSuccess"';}elseif($comment['rate'] < 0){ echo 'class="myWinError"';}else{ echo 'style="color:gray;"';} ?> ><b><? if($comment['rate'] > 0){ echo "+";} echo $comment['rate'];?></b></span>
+<img alt="" src="/img/finger_up_white.png" align="absmiddle" width="13" border="0" title="Хороший пост">
+<img alt="" src="/img/finger_down_white.png" align="absmiddle" width="13" border="0" title="Плохой пост">
+</div>
+<div class="cTop" style="text-align:left;">
+<a href="#ent<? echo $comment['commentID'];?>" name="ent<? echo $comment['commentID'];?>">
+<b><? // echo $this->comments_keys[$comment['commentID']]['key']; ?></b>
+</a>
+<a href="javascript://" class="open_user_page" user_id="<? echo $comment['userID']; ?>" rel="nofollow" >
+<b><? echo $comment['username']; ?></b>
+</a> &nbsp;<span style="font-size:7pt;unicode-bidi:embed;">(<? echo date('d-m-Y H:m', $comment['addTime']); ?>)</span>
+</div>
+<div class="cMessage" style="text-align:left;clear:both;padding:2px 0;max-width: 650px;overflow: hidden;">
+
+<a href="javascript://" class="open_user_page" user_id="<? echo $comment['userID']; ?>" rel="nofollow" title="<? echo $comment['username']; ?>" style="padding-right:4px;">
+<? if($comment['user_avatar'] != "") {?>
+<img alt="" align="left" src="<? if($comment['user_avatar_type'] == "1"){echo "/forum/download/file.php?avatar=";} echo $comment['user_avatar']; ?>" width="30" border="0">
+<? } ?>
+</a> 
+<? echo $comment['message'];?>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+</div>
+<div style="width:auto;*width:100%;margin-left:20px;" id="appEntry<? echo $comment['commentID'];?>"><b></b></div>
+<?
+echo $tmp;
+$count_comments--;
+?>
+<?}?>
+<?}?> 
+</div>

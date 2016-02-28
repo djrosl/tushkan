@@ -1,0 +1,47 @@
+<? $user_id = Zend_Controller_Front::getInstance()->getRequest()->getParam("id");
+$server_uri = $_SERVER["REQUEST_URI"];
+$page_number = 1;
+$min_pos_1 = strpos($server_uri, "-");
+$str1 = substr($server_uri,$min_pos_1+1);
+$min_pos_2 = strpos($str1, "-");
+$str_pn = substr($str1,0,$min_pos_2);
+$page_number = (int)($str_pn);
+$str2 = substr($str1,$min_pos_2+1);
+$min_pos_3 = strpos($str2, "-");
+$str_uid = substr($str2,0,$min_pos_3);
+$user_id = (int)($str_uid);
+?>
+<? $item_per_page = 10; // количество итемов на странице ?>
+<?php if ($this->pageCount): ?>
+<span class="pagesBlock1">
+<!-- Previous page link -->
+<?php if (isset($this->previous)): ?>
+    <a href="<?php echo "/publ/0-".$this->previous."-".$user_id."-0-17"; ?>">
+    <span>«</span>
+    </a>    
+<?php else: ?>
+  <span class="disabled" style="display: none;">«</span>
+<?php endif; ?>
+
+<!-- Numbered page links -->
+
+<?php foreach ($this->pagesInRange as $page): ?>
+  <?php if ($page != $this->current): ?>
+    <a href="<?php echo "/publ/0-".$page."-".$user_id."-0-17"; ?>">
+    <span><?php if($page == 1){echo $page."-".($item_per_page);}else{ echo ((($item_per_page) * ($page - 1))+1)."-".(($item_per_page) * ($page)); } ?></span>
+    </a>
+  <?php else: ?>
+        <b class="swchItemA"><span><?php if($page == 1){echo $page."-".($item_per_page);}else{ echo ((($item_per_page) * ($page - 1))+1)."-".(($item_per_page) * ($page)); } ?></span></b>
+  <?php endif; ?>
+<?php endforeach; ?>
+
+<!-- Next page link -->
+<?php if (isset($this->next)): ?>
+    <a href="<?php echo "/publ/0-".$this->next."-".$user_id."-0-17"; ?>">
+        <span>»</span>
+    </a>
+<?php else: ?>
+  <span class="disabled" style="display: none;">»</span>
+<?php endif; ?>
+</span>
+<?php endif; ?>

@@ -1,0 +1,48 @@
+<style>#facebox #wrapper{padding-left:0} #facebox{width: 400px; margin-left: -200px} #facebox .body{width: 390px}</style>
+<script>
+    $(document).ready(function(){
+        $('.save_user_ch').click(function(){
+            var username = $('#username_ch').val();
+            var idc = $('#idc').val();
+            var content = '<? echo $this->content;?>';
+            if(username){
+                $.post('/tncontrol/ajax/fl/newauthor/cont/'+content+'/', {id:idc, user:username}, function(e){
+                    if(e != '2'){
+                        jQuery('.alert').html('');
+                        jQuery('.alert').append('<p>Автор успешно изменен</p>');
+                        jQuery('.alert').removeClass('alert-danger');
+                        jQuery('.alert').addClass('alert-success');
+                        jQuery('.alert').slideDown('slow');
+                        $('.author_ch').text(e);
+                        setTimeout(function(){
+                            $.facebox.close();
+                        }, 2000)
+                    }if(e == '2')
+                    {
+                        jQuery('.alert').html('');
+                        jQuery('.alert').append('<p>Запрашиваемый пользователь не найден.</p>');
+                        jQuery('.alert').removeClass('alert-success');
+                        jQuery('.alert').addClass('alert-danger');
+                        jQuery('.alert').slideDown('slow');
+                        setTimeout(function(){
+                            jQuery('.alert').slideUp('slow');
+                        }, 3000)
+                    }
+                });
+            }
+        });
+
+        function closeError(){
+            jQuery('.alert').slideUp('slow');
+            jQuery('.alert').html("");
+        }
+
+    });
+</script>
+<div class="username_ch">
+    <label>Имя пользователя</label>
+    <input type="hidden" value="<? echo $this->id; ?>" id="idc">
+    <input  type="text" class="form-control" id="username_ch" value="<? echo $this->user;?>" placeholder="Введите имя пользователя">
+    <div style="display:none; margin-top: 5px"  class="alert alert-success"><p>Успешная авторизация</p></div>
+    <button class="btn btn-large btn-success save_user_ch">Сохранить</button>
+</div>

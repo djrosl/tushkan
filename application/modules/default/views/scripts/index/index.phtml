@@ -1,0 +1,77 @@
+<style>.breadcrumbs{display: none;}</style>
+<?php
+$memcache = Zend_Registry::get("memcache");
+/*$key = 'news_blocks_index_page';
+if(($result = $memcache->get($key)) === false ) {
+    $news_blocks_res = Model_News::getNewsBlocksById(23);
+    $memcache->set($key, $news_blocks_res, false, 3600);
+} else {
+    $news_blocks_res = $result;
+}
+if ($news_blocks_res){$news_blocks = (array)$news_blocks_res;}*/
+global $news_blocks; $news_blocks = getSeoInfo();
+$this->headTitle($news_blocks['title_main']);
+
+$key = 'meta_index_page';
+if(($result = $memcache->get($key)) === false ) {
+    $meta_arr = Model_MetaTags::getMetaTagsByLocation("index_page");
+    $memcache->set($key, $meta_arr, false, 3600);
+} else {
+    $meta_arr = $result;
+}
+
+$meta = '';
+foreach($meta_arr as $item) {
+    $meta .= '<meta name="'.$item['name'].'" content="'.$item['content'].'" />';
+}
+$meta .= $this->headMeta();
+Zend_Registry::set("meta",$meta);
+
+
+function words_limit($input_text, $limit = 20, $end_str = '...') {
+    $input_text = strip_tags($input_text);
+    $words = explode(' ', $input_text); // создаём из строки массив слов
+    if ($limit < 1 || sizeof($words) <= $limit) { // если лимит указан не верно или количество слов меньше лимита, то возвращаем исходную строку
+        return $input_text;
+    }
+    $words = array_slice($words, 0, $limit); // укорачиваем массив до нужной длины
+    $out = implode(' ', $words);
+    return $out.$end_str; //возвращаем строку + символ/строка завершения
+}
+
+
+
+?>
+<? if($news_blocks) { ?>
+<div class="main-titles">
+<? echo $news_blocks['title_up'];?>
+</div>
+<?}?>
+
+
+<section class="index-first-row">
+    <? foreach ($this->news as $key=>$value){ 
+            $titleStr = getTitleTagText($value['title'], $value['catID']);
+        ?>
+        <div class="film-card">
+            <a href="/news/<? echo $value['sbscr']; ?>/<? echo date('Y-m-d', $value['urltime']); ?>-<? echo $value['id']; ?>">
+                <img height="237" alt="<? echo $titleStr; ?>" src="<? if(file_exists(CACHE_DIR.'/one_news_'.$value['id'].'.jpg')){ echo "/images_cached/one_news_".$value['id'].".jpg"; }else{ echo $value['other1']; } ?>">
+                
+                <p><? echo words_limit($value['title'], 6); ?><br><span>/Levitan</span></p>  
+            </a>
+        </div>
+    <? } ?>
+
+    <ul class="pagination">
+        <li><a href="#">&#60;</a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">6</a></li>
+        <li>&#8230;</li>
+        <li><a href="#">2387</a></li>
+        <li><a href="#">&#62;</a></li>
+    </ul>
+</section>

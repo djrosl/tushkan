@@ -1,0 +1,98 @@
+<?php
+$comments_order = Zend_Controller_Front::getInstance()->getRequest()->getParam("comments_order");
+$server_uri = $this->url();
+$str = substr($server_uri,1); // убираем первый слеш "/"
+$param2 = 0;
+$item_url = "";
+$str = substr($str,5);
+$is_slash = strpos($str, "/");
+if($is_slash === false){ // если нету в строке "/"
+    $min_pos_1 = strpos($str, "-");
+    if($min_pos_1 === false){
+        $param1 = (int)($str);
+    }else{
+        $str2 = substr($str,0,$min_pos_1);
+        $param1 = (int)($str2);
+        $str3 = substr($str,$min_pos_1+1);
+        $min_pos_2 = strpos($str3, "-");
+        $str4 = substr($str3,0,$min_pos_2);
+        $param2 = (int)($str4);
+    }
+}else{
+    $item_url = substr($str,0,$is_slash);
+    $str2 = substr($str,$is_slash+1);
+    $min_pos_1 = strpos($str2, "-");
+    if($min_pos_1 === false){
+        $param1 = (int)($str2);
+    }else{
+        $str3 = substr($str2,0,$min_pos_1);
+        $param1 = ($str3);
+        $str4 = substr($str2,$min_pos_1+1);
+        $min_pos_2 = strpos($str4, "-");
+        $str5 = substr($str4,0,$min_pos_2);
+        $param2 = ($str5);
+        $str6 = substr($str4,$min_pos_2+1);
+        $min_pos_3 = strpos($str6, "-");
+        $str7 = substr($str6,0,$min_pos_3);
+        $param3 = ($str7);
+        $str8 = substr($str6,$min_pos_3+1);
+        $min_pos_4 = strpos($str8, "-");
+        if($min_pos_4 === false){
+            $min_pos_4 = strpos($str8, "/");
+        }
+        $str9 = substr($str8,0,$min_pos_4);
+        $param4 = (int)($str9);
+    }
+}
+
+?>
+<?php if ($this->pageCount): ?>
+<span class="pagesBlock1">
+<!-- Previous page link -->
+<?php if (isset($this->previous)): ?>
+    <? if($this->previous == 1){?>
+    <a href="<?php if($item_url != ""){ echo "/news/".$item_url."/".$param1."-".$param2."-".$param3."-".$param4; }
+    if($comments_order != ""){ echo "?comments_order=".$comments_order; } ?>">
+    <span>«</span>
+    </a>    
+    <?}else{?>
+    <a href="<?php if($item_url != ""){ echo "/news/".$item_url."/".$param1."-".$param2."-".$param3."-".$param4."-0-".$this->previous; }
+    if($comments_order != ""){ echo "?comments_order=".$comments_order; } ?>">
+    <span>«</span>
+    </a>    
+    <? } ?>
+<?php else: ?>
+  <span class="disabled" style="display: none;">«</span>
+<?php endif; ?>
+
+<!-- Numbered page links -->
+
+<?php foreach ($this->pagesInRange as $page): ?>
+  <?php if ($page != $this->current): ?>
+  <? if($page == 1){ ?>
+    <a href="<?php if($item_url != ""){ echo "/news/".$item_url."/".$param1."-".$param2."-".$param3."-".$param4; }
+    if($comments_order != ""){ echo "?comments_order=".$comments_order; } ?>">
+    <span><?php echo $page; ?></span>
+    </a>
+    <?}else{?>
+    <a href="<?php if($item_url != ""){ echo "/news/".$item_url."/".$param1."-".$param2."-".$param3."-".$param4."-0-".$page; }
+    if($comments_order != ""){ echo "?comments_order=".$comments_order; } ?>">
+    <span><?php echo $page; ?></span>
+    </a>
+    <? } ?>
+  <?php else: ?>
+        <b class="swchItemA"><span><?php echo $page; ?></span></b>
+  <?php endif; ?>
+<?php endforeach; ?>
+
+<!-- Next page link -->
+<?php if (isset($this->next)): ?>
+    <a href="<?php if($item_url != ""){ echo "/news/".$item_url."/".$param1."-".$param2."-".$param3."-".$param4."-0-".$this->next; }
+    if($comments_order != ""){ echo "?comments_order=".$comments_order; } ?>">
+        <span>»</span>
+    </a>
+<?php else: ?>
+  <span class="disabled" style="display: none;">»</span>
+<?php endif; ?>
+</span>
+<?php endif; ?>

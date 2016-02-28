@@ -1,0 +1,11 @@
+<?
+$title = $this->headTitle();
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+?>
+<div style="text-align: center;">
+<h3>Новый пароль был успешно сгенерирован и отправлен на e-mail "<? echo $this->email; ?>".</h3>
+
+<h4>Помните, вы всегда можете изменить пароль, отредактировав свой профиль.</h4>
+</div>

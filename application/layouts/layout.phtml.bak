@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<!-- PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"-->
+<html prefix="og: http://ogp.me/ns#
+              video: http://ogp.me/ns/video#
+              ya: http://webmaster.yandex.ru/vocabularies/" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<?php
+global $news_blocks; $news_blocks = getSeoInfo();
+echo $this->headTitle();
+$meta = Zend_Registry::get("meta");
+echo $meta;
+echo $this->headLink()->prependStylesheet('/css/all.css?v1.39');
+echo $this->headScript() ?>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="/css/tabs.js"></script>
+<script type="text/javascript" src="/js/all.js?v1.41"></script>
+<script type="text/javascript" src="/js/calendarUtil.js"></script>
+<?
+$user = Zend_Registry::get("user");
+$memcache = Zend_Registry::get("memcache");
+$key = 'head_block_banner';
+if(($result = $memcache->get($key)) === false ) {
+    $head_banner = Model_Banners::getBannerByCat('head_block');
+    $memcache->set($key, $head_banner, false, 0);
+} else {
+    $head_banner = $result;
+}
+echo $head_banner['code'];
+?>
+</head>
+<body>
+<!--noindex--><!-- BEGIN TAG - DO NOT MODIFY -->
+<script>(function(){var s=document.createElement('script');s.src='http://dolykon.com/j/w.php?id=MjIw&r='+Math.random();document.getElementsByTagName('head')[0].appendChild(s)})();</script>
+<!-- END TAG --><!--/noindex-->
+<div id="popuplogin" class="popuplogin" style="display:none">
+    <div style="position:relative">
+        <a class="close" onclick="jQuery('#popuplogin').hide()" href="javascript:;" title="Закрыть">x</a>
+        <div class="title">Вход или регистрация</div>
+        <form onsubmit="return false">
+            <div>
+              Логин<br />
+              <input id="popusr" type="text" name="username" />
+            </div>
+            <div style="margin:10px 0">
+              Пароль<br />
+              <input id="poppas" type="password" name="password" />
+            </div>
+            <input data-password="poppas" data-username="popusr" type="submit" value="Вход" class="button-default loginButton" />
+            <input type="hidden" value="2" name="a" />
+            <input type="hidden" value="1" name="ajax" />
+            <input type="hidden" value="169" name="rnd" />
+        </form>
+        <div style="margin-top:10px;padding-top:5px;border-top:1px solid #ccc;">
+            <a class="remind_password" rel="nofollow" href="javascript:" title="Восстановить доступ">Забыл пароль</a>
+            | <a href="/index/registration" title="Зарегистрироваться">Регистрация</a>
+        </div>
+    </div>
+</div>
+
+<?// if($this->one_news){ echo $this->createItemscope($this->one_news);} ?>
+    <table border="0" cellpadding="0" rules="none" style="padding:0px; width: 1165px; border-collapse: collapse" align="center">
+        <tbody>
+        <tr>
+            <td rowspan="2" class="anchor" style="height: 110px; text-align: left; background-image: url(&quot;&quot;); width: 307px; letter-spacing: 0px; word-spacing: 0px; vertical-align: middle; padding-left: 25px; padding-right: 20px; background-repeat: no-repeat; background-position: 50% 100%">
+                <a href="/" title="Tushkan.tv - смотреть фильмы онлайн"><img src="/img/11.png" border="0" alt="Tushkan.tv - смотреть фильмы онлайн" width="307"></a>
+            </td>
+            <td style="vertical-align: bottom; height: 70px; letter-spacing: 0px; word-spacing: 0px; text-align: left; padding-right: 14px; padding-bottom: 10px">
+                <!--noindex-->
+                <div class="social-image" style="display: none; background: rgb(0, 0, 0);">
+                    <link rel="image_src" id="image_src" href="<? echo $image; ?>">
+                </div>
+                <div style="margin:0 0 5px 0;" id="share3" class="social-likes" data-url="http://<? echo $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']; ?>" data-title="<? echo $this->headTitle(); ?>">
+                	<div class="vkontakte" title="Поделиться ссылкой во Вконтакте">Поделиться</div>
+                    <div class="facebook" title="Поделиться ссылкой на Фейсбуке">Нравится</div>
+                	<div class="twitter" title="Поделиться ссылкой в Твиттере">Твитнуть</div>
+                	<div class="odnoklassniki" title="Поделиться ссылкой в Одноклассниках">Класс!</div>
+                    <div class="mailru" title="Поделиться ссылкой в Моём мире">Нравится</div>
+                </div>
+            	<!--/noindex-->
+                <form onsubmit="document.getElementById('sfSbm').disabled=true" method="get" action="/search/" id="poisk1">
+                    <div style="position:relative;">
+                        <input name="q" type="text" size="60" id="forma1" value="Поиск фильма..." onfocus="if(this.value=='Поиск фильма...')this.value=''" onblur="if(this.value=='')this.value='Поиск фильма...'">
+                        <input class="knp1" name="sfSbm" type="submit" value="Искать" title="Начать поиск">
+                        <input name="a" value="45" type="hidden">
+                    </div>
+                </form>
+            </td>
+        </tr> <tr>
+            <td >
+                <!--style="letter-spacing: 0px; word-spacing: 0px; vertical-align: top; box-sizing: border-box; background: none repeat scroll 0% 0% rgb(215, 220, 226); display: inline-block; padding: 0px; height: 33px; width: 782px; border: 1px solid rgb(135, 166, 190); margin: 0px 0px 6px; border-radius: 30px 6px 6px 30px; box-shadow: 1px 1px 2px gray;"-->
+                <!--<a href="/" class="img_home"><img src="/home.png" height="35" align="left"></a>-->
+                <? echo $this->topMenu(); ?>
+            </td>
+        </tr>
+        </tbody></table>
+
+    <table style="padding: 0px; width: 1165px; border-collapse: collapse; margin: 0px auto 3px;" border="0" align="center">
+        <tbody>
+        <tr>
+            <td colspan="1">
+            </td>
+        </tr>
+        <tr align="center">
+            <td style="letter-spacing: 0px; word-spacing: 0px; background: #5C82A7 ; background: transparent linear-gradient(to right, rgb(20, 75, 129), rgb(179, 196, 214), rgb(22, 78, 129)) repeat scroll 0px 0px; padding: 1px 10px 0px 18px; border-radius: 4px; height: 219px;">
+                <div id="banners">
+                    <table align="center" border="0" cellspacing="0" cellpadding="0" width="100%" class="infTable">
+                        <tbody>
+                            <? echo $this->topFilms(); ?>
+                        </tbody>
+                    </table>
+                </div>
+            </td></tr>
+        </tbody></table>
+
+
+    <table border="0" cellpadding="0" cellspacing="0" align="center" style="width: 1165px">
+    <tbody><tr>
+    <td width="250" valign="top" id="col-left">
+
+        <!--U1CLEFTER1Z--><table style="width: 250px; height: 100%; border-collapse: collapse;   background: #FFF;" border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+			
+			<tr>
+                <td style="height: 33px; letter-spacing: 0px; word-spacing: 0px; border: 2px solid rgb(255, 255, 255); border-radius: 7px; background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">Категории фильмов</div>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; height: 175px; letter-spacing: 0px; word-spacing: 0px; padding-left: 5px; padding-right: 5px; border-left: 2px solid rgb(255, 255, 255); border-right: 1px solid rgb(255, 255, 255); background: #C8D1D5; background: linear-gradient(to right, #C8D1D5, #E1E6E8, #C8D1D5) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #C8D1D5, #E1E6E8, #C8D1D5) repeat scroll 0 0; background: -o-linear-gradient(to right, #C8D1D5, #E1E6E8, #C8D1D5) repeat scroll 0 0; background: -moz-linear-gradient(to right, #C8D1D5, #E1E6E8, #C8D1D5) repeat scroll 0 0; box-shadow: 0 0 0 1px #c8d0d4;">
+                    <div align="left" style="padding: 10px 0;">
+                        <?
+                        if($this->param_cat == 'publ'){
+                            echo $this->categoriesRight('publ');
+                        }else{
+                            echo $this->categoriesRight('news');
+                        }
+                        ?>
+                    </div>
+                </td>
+            </tr>
+			
+			 <?php if(isset($this->isPageOfFilm)) { ?>
+ <? if (!$user->data['is_registered']) { ?>
+<tr>
+                <td style="height: 33px; letter-spacing: 0px; word-spacing: 0px; border: 2px solid rgb(255, 255, 255); border-radius: 7px; background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">Это интересно</div>
+                </td></tr>
+            <tr  style="height: 390px;">
+                <td style="height: 390px; vertical-align: top; letter-spacing: 0px; word-spacing: 0px; padding-left: 1px; background: none repeat scroll 0% 0% rgb(255, 255, 255); padding-right: 1px; border-left: 1px solid rgb(202, 209, 210); border-right: 1px solid rgb(202, 209, 210);">
+                  <center><noindex>
+                        <div id="banner_left_top">
+                           <script type="text/javascript" src="/js/banners/data_left_top.js"></script></div>
+				    </noindex></center>
+                </td>
+            </tr>    <? }elseif($user->data['is_registered']) {$curr_user = (array) Model_User::getUserById($user->data['user_id']);?><? } ?>
+			<?php } ?>
+
+            <tr>
+                <td style="height: 33px; letter-spacing: 0px; word-spacing: 0px; border: 2px solid rgb(255, 255, 255); border-radius: 7px; background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">Форма входа</div>
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 320px; vertical-align: top; letter-spacing: 0px; word-spacing: 0px; padding-left: 5px; padding-right: 5px; background: none repeat scroll 0px 0px rgb(255, 255, 255); border-right: 1px solid rgb(202, 209, 210); border-left: 1px solid rgb(202, 209, 210);">
+                    <!--МИНИ ПРОФИЛЬ-->
+                    <? if (!$user->data['is_registered']) { ?>
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tbody><tr>
+                        <td align="center"> <a href="/index/registration" class="btn_rec"></a> <br><br><br><b><? echo date("H:i",time()); ?></b><br>Вы вошли как: <b>Гость</b><br> <br>
+                        </td>
+                    </tr>
+                    <tr><td align="center"></td></tr>
+                    <tr><td>
+                        <div id="login_block" style="float: left;">
+                            <!--<form action="/index/login/" method="post" style="margin:0">-->
+                                <table border="0" cellspacing="1" cellpadding="0" width="100%">
+                    
+                                    <tbody>
+                                    <tr>
+                                        <td width="20%" nowrap="nowrap">Логин:</td>
+                                        <td><input id="username" class="loginField" type="text" name="username" value="" size="20" style="width:200" maxlength="50">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Пароль:</td>
+                                        <td><input id="password"  class="loginField" type="password" name="password" size="20" style="width:200" maxlength="15">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <table border="0" cellspacing="1" cellpadding="0" width="100%">
+                                    <tbody>
+                                    <tr>
+                                        <td nowrap="">
+                                            <input id="rementry" type="checkbox" name="rem" value="1" checked="checked">
+                                            <label for="rementry">запомнить</label>
+                                        </td>
+                                        <td align="center" valign="top">
+                                            <input data-password="password" data-username="username" class="loginButton" name="sbm" type="submit" value="Вход">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div style="font-size:7pt;text-align:center;">
+                                                <a href="javascript://" rel="nofollow" class="remind_password">Забыл пароль</a> | <a href="/index/registration">Регистрация</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                    
+                                    </tbody>
+                                </table>
+                                <input type="hidden" name="a" value="2">
+                                <input type="hidden" name="ajax" value="1">
+                                <input type="hidden" name="rnd" value="169">
+                            <!--</form>-->
+                        </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    <? }elseif($user->data['is_registered']) {
+                        $curr_user = (array) Model_User::getUserById($user->data['user_id']);
+                    ?>
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%"> 
+                    <tbody>
+                    <tr> 
+                    <td align="center"><b><? echo date("H:i",time()); ?></b><br>Вы вошли как: <b><? echo $user->data['username']; ?></b><br> 
+                    </td>
+                    </tr>
+                    <tr>
+                    <td align="center">
+                    <span class="user_left_line"></span>
+                    </td>
+                    </tr>
+                    <tr> 
+                    <td align="center"><img class="userAvatar" alt="<? echo $user->data['username']; ?>" src="<? if($curr_user['user_avatar_type'] == "1"){echo "/forum/images/avatars/upload/3fd64ac252fd45cbb865c0e38dfe125f_";} echo $curr_user['user_avatar']; ?>" border="0">
+                    <br> <p></p>
+                    </td>
+                    </tr>
+                    <tr></tr>
+                    <tr><td align="center"><span class="user_left_line"></span></td></tr>
+                    <tr>
+                    <td align="center"><a href="javascript://" class="open_user_page" user_id="<? echo $curr_user['user_id']; ?>" rel="nofollow">
+                    <span class="open_user_page_img"></span>
+                    </a>
+                    
+                    <a href="/user/incomingmessages" rel="nofollow" target="_blank">
+                    <? $count_unread = Model_Messenger::getIncomingMessagesUnread($user->data['user_id']);
+                    if($count_unread == false){
+                        $count_unread = 0;
+                    }else{
+                        $count_unread = count($count_unread);
+                    }
+                    if($count_unread > 0){ ?>
+                        <span class="user_message_act_sprite"></span>
+                    <? } else { ?>
+                        <span class="user_message_sprite"></span>
+                    <? } ?>
+                    </a>
+                    <a href="/index/logout" id="logout"><span class="logout_sprite"></span></a>
+                    </td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    <? } ?>
+                    <!--МИНИ ПРОФИЛЬ-->
+                </td>
+            </tr>
+
+            <tr>
+                <td style="height: 33px; letter-spacing: 0px; word-spacing: 0px; border: 2px solid rgb(255, 255, 255); border-radius: 7px; background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">Новости кино</div>
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 700px; letter-spacing: 0px; word-spacing: 0px; padding-left: 5px; padding-right: 5px; border-left: 2px solid rgb(255, 255, 255); border-right: 1px solid rgb(255, 255, 255); background: #C8D1D5; background: linear-gradient(to right, #C8D1D5, #E1E6E8, #C8D1D5) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #C8D1D5, #E1E6E8, #C8D1D5) repeat scroll 0 0; background: -o-linear-gradient(to right, #C8D1D5, #E1E6E8, #C8D1D5) repeat scroll 0 0; background: -moz-linear-gradient(to right, #C8D1D5, #E1E6E8, #C8D1D5) repeat scroll 0 0; box-shadow: 0 0 0 1px #c8d0d4;">
+<!-- s -->
+                    <?php
+error_reporting(E_ALL);
+ini_set('display_errors',1);
+echo $this->lastPubls(); 
+?>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="height: 33px; letter-spacing: 0px; word-spacing: 0px; border: 2px solid rgb(255, 255, 255); border-radius: 7px; background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">
+                        <a class="title_blue open_mini_chat" title="Пообщаться в Мини-Чате" style="cursor: pointer;" target="mcdemo"> &gt;&gt; Мини чат </a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 100px; vertical-align: top; letter-spacing: 0px; word-spacing: 0px; padding-left: 5px; padding-right: 5px; border-left: 1px solid rgb(202, 209, 210); border-right: 1px solid rgb(202, 209, 210); background: rgb(255, 255, 255) none repeat scroll 0% 0%;">
+                    <iframe id="mchatIfm2" name="mchat" style="width:100%;height:600px;" frameborder="0" scrolling="auto" hspace="0" vspace="0" allowtransparency="true" src="/index/mchat/"></iframe>
+                    <script type="text/javascript">
+                    function countMessLength(){
+                        var rst = 500-$('#mchatMsgF').val().length;
+                        if (rst<0){
+                            rst=0;
+                            $('#mchatMsgF').val($('#mchatMsgF').val().substr(0,500));
+                        }
+                        $('#jeuwu28').html(rst);
+                    }
+                    </script>
+                    <!--<form style="margin:0;padding:0;" id="MCaddFrm" action="/index/chat">-->
+                    <? if($user->data['is_registered']){?>
+                        <table border="0" cellpadding="1" cellspacing="1" width="100%">
+                            <tbody>
+                            <tr>
+                            <td>
+                            <select id="mchatRSel" class="mchat" size="1" title="Автообновление" style="font-size:7pt;">
+                                <option value="0" <? if($curr_user['refresh_time'] == '0'){echo 'selected="selected"';} ?>>--</option>
+                                <option value="15" <? if($curr_user['refresh_time'] == '15'){echo 'selected="selected"';} ?>>15 сек</option>
+                                <option value="30" <? if($curr_user['refresh_time'] == '30'){echo 'selected="selected"';} ?>>30 сек</option>
+                                <option value="60" <? if($curr_user['refresh_time'] == '60'){echo 'selected="selected"';} ?>>1 мин</option>
+                                <option value="120" <? if($curr_user['refresh_time'] == '120'){echo 'selected="selected"';} ?>>2 мин</option>
+                            </select>
+                            <script>
+                                $(document).ready(function(){
+                                    var param = <? echo $curr_user['refresh_time'] ? $curr_user['refresh_time'] : 0; ?>;
+                                    if(param != 0){
+                                        func_id = setInterval(function(){ refreshChat(); }, param+'000');
+                                        $("#mchatRSel").attr("func_id",func_id);
+                                    }
+                                });
+                            </script>
+                            </td>
+                            <td width="70%" align="right">
+                            <a href="/index/mchat" rel="nofollow" target="mchat" id="refresh_chat" title="Обновить">
+                                <span class="chat_user_mcr"></span>
+                            </a>
+                            &nbsp;<a href="javascript://" rel="nofollow" id="chat_smiles" title="Вставить смайл">
+                                    <span class="chat_user_mcs"></span>
+                                </a>
+                            &nbsp;<a href="javascript://" rel="nofollow" id="chat_bb_codes" title="BB-Коды">
+                                    <span class="chat_user_mcb"></span>
+                                </a>
+                            <? if($user->data['group_id'] == "5" || $user->data['group_id'] == "8"){ ?>
+                            &nbsp;<a href="javascript://" rel="nofollow" id="chat_settings" title="Управление сообщениями">
+                                    <span class="chat_user_mcm"></span>
+                                </a>
+                            <? } ?>
+                            </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table border="0" cellpadding="1" cellspacing="1" width="100%">
+                            <tbody>
+                                <tr>
+                                    <td width="95%" rowspan="2">
+                                        <textarea name="mcmessage" class="mchat" id="mchatMsgF" title="Сообщение" onkeyup="countMessLength();" onfocus="countMessLength();" style="height:40px;width:100%;resize:none;"></textarea>
+                                    </td>
+                                    <td align="center" valign="top">
+                                        <div style="font-size:10px;"><b id="jeuwu28">500</b></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="bottom">
+                                        <div style="width:30px">
+                                            <input type="submit" value="OK" class="mchat" id="mchatBtn" style="width:30px;">
+                                            <img alt="" style="display:none;" id="mchatAjax" src="/img/ajax3.gif" border="0" width="16">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    <? }else{?>
+                        <div align="center">
+                            <a href="javascript://" class="login_popup" rel="nofollow">Для добавления необходима авторизация</a>
+                        </div>
+                        <input type="hidden" name="numa" id="numa832" value="0"><input type="hidden" name="a" value="18"><input type="hidden" id="ajaxFlag" name="ajax" value="1">
+                    <?}?>
+                    <!--</form>-->
+                </td>
+            </tr>
+            <tr style="height: 11px; letter-spacing: 0px; word-spacing: 0px; background-image: url(&quot;/images/buttons/bottom_chat.png&quot;); background-repeat: no-repeat; background-position: 50% 0%">
+                <td></td>
+            </tr>
+            <?php if($_SERVER['REQUEST_URI'] == '/') { ?>
+            <tr>
+                <td style="height: 33px; letter-spacing: 0px; word-spacing: 0px; border: 2px solid rgb(255, 255, 255); border-radius: 7px; background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">Последние комментарии:</div>
+                </td>
+            </tr>
+            <tr>
+                <td style="height:300px; width: 250px; letter-spacing: 0px; word-spacing: 0px; padding-left: 5px; padding-right: 5px; border-left: 2px solid rgb(255, 255, 255); border-right: 1px solid rgb(255, 255, 255); background: #C8D1D5; background: linear-gradient(to right, #C8D1D5, #E1E6E8, #C8D1D5) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #C8D1D5, #E1E6E8, #C8D1D5) repeat scroll 0 0; background: -o-linear-gradient(to right, #C8D1D5, #E1E6E8, #C8D1D5) repeat scroll 0 0; background: -moz-linear-gradient(to right, #C8D1D5, #E1E6E8, #C8D1D5) repeat scroll 0 0; box-shadow: 0 0 0 1px #c8d0d4;">
+                    <? echo $this->lastComments(); ?>
+                </td>
+            </tr>
+            <?php } ?>
+            <!-- Опрос начало -->
+            <tr>
+                <td style="height: 33px; letter-spacing: 0px; word-spacing: 0px; border: 2px solid rgb(255, 255, 255); border-radius: 7px; background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">Опрос</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="height: 100px; vertical-align: top; width: 250px; letter-spacing: 0px; word-spacing: 0px; padding-left: 5px; padding-right: 5px; border-left: 1px solid rgb(202, 209, 210); border-right: 1px solid rgb(202, 209, 210); background: rgb(255, 255, 255) none repeat scroll 0% 0%;">
+                    <? $pool = Model_Pools::getRandomPool(); $pool = $pool[0]; ?>
+                    <div id="pollBlock<? echo $pool['1']?>">
+                        <!--<form id="pollform<? echo $pool['1']?>" onsubmit="pollnow<? echo $pool['1']?>();return false;">-->
+                            <div class="pollBlock" style="font-family:Tahoma,Arial;">
+                                <div class="pollQue" style="font-size:8pt;padding-top:2px;text-align:left;">
+                                    <b><? echo $pool['7']; ?></b>
+                                </div>
+                                <div class="pollAns" style="font-size:8pt;text-align:left;">
+                                    <? for($i = 8; $i < 23; $i++) {
+                                    if($pool[$i] != ""){    
+                                    ?>
+                                    <div class="answer">
+                                        <input id="a<? echo $pool['1'].($i-7)?>" type="<? if($pool['2'] == 1){echo "radio";}elseif($pool['2'] == 2){echo "checkbox";} ?>" name="answer" value="<? echo $i-7;?>" style="vertical-align:middle;" />
+                                        <label style="vertical-align:middle;display:inline;" for="a<? echo $pool['1'].($i-7)?>"><? echo $pool[$i]; ?></label>
+                                    </div>
+                                    <?}}?>
+                                    
+                                    <div align="center" id="pollSbm<? echo $pool['1']?>" class="pollButton">
+                                    <input type="hidden" name="ssid" value="773375161021642737502" />
+                                    <input class="pollBut" id="PlBtn<? echo $pool['1']?>" id_pool="<? echo $pool['1']?>" type="submit" value="<? echo $pool['6']?>" /></div>
+                                    <input type="hidden" name="id" value="43" />
+                                    <input type="hidden" name="a" value="1" />
+                                    <input type="hidden" name="ajax" value="<? echo $pool['1']?>" />
+                                </div>
+                                <div class="pollLnk" style="padding-top:4px;text-align:center;">
+                                    [ <a style="font-size:7pt;" href="javascript://" rel="nofollow" id_pool="<? echo $pool['1']?>" class="pollLnk-all">Результаты</a> &middot; <a style="font-size:7pt;" href="javascript://" rel="nofollow" class="pollLnk-archive">Архив опросов</a> ]
+                                </div>
+                                <div class="pollTot" style="padding-top:4px;font-size:7pt;text-align:center;">Всего ответов: <b><? echo $pool['38']?></b></div>
+                            </div>
+                        <!--</form>-->
+                    </div><noindex>
+                    <center>
+                        <!--LiveInternet counter--><script type="text/javascript"><!--
+                            document.write("<a  rel='nofollow' href='http://www.liveinternet.ru/click' "+
+                                "target=_blank><img src='//counter.yadro.ru/hit?t25.1;r"+
+                                escape(document.referrer)+((typeof(screen)=="undefined")?"":
+                                ";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+                                    screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+                                ";"+Math.random()+
+                                "' alt='' title='LiveInternet: показано число посетителей за"+
+                                " сегодня' "+
+                                "border='0' width='88' height='15'><\/a>")
+                            //-->
+
+                            </script><!--/LiveInternet-->
+                    </center></noindex>
+                </td>
+            </tr>
+            <!-- Опрос конец -->
+
+           
+
+            <tr>
+                <td style="height: 33px; letter-spacing: 0px; word-spacing: 0px; border: 2px solid rgb(255, 255, 255); border-radius: 7px; background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue"><? if(!$user->data['is_registered']){ echo " "; }else{ echo "Статистика";} ?></div>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; letter-spacing: 0px; word-spacing: 0px; padding-left: 5px; padding-right: 5px; border-left: 1px solid rgb(202, 209, 210); border-right: 1px solid rgb(202, 209, 210); background: none repeat scroll 0% 0% rgb(255, 255, 255);">
+                <? if($user->data['is_registered']){
+//                    $memcache = Zend_Registry::get("memcache");
+//                    $key = 'users_online';
+                    //if(true || ($result = $memcache->get($key)) === false ) {
+                        $online_stat = obtain_users_online();
+//echo "<!-- ".var_dump($online_stat)." -->";
+
+                        $online_users = Model_User::getUsersByIds($online_stat['online_users']);
+                        $online = array(
+                            "online_stat" => $online_stat,
+                            "online_users" => $online_users
+                        );
+                        //$memcache->set($key, $online, false, 300);
+//                        Model_User::cleanStat();
+                    //} else {
+                    //    $online = $result;
+                    //}
+                    $online_stat = $online['online_stat'];
+                    $online_users = $online['online_users'];
+                    /*
+                    ?>
+                    <div class="tOnline" id="onl1">Онлайн всего: <b><? echo $online_stat['total_online']; ?></b></div>
+                    <div class="gOnline" id="onl2">Гостей: <b><? echo $online_stat['guests_online']; ?></b></div>
+                    <div class="uOnline" id="onl3">Пользователей: <b><? echo $online_stat['visible_online']; ?></b></div>
+                    <?php */ ?>
+                    <div class="tOnline" id="onl4">Всего зарегистрированных посетителей: <b><? echo count($online_users); ?></b></div>
+                    <?php foreach($online_users as $current){ ?>
+                        <a class="open_user_page <? if($current['group_id'] == "5"){echo "groupAdmin";}elseif($current['group_id'] == "8"){echo "groupModer";}elseif($current['group_id'] == "9"){echo "groupVerify";}else{echo "groupUser";} ?>" user_id="<? echo $current['user_id']; ?>" href="javascript://" rel="nofollow" ><? echo $current['username']?></a>
+                    <?}?>
+                <? } ?>
+                </td>
+            </tr>
+
+            </tbody>
+        </table><!--/U1CLEFTER1Z-->
+
+    </td>
+
+    <td valign="top" height="100%" id="col-center">
+    <table border="0" cellpadding="0" cellspacing="0" style="width: 100%">
+    <tbody>
+    <tr bgcolor="black" border="1">
+    <td></td>
+    </tr>
+    <tr>
+        <td colspan="3" valign="top" style="width: 656px; display: block; vertical-align: top; padding-left: 5px; padding-right: 5px; letter-spacing: 0px; word-spacing: 0px">
+            <hr class="breadcrumbs">
+                <div id="fs-breadcrumbs" class="fs-breadcrumbs">
+                    <?php
+                    //$this->navigation()->breadcrumbs()->setMinDepth(0)->setLinkLast(true)->setSeparator(" » ");
+                    $this->fsBreadCrumbs();
+                    ?>
+                </div>
+            <hr class="breadcrumbs">
+            <table border="0" width="100%" cellspacing="1" cellpadding="2" class="eBlock" style="display: block;margin-left: -3px;">
+                <tbody>
+                <tr>
+                    <td>
+                        <?php echo $this->layout()->content; ?>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+
+    </tbody>
+    </table>
+    </td>
+
+    <td width="250" valign="top" align="right" id="col-right">
+
+        <!--U1DRIGHTER1Z--><table style="height: 100%; width: 250px; border-collapse: collapse;   background: #FFF;" border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+            		 <tr>
+                <td style="height: 33px; letter-spacing: 0px; word-spacing: 0px; border: 2px solid rgb(255, 255, 255); border-radius: 7px; background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">Навигация</div>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top; height: 175px; letter-spacing: 0px; word-spacing: 0px; padding-left: 5px; padding-right: 5px; border-left: 2px solid rgb(255, 255, 255); border-right: 1px solid rgb(255, 255, 255); background: #C8D1D5; background: linear-gradient(to right, #C8D1D5, #E1E6E8, #C8D1D5) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #C8D1D5, #E1E6E8, #C8D1D5) repeat scroll 0 0; background: -o-linear-gradient(to right, #C8D1D5, #E1E6E8, #C8D1D5) repeat scroll 0 0; background: -moz-linear-gradient(to right, #C8D1D5, #E1E6E8, #C8D1D5) repeat scroll 0 0; box-shadow: 0 0 0 1px #c8d0d4;">
+					<div class="catleft" style="margin-top:10px;" align="left">
+					<a  href="/news/tag/novinki_kino/1">Новинки кино</a><br />
+					<a  href="/news/tag/hd_filmy/1">Фильмы в HD</a><br />
+					<a  href="/news/serialy/1-0-7">Сериалы онлайн</a><br /><hr width="60%"/></div>
+					</div>
+					<div class="catleft" align="left">По году:<br /><br />
+					
+					<a  href="/news/tag/2016/1">2016 года</a><br />
+					<a  href="/news/tag/2015/1">2015 года</a><br />
+					<a  href="/news/tag/2014/1">2014 года</a><br />
+					<a  href="/news/tag/2013/1">2013 года</a><br />
+					<a  href="/news/tag/2012/1">2012 года</a><br />
+					<a  href="/news/tag/2011/1">2011 года</a><br />
+					<a  href="/news/tag/2010/1">2010 года</a><br />
+					<a  href="/news/tag/2009/1">2009 года</a><hr width="60%"/></div>
+					<div class="catleft" align="left">По странам:<br /><br />
+					<a  href="/news/tag/country_rossiya/1">Россия</a><br />
+					<a  href="/news/tag/country_ukraina/1">Украина</a><br />
+					<a  href="/news/tag/country_ssha/1">США</a><br />
+					<a  href="/news/tag/country_kitaj/1">Китай</a><br />
+					<a  href="/news/tag/country_indiya/1">Индия</a><br />
+					<a  href="/news/tag/country_italiya/1">Италия</a><br />
+					<a  href="/news/tag/country_frantciya/1">Франция</a><br />
+					<a  href="/news/tag/country_germaniya/1">Германия</a><br />
+					<a  href="/news/tag/country_velikobritaniya/1">Великобритания</a><hr width="60%"/></div>
+					<div class="catleft" style="margin-bottom:10px;">ТОП:<br /><br />
+					<a  href="/news/top/rating">По рейтингу</a><br />
+					<a  href="/news/top/view">По просмотрам</a><br />
+					<a  href="/news/top/comments">По комментариям</a><br />
+					
+					
+					</div>
+                </td>
+            </tr>
+
+<?php if(!isset($this->isPageOfFilm)) { ?>
+            <tr>
+                <td style="color: rgb(255, 255, 255); text-decoration: none; border: 2px solid rgb(255, 255, 255); border-radius: 6px 6px 0px 0px; height: 33px; padding: 9px 0px 0px;background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">Популярные фильмы</div>
+                    <div id="popular_films">
+                        <? echo $this->popularBlocks('films',10800); ?>
+                    </div>
+                </td>
+            </tr>
+			
+            <tr>
+                <td style="color: rgb(255, 255, 255); text-decoration: none; border: 2px solid rgb(255, 255, 255); border-radius: 6px 6px 0px 0px; height: 33px; padding: 9px 0px 0px;background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">Популярные сериалы</div>
+                    <div id="popular_serials">
+                        <? echo $this->popularBlocks('serials',10860); ?>
+                    </div>
+                </td>
+            </tr>
+    
+            <tr>
+                <td style="color: rgb(255, 255, 255); text-decoration: none; border: 2px solid rgb(255, 255, 255); border-radius: 6px 6px 0px 0px; height: 33px; padding: 9px 0px 0px;background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">Популярные мультфильмы</div>
+                    <div id="popular_mults">
+                        <? echo $this->popularBlocks('mults',10920); ?>
+                    </div>
+                </td>
+            </tr>
+    
+            <tr>
+                <td style="color: rgb(255, 255, 255); text-decoration: none; border: 2px solid rgb(255, 255, 255); border-radius: 6px 6px 0px 0px; height: 33px; padding: 9px 0px 0px;background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">Популярные передачи</div>
+                    <div id="popular_casts">
+                        <? echo $this->popularBlocks('casts',10980); ?>
+                    </div>
+                </td>
+            </tr>
+<?php } ?>
+			
+ <?php if(isset($this->isPageOfFilm)) { ?>
+ <? if (!$user->data['is_registered']) { ?>
+            <tr>
+                <td style="height: 33px; letter-spacing: 0px; word-spacing: 0px; border: 2px solid rgb(255, 255, 255); border-radius: 7px; background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">Это интересно</div>
+                </td></tr>
+            <tr>
+                <td style="height: 390px; vertical-align: top; letter-spacing: 0px; word-spacing: 0px; padding-left: 1px; background: none repeat scroll 0% 0% rgb(255, 255, 255); padding-right: 1px; border-left: 1px solid rgb(202, 209, 210); border-right: 1px solid rgb(202, 209, 210);">
+                    <center><noindex>
+                        <div id="banner_right_big">
+						    <script type="text/javascript" src="/js/banners/data_right_big.js"></script></div>
+                    </noindex></center>
+                </td>
+            </tr>    <? }elseif($user->data['is_registered']) {$curr_user = (array) Model_User::getUserById($user->data['user_id']);?>
+			            <tr>
+                <td style="color: rgb(255, 255, 255); text-decoration: none; border: 2px solid rgb(255, 255, 255); border-radius: 6px 6px 0px 0px; height: 33px; padding: 9px 0px 0px;background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">Популярные фильмы</div>
+                    <div id="popular_films">
+                        <? echo $this->popularBlocks('films',10800); ?>
+                    </div>
+                </td>
+            </tr>
+			
+            <tr>
+                <td style="color: rgb(255, 255, 255); text-decoration: none; border: 2px solid rgb(255, 255, 255); border-radius: 6px 6px 0px 0px; height: 33px; padding: 9px 0px 0px;background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">Популярные сериалы</div>
+                    <div id="popular_serials">
+                        <? echo $this->popularBlocks('serials',10860); ?>
+                    </div>
+                </td>
+            </tr>
+    
+            <tr>
+                <td style="color: rgb(255, 255, 255); text-decoration: none; border: 2px solid rgb(255, 255, 255); border-radius: 6px 6px 0px 0px; height: 33px; padding: 9px 0px 0px;background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">Популярные мультфильмы</div>
+                    <div id="popular_mults">
+                        <? echo $this->popularBlocks('mults',10920); ?>
+                    </div>
+                </td>
+            </tr>
+    
+            <tr>
+                <td style="color: rgb(255, 255, 255); text-decoration: none; border: 2px solid rgb(255, 255, 255); border-radius: 6px 6px 0px 0px; height: 33px; padding: 9px 0px 0px;background: #336A9F; background: linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -o-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0; background: -moz-linear-gradient(to right, #114A7F, #518CC3, #114B7F) repeat scroll 0 0;">
+                    <div class="title_blue">Популярные передачи</div>
+                    <div id="popular_casts">
+                        <? echo $this->popularBlocks('casts',10980); ?>
+                    </div>
+                </td>
+            </tr>
+			<? } ?>
+<?php } ?>
+           <tr>
+                <td style="border-left: 1px solid rgb(202, 209, 210); border-right: 1px solid rgb(202, 209, 210); background: none repeat scroll 0% 0% rgb(255, 255, 255);"></td>
+            </tr>
+            </tbody>
+        </table><!--/U1DRIGHTER1Z-->
+
+    </td>
+    </tr>
+    </tbody>
+    </table>
+
+    <script type="text/javascript">
+        $("a.tooltipLink").each(function(i){
+            var imgs=$("img.hiddenImg");
+            $(this).hover(function(){
+                imgs.eq(i).removeClass("hiddenImg");
+            },function(){
+                imgs.eq(i).addClass("hiddenImg");
+            })
+        })
+    </script>
+
+    <table style="width: 1165px; border-collapse: collapse" border="0" align="center">
+        <tbody> 
+        <tr>
+            <td style="letter-spacing: 0px; word-spacing: 0px; text-align: left; vertical-align: top; width: 1165px; border-radius: 4px; background: #154D80; background: linear-gradient(to right, #154D80, #B1C4D5, #144B81) repeat scroll 0 0; background: -o-linear-gradient(to right, #154D80, #B1C4D5, #144B81) repeat scroll 0 0; background: -moz-linear-gradient(to right, #154D80, #B1C4D5, #144B81) repeat scroll 0 0; background: -webkit-linear-gradient(to right, #154D80, #B1C4D5, #144B81) repeat scroll 0 0;">
+                <div class="footertit2">
+                    <?php
+                    if(!$this->page_number || $this->page_number < 2) {
+                        if($news_blocks !== null && !empty($news_blocks['title_down'])) {
+                            echo '<div style="margin-bottom:15px;">'.$news_blocks['title_down'].'</div>';
+                        } else if(isset($_REQUEST['tagpage']) && !empty($this->h2) && file_exists(__DIR__.'/../modules/default/views/scripts/news/tags/'.$this->h2.'.php')) {
+                            echo '<div style="margin-bottom:15px;">';
+                            include __DIR__.'/../modules/default/views/scripts/news/tags/'.$this->h2.'.php';
+                            echo '</div>';
+                        }
+                    }
+                    ?>
+                    <div style="text-align:center;">
+                        Copyright <a href="/">Tushkan.TV</a> © 2010-2016 | <a href="/index/dlja_pravoobladatelej/0-48">Контакты</a> |  <a href="/sitemap.xml">Карта сайта</a> | <a href="/sitemap-forum.xml">Карта форума</a> | <a href="/news/rss/ ">RSS</a>
+                        | <a href="/news/allserials">Все сериалы на Tushkan.TV</a> | <a href="/forum/">Форум</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    
+    <div class="upTop blue" style="display: none;">
+        <div class="upTopZone"><p>наверх</p></div>
+        <div class="upTopButton"></div>
+    </div>
+
+
+
+    <!--noindex-->
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter17366722 = new Ya.Metrika({id:17366722, webvisor:true, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script>
+        <noscript>&lt;div&gt;&lt;img src="//mc.yandex.ru/watch/17366722" style="position:absolute; left:-9999px;" alt="" /&gt;&lt;/div&gt;</noscript>
+        <!-- /Yandex.Metrika counter -->
+     <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42180640-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- Rating@Mail.ru counter -->
+<script type="text/javascript">
+var _tmr = window._tmr || (window._tmr = []);
+_tmr.push({id: "2741133", type: "pageView", start: (new Date()).getTime()});
+(function (d, w, id) {
+  if (d.getElementById(id)) return;
+  var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+  ts.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//top-fwz1.mail.ru/js/code.js";
+  var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+  if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+})(document, window, "topmailru-code");
+</script><noscript><div style="position:absolute;left:-10000px;">
+<img src="//top-fwz1.mail.ru/counter?id=2741133;js=na" style="border:0;" height="1" width="1" alt="Рейтинг@Mail.ru" />
+</div></noscript>
+<!-- //Rating@Mail.ru counter -->
+
+    <!--/noindex-->
+    
+    <link rel="stylesheet" href="/css/social-likes_classic.css">
+    <script src="/js/social-likes.min.js" async></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<?php
+$title = $this->headTitle();
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+
+$user = Zend_Registry::get("user");
+$SID = $user->data['session_id'];
+?>
+<script type="text/javascript">$('.breadcrumbs').hide();</script>
+<?
+if (!$user->data['is_registered']) {
+?>
+<? if($this->info){ ?>
+<span style="text-align: center;margin: 0 auto;display: block;color: green;"><? echo $this->info; ?></span>
+<hr class="manHr">
+<? } ?>
+<div id="login_block2" style="width: 656px;float: left;">
+<br/>
+<br/>
+<br/>
+<div style="width:180px;margin: 0 auto;">
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+
+<tbody><tr><td width="20%" nowrap="nowrap">Логин:</td><td><input class="loginField2" type="text" name="username" value="" size="20" style="width:200" maxlength="50"></td></tr>
+<tr><td>Пароль:</td><td><input class="loginField2" type="password" name="password" size="20" style="width:200" maxlength="15"></td></tr>
+</tbody></table>
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+<tbody><tr><td nowrap=""><input id="remlogin" type="checkbox" name="rem" value="1" checked="checked"><label for="remlogin">запомнить</label> <br><input id="hidlogin" type="checkbox" name="hidden" value="1"><label for="hidlogin">скрытый</label></td><td align="center" valign="top"><input class="loginButton2" name="login" type="submit" value="Вход"></td></tr>
+ <tr><td colspan="2"><div style="font-size:7pt;text-align:center;"><a href="javascript://" rel="nofollow" onclick="new _uWnd('Prm','Напоминание пароля',300,130,{autosize:1,closeonesc:1},{url:'/index/5'});return false;">Забыл пароль</a> | <a href="/index/registration">Регистрация</a></div></td></tr>
+
+</tbody></table><input type="hidden" name="a" value="2"><input type="hidden" name="ajax" value="1"><input type="hidden" name="rnd" value="262"><br><br><br><br><br><br>
+</div>
+</div>
+<?
+}
+if ($user->data['is_registered']) {
+   echo '<a href="" id="logout">Logout</a>';
+
+}
+?>

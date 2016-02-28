@@ -1,0 +1,63 @@
+<?
+$category = Zend_Controller_Front::getInstance()->getRequest()->getParam("cat");
+switch($category){
+    case "_0" : $str = "Разное"; $size = 45; $count_items = 56; break;
+    case "_1" : $str = "Мужчины"; $size = 64; $count_items = 30; break;
+    case "_2" : $str = "Женщины"; $size = 64; $count_items = 30; break;
+    case "_3" : $str = "Животные"; $size = 64; $count_items = 30; break;
+    case "_4" : $str = "Кино"; $size = 64; $count_items = 30; break;
+    case "_5" : $str = "Мультфильмы"; $size = 64; $count_items = 30; break;
+    case "_6" : $str = "Игры"; $size = 64; $count_items = 30; break;
+    case "_7" : $str = "Аниме"; $size = 64; $count_items = 30; break;
+    case "_8" : $str = "Искусство"; $size = 64; $count_items = 30; break;
+    case "_9" : $str = "Разное"; $size = 64; $count_items = 30; break;
+    case "01" : $str = "Фентези"; $size = 110; $count_items = 16; break;
+    case "02" : $str = "Мужчины"; $size = 110; $count_items = 16; break;
+    case "03" : $str = "Женщины"; $size = 110; $count_items = 16; break;
+    case "04" : $str = "Животные"; $size = 110; $count_items = 16; break;
+    case "05" : $str = "Игры"; $size = 110; $count_items = 16; break;
+    case "06" : $str = "Кино"; $size = 110; $count_items = 16; break;
+    case "07" : $str = "Мультфильмы"; $size = 110; $count_items = 16; break;
+    case "08" : $str = "Аниме"; $size = 110; $count_items = 16; break;
+    case "09" : $str = "Цветы"; $size = 110; $count_items = 16; break;
+    case "10" : $str = "Знаменитости"; $size = 110; $count_items = 16; break;
+    case "11" : $str = "Вещи"; $size = 110; $count_items = 16; break;
+    case "12" : $str = "Части тела"; $size = 110; $count_items = 16; break;
+    case "13" : $str = "Искусство"; $size = 110; $count_items = 16; break;
+    case "14" : $str = "Разное"; $size = 110; $count_items = 16; break;
+    case "15" : $str = "Дети"; $size = 110; $count_items = 16; break;
+}
+?>
+<? $item_per_page = $count_items; // количество итемов на странице ?>
+<?php if ($this->pageCount): ?>
+<span dir="ltr" class="pagesBlock1">
+<!-- Previous page link -->
+<?php if (isset($this->previous)): ?>
+    <a href="<?php echo "/index/avatarsavatars/cat/".$category."/page/".$this->previous; ?>">
+    <span>«</span>
+    </a>
+<?php else: ?>
+  <span class="disabled" style="display: none;">«</span>
+<?php endif; ?>
+
+<!-- Numbered page links -->
+<?php foreach ($this->pagesInRange as $page): ?>
+  <?php if ($page != $this->current): ?>
+    <a href="<?php echo "/index/avatarsavatars/cat/".$category."/page/".$page; ?>">
+    <span><?php if($page == 1){echo $page."-".($item_per_page);}else{ echo ((($item_per_page) * ($page - 1))+1)."-".(($item_per_page) * ($page)); } ?></span>
+    </a>
+  <?php else: ?>
+        <b class="swchItemA"><span>[<?php if($page == 1){echo $page."-".($item_per_page);}else{ echo ((($item_per_page) * ($page - 1))+1)."-".(($item_per_page) * ($page)); } ?>]</span></b>
+  <?php endif; ?>
+<?php endforeach; ?>
+
+<!-- Next page link -->
+<?php if (isset($this->next)): ?>
+    <a href="<?php echo "/index/avatarsavatars/cat/".$category."/page/".$this->next; ?>">
+        <span>»</span>
+    </a>
+<?php else: ?>
+  <span class="disabled" style="display: none;">»</span>
+<?php endif; ?>
+</span>
+<?php endif; ?>

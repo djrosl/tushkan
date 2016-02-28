@@ -1,0 +1,68 @@
+
+<?php
+    $user = Zend_Registry::get('user');
+    switch ($user->data['group_id'])
+    {
+        case '5':
+            echo adminMenu($this->session_id);
+            break;
+        case '8':
+            echo moderMenu();
+            break;
+        case '4':
+            echo moderMenu();
+            break;
+        case '9':
+            echo editorMenu();
+            break;
+    }
+
+function adminMenu($s_id)
+{
+    return '<ul class="nav navbar-nav side-nav">
+                <li id="news"><a href="/tncontrol"><i class="fa fa-fw fa-video-camera"></i> Новости</a></li>
+                <li id="publ"><a href="/tncontrol/publ"><i class="fa fa-fw fa-file-text-o"></i> Статьи</a></li>
+                <li id="statp"><a href="/tncontrol/statpages"><i class="fa fa-fw fa-file-text"></i> Статические страницы</a></li>
+                <li id="users"><a href="/tncontrol/tags"><i class="fa fa-fw fa-edit"></i> Метки</a></li>
+                <li id="users"><a href="/tncontrol/users"><i class="fa fa-fw fa-user"></i> Пользователи</a></li>
+                <li id="comments"><a href="/tncontrol/comments"><i class="fa fa-fw fa-comment"></i> Коментарии</a></li>
+                <li id="pools"><a href="/tncontrol/pools"><i class="fa fa-fw fa-pie-chart"></i> Опросы</a></li>
+                <li id="forum"><a target="_blank" href="/forum/adm13vb43/index.php?sid='. $s_id.'"><i class="fa fa-fw fa-edit"></i> Форум</a></li>
+                <li id="stat"><a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-bar-chart"></i></i> Статистика <i class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="demo" class="collapse">
+                        <li><a href="/tncontrol/commstat">Комментарии</a></li>
+                        <li><a href="/tncontrol/matstat">Материалы</a></li>
+                        <li><a href="/tncontrol/regstat">Регистрации</a></li>
+                    </ul></li>
+                <li id="settings">
+                    <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><i class="fa fa-fw fa-gear"></i></i> Настройки <i class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="demo2" class="collapse">
+                        <li><a href="/tncontrol/banners">Баннеры</a></li>
+                        <li><a href="/tncontrol/metatags">Сео блоки</a></li>
+                        <li><a href="/tncontrol/settings">Параметры</a></li>
+                        <li><a href="/tncontrol/security">Безопасность</a></li>
+                    </ul>
+                </li>
+            </ul>';
+}
+
+function moderMenu()
+{
+    /*return '<ul class="nav navbar-nav side-nav">
+                <li id="users"><a href="/tncontrol/users"><i class="fa fa-fw fa-user"></i> Пользователи</a></li>
+                <li id="comments"><a href="/tncontrol/comments"><i class="fa fa-fw fa-comment"></i> Коментарии</a></li>
+            </ul>';*/
+    return '<ul class="nav navbar-nav side-nav">
+                <li id="news"><a href="/tncontrol"><i class="fa fa-fw fa-video-camera"></i> Новости</a></li>
+                <li id="publ"><a href="/tncontrol/publ"><i class="fa fa-fw fa-file-text-o"></i> Статьи</a></li>
+            </ul>';
+}
+
+function editorMenu()
+{
+    return '<ul class="nav navbar-nav side-nav">
+                <li id="news"><a href="/tncontrol"><i class="fa fa-fw fa-video-camera"></i> Новости</a></li>
+                <li id="publ"><a href="/tncontrol/publ"><i class="fa fa-fw fa-file-text-o"></i> Статьи</a></li>
+            </ul>';
+}
+?>

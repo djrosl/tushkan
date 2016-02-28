@@ -1,0 +1,212 @@
+<?
+$title = $this->headTitle();
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+$user_online = Zend_Registry::get("user");
+if($user_online->data['is_registered']){
+    $user = (array) Model_User::getUserById($user_online->data['user_id']);
+?>
+<html><head>
+<title>Изменение личной информации</title>
+<link type="text/css" rel="StyleSheet" href="/css/main.css">
+<link type="text/css" rel="StyleSheet" href="/css/base.css">
+<link type="text/css" rel="StyleSheet" href="/css/layer1.css">
+<script type="text/javascript" src="/js/jquery-1.7.2.js"></script>
+<script type="text/javascript">window.ulb = {photoPage: "Перейти на страницу с фотографией.",closeBtn: "Закрыть", error: "Запрошенный контент не может быть загружен. Пожалуйста, попробуйте позже.", next: "Вперед", prev: "Предыдущий", btnPlay: "Начать слайдшоу", btnToggle: "Изменить размер"}</script>
+<link href="/css/ulightbox.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/js/ulightbox.js"></script>
+<script type="text/javascript" src="/js/uwnd.js?2"></script>
+<style type="text/css">.UhideBlockL {display:none}</style>
+<script type="text/javascript">new Image().src = "http://counter.yadro.ru/hit;noadsru?r"+escape(document.referrer)+((typeof(screen)=="undefined")?"":";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+";"+Math.random();</script>
+<script type="text/javascript" src="/js/slaider_box.js"></script>
+</head>
+<body style="background-image:url('/background_vesna.gif'); background-repeat:repeat; padding:0px;" topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="2" cellspacing="1" style="background:#A9B8C2;" width="100%">
+<tbody>
+<tr><td style="background:#D4DFF7;" align="center"><b>Изменение личной информации</b></td></tr>
+<? if($this->info != ""){ ?>
+<tr><td style="background:#F4F4F4;padding:5px;" align="center"><b style="color: red;"><? echo $this->info; ?></b></td></tr>
+<?}?>
+<tr><td align="center" style="background:#F4F4F4;padding:5px;"><script type="text/javascript">window.resizeTo(750,600);</script>
+<div align="center">
+<script type="text/javascript">
+function showgrp(){var e=document.getElementById('pmgrs');if (e.style.display=='none'){e.style.display='';}else {e.style.display='none';}}
+function checkAll(){if (document.getElementById('ugrOAll').checked==true){for (var i=0;i<document.adduser.pmgr.length;i++){document.adduser.pmgr[i].checked=true;}}else {for (var i=0;i<document.adduser.pmgr.length;i++){document.adduser.pmgr[i].checked=false;}}}
+function checkcur(){var isall=1;for (var i=0;i<document.adduser.pmgr.length;i++){if (document.adduser.pmgr[i].checked==false){isall=0; break;}}if (isall==0){document.getElementById('ugrOAll').checked=false;}else {document.getElementById('ugrOAll').checked=true;}}
+function ava(t){
+    if (t==1){
+        document.adduser.avatar.disabled=true;
+        document.adduser.avatar.style.display='none';
+        document.adduser.avau.style.display='';
+        document.adduser.avau.disabled=false;
+        document.getElementById('ava1').innerHTML='(GIF, JPEG)';
+    }else {
+        document.adduser.avau.disabled=true;
+        document.adduser.avau.style.display='none';
+        document.adduser.avatar.style.display='';
+        document.adduser.avatar.disabled=true;
+        document.getElementById('ava1').innerHTML='(www адрес)';
+        window.open('/index/avatars','Avatars','top=0,left=0,width=700,height=550');
+    }
+}
+$('.manFlSbm').live("click",function(){
+    document.adduser.avatar.disabled=false;
+});
+</script>
+<form method="post" enctype="multipart/form-data" name="adduser" style="margin:0px">
+<input type="hidden" name="jkd498" value="1"><input type="hidden" name="jkd428" value="1">
+<table border="0" cellspacing="1" cellpadding="2" width="100%" class="manTable" id="siM633">
+<tbody>
+<tr id="siM42"><td class="manTd1" width="35%" id="siM43">Логин <font color="#FF0000" class="manStar">*</font>:</td>
+<td class="manTd2" id="siM44">
+<b><? echo $user['username']; ?></b></td></tr><tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM45"><td class="manTd1" id="siM46">Пароль <font color="#FF0000" class="manStar">*</font>:</td><td class="manTd2" id="siM47">
+<span id="dfldk3d" class="myWinError">******</span>
+<span id="kkkje30"></span><span id="jkdjdkrt3" style="font-size:7pt;">&nbsp; &nbsp; 
+[<a href="javascript://" rel="nofollow" onclick="document.getElementById('jkdjdkrt3').style.display='none';document.getElementById('dfldk3d').style.display='none';document.getElementById('kkkje30').innerHTML='<input type=\'password\' id=\'siF14\' class=\'manFlPassw\' name=\'password\' size=\'20\' style=\'width:100%;color:red;\' maxlength=\'15\' />';return false;">Изменить</a>]</span></td></tr>
+
+<tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM51"><td class="manTd1" id="siM52">Полное имя <font color="#FF0000" class="manStar">*</font>:</td><td class="manTd2" id="siM53">
+<input type="text" id="siF16" class="manFlaName" name="name" size="20" style="width:100%;" value="<? echo $user['pf_real_name_n']; ?>" maxlength="35"></td></tr><tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM54"><td class="manTd1" id="siM55">E-mail адрес <font color="#FF0000" class="manStar">*</font>:</td><td class="manTd2" id="siM56">
+<input type="text" id="siF17" class="manFlaEmail" name="email" size="20" style="width:100%;" value="<? echo $user['user_email']; ?>" maxlength="60" onchange="_uWnd.alert('Проверьте правильность вашего Email адреса, на этот адрес будет выслано письмо с кодом подтверждения. Если не подтвердить email, то любая активность, для которой используется электронная почта, будет заблокирована для вас.','',{w:300,h:110,tm:8000});"></td></tr><tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM30"><td class="manTd1" id="siM31">Дата рождения:</td><td class="manTd2" id="siM32">
+<select size="1" class="manFlbY" name="by" id="siF21">
+<option value="0">Год</option>
+<?
+$date_now = time();
+$date_time_array = getdate($date_now);
+$hours = $date_time_array['hours'];
+$minutes = $date_time_array['minutes'];
+$seconds = $date_time_array['seconds'];
+$month = $date_time_array['mon'];
+$day = $date_time_array['mday'];
+$year = $date_time_array['year'];
+$date_1 = mktime($hours,$minutes,$seconds,$month,$day,$year);
+
+$user_birthday = $user['user_birthday'];
+$pos1 = strpos($user_birthday,"-");
+$str1 = substr($user_birthday,0,$pos1);
+$u_day = (int) $str1;
+$str2 = substr($user_birthday,$pos1+1);
+$pos2 = strpos($str2,"-");
+$str3 = substr($str2,0,$pos2);
+$u_month = (int) $str3;
+$str4 = substr($str2,$pos2+1);
+$u_year = (int) $str4;
+
+for($i = $year - 4; $i > $year - 100; $i--){
+    if($i == $u_year){
+        echo '<option value="'.$i.'" selected>'.$i.'</option>';
+    }else{
+        echo '<option value="'.$i.'">'.$i.'</option>';
+    }
+}
+?>
+</select>-
+<select size="1" class="manFlbM" name="bm" id="siF2">
+<option value="0">Месяц</option>
+<?
+$MonthNames=array("Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь");
+for($i = 1; $i < 13; $i++){
+    if($i == $u_month){
+        echo '<option value="'.$i.'" selected>'.$MonthNames[$i-1].'</option>';
+    }else{
+        echo '<option value="'.$i.'">'.$MonthNames[$i-1].'</option>';
+    }
+}
+?>
+</select>-
+<select size="1" class="manFlbD" name="bd" id="siF3">
+<option value="0">День</option>
+<?
+for($i = 1; $i < 32; $i++){
+    if($i == $u_day){
+        echo '<option value="'.$i.'" selected>'.$i.'</option>';
+    }else{
+        echo '<option value="'.$i.'">'.$i.'</option>';
+    }
+}
+?>
+</select>
+<script type="text/javascript">calendarUtil.setAvailableDays(".manFlbD",".manFlbM",".manFlbY");</script></td>
+</tr>
+
+<tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM27"><td class="manTd1" id="siM28">Ваш пол:</td><td class="manTd2" id="siM29">
+<select size="1" class="manFlaGender" id="siF24" name="gender">
+<option value="1" <? if($user['user_gender'] == 1){echo 'selected="selected"';} ?>style="background:#EEEEEE;">Мужчина</option>
+<option value="2" <? if($user['user_gender'] == 2){echo 'selected="selected"';} ?>>Женщина</option>
+</select></td>
+</tr>
+
+<tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM24"><td class="manTd1" id="siM25">Город:</td><td class="manTd2" id="siM26">
+<input id="siF8" type="text" class="manFlaCity" name="city" size="20" style="width:100%;" value="<? echo $user['user_from']; ?>" maxlength="50"></td></tr><tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM36"><td class="manTd1" valign="top" id="siM37">Аватар <span id="ava1">(www адрес)</span>:</td><td class="manTd2" id="siM38">
+<input type="text" id="siF12" class="manFlAvaLink" name="avatar" disabled="disabled" size="20" style="width:100%;" value="<? if($user['user_avatar_type'] == 2){ echo $user['user_avatar']; } ?>" maxlenth="150">
+<input type="file" id="siF11" class="manFlAvaFile" name="avau" style="width:100%;display:none;" size="20"><br>
+[ <a href="javascript://" rel="nofollow" onclick="ava(0);return false;">Выбрать аватар</a>
+ | <a href="javascript://" rel="nofollow" onclick="ava(1);return false;">Загрузить свой аватар (до 1мб)</a>
+  ]</td></tr><tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM39"><td class="manTd1" id="siM40">Подписаться на рассылку</td><td class="manTd2" id="siM41">
+<script type="text/javascript">function checkall(t){if (t.checked){for (i=0;i<document.adduser.mmcid.length;i++){if (document.adduser.mmcid[i].value!=0){document.adduser.mmcid[i].checked=true;}}}else {for (i=0;i<document.adduser.mmcid.length;i++){document.adduser.mmcid[i].checked=false;}}}</script>
+<table border="0" cellspacing="1" cellpadding="2" width="100%"><tbody><tr><td style="width:50%">
+<input id="c1" type="checkbox" name="mmcid" value="1"> <label for="c1">О кино</label></td><td style="width:50%">
+<input id="c2" type="checkbox" name="mmcid" value="2"> <label for="c2">Новости сайта</label></td></tr><tr><td style="width:50%">
+<input id="c0" type="checkbox" name="mmcid" value="0" onclick="checkall(this);"> <label for="c0"><u>Подписаться на все!</u></label></td></tr></tbody></table></td></tr><tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM63"><td class="manTd1" id="siM64">Опции пользователя:</td><td class="manTd2" id="siM65">
+<input type="checkbox" name="opt" value="1" id="op1" checked=""> <label for="op1">Скрывать e-mail адрес</label><br>
+<input type="checkbox" name="opt" value="8" id="op8"> <label for="op8">Скрывать телефон</label><br>
+<input type="checkbox" name="opt" value="2" id="op2" checked=""> <label for="op2">Принимать письма от других пользователей сайта</label><br>
+<input type="checkbox" name="opt" value="3" id="op3"> <label for="op3">Отключить показ аватаров в сообщениях форума</label><br>
+<input type="checkbox" name="opt" value="4" id="op4"> <label for="op4">Отключить показ подписей в сообщениях форума</label><br>
+<input type="checkbox" name="opt" value="6" id="op6"> <label for="op6">Отключить прием уведомлений об изменении репутации</label><br>
+<input type="checkbox" name="opt" value="7" id="op7"> <label for="op7">Отключить прием уведомлений о получении наград</label><br>
+<input type="checkbox" name="opt" value="5" id="op5" checked=""> <label for="op5">Получать почтовые извещения о личных сообщениях</label><br><div style="padding-left:24px;padding-top:4px;">
+<a id="pmGrLnk" href="javascript://" rel="nofollow" onclick="showgrp();return false;">Принимать личные сообщения только от групп...</a></div><div id="pmgrs" style="display:none;">
+<input type="checkbox" id="ugrOAll" name="pmgrall" value="1000" onclick="checkAll();" checked=""> <label for="ugrOAll"><b id="allGrps">Все группы</b></label><br>
+<input type="checkbox" id="ugrO1" name="pmgr" onclick="checkcur();" value="1" checked=""> <label for="ugrO1">Пользователи</label> &nbsp;
+<input type="checkbox" id="ugrO2" name="pmgr" onclick="checkcur();" value="2" checked=""> <label for="ugrO2">Проверенные</label> &nbsp;
+<input type="checkbox" id="ugrO3" name="pmgr" onclick="checkcur();" value="3" checked=""> <label for="ugrO3">Супер Модераторы</label> &nbsp;<br>
+<input type="checkbox" id="ugrO4" name="pmgr" onclick="checkcur();" value="4" checked=""> <label for="ugrO4">Администраторы</label> &nbsp;
+<input type="checkbox" id="ugrO5" name="pmgr" onclick="checkcur();" value="5" checked=""> <label for="ugrO5">Журналисты</label> &nbsp;
+<input type="checkbox" id="ugrO6" name="pmgr" onclick="checkcur();" value="6" checked=""> <label for="ugrO6">Редакторы</label> &nbsp;<br>
+<input type="checkbox" id="ugrO8" name="pmgr" onclick="checkcur();" value="8" checked=""> <label for="ugrO8">Модераторы</label> &nbsp;
+<input type="checkbox" id="ugrO251" name="pmgr" onclick="checkcur();" value="251" checked=""> <label for="ugrO251">Друзья</label> &nbsp;
+<input type="checkbox" id="ugrO255" name="pmgr" onclick="checkcur();" value="255"> <label for="ugrO255">Заблокированные</label> &nbsp;<br></div></td></tr><tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM60"><td class="manTd1" id="siM61">Код безопасности <font color="red" class="manStar">*</font>:</td>
+<td class="manTd2" id="siM62">
+<input id="fCode" type="text" name="captcha[input]" />
+<input type="hidden" value="<? echo $this->captcha_id; ?>" name="captcha[id]" />
+<img alt="" style="margin:0;padding:0;border:0;cursor:pointer;" id="secImg" align="absmiddle" src="/captcha/<? echo $this->captcha_id; ?>.png" title="Обновить код безопасности">
+</td></tr><tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM64"><td class="manTdBut" colspan="2" align="center" id="siM65">
+<input class="manFlSbm" id="siF20" type="submit" name="sbm" value="Сохранить"></td></tr>
+</tbody>
+</table>
+<!-- Параметры друзей -->
+<input type="hidden" name="a" value="12">
+
+</form>
+</div></td></tr>
+</tbody></table>
+
+</body>
+</html>
+<?}else{
+    echo "Вы не авторизовались на сайте";
+}?>

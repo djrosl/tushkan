@@ -1,0 +1,70 @@
+<?
+$title = $this->headTitle();
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+$user_online = Zend_Registry::get("user");
+if($user_online->data['is_registered']){
+?>
+<html style="height: 100%;"><head>
+<title>Личные сообщения</title>
+<link type="text/css" rel="StyleSheet" href="/css/main.css">
+<link type="text/css" rel="StyleSheet" href="/css/base.css">
+<link type="text/css" rel="StyleSheet" href="/css/layer1.css">
+<script type="text/javascript" src="/js/jquery-1.7.2.js"></script>
+<script type="text/javascript">window.ulb = {photoPage: "Перейти на страницу с фотографией.",closeBtn: "Закрыть", error: "Запрошенный контент не может быть загружен. Пожалуйста, попробуйте позже.", next: "Вперед", prev: "Предыдущий", btnPlay: "Начать слайдшоу", btnToggle: "Изменить размер"}</script>
+<link href="/css/ulightbox.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/js/ulightbox.js"></script>
+<script type="text/javascript" src="/js/uwnd.js?2"></script>
+<style type="text/css">.UhideBlockL {display:none}</style>
+<script type="text/javascript">new Image().src = "http://counter.yadro.ru/hit;noadsru?r"+escape(document.referrer)+((typeof(screen)=="undefined")?"":";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+";"+Math.random();</script>
+</head>
+<body topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="2" cellspacing="1" style="background:#A9B8C2;" width="100%">
+<tbody>
+<tr><td style="background:#D4DFF7;" align="center"><b>Личные сообщения</b></td></tr>
+<tr><td align="center" style="background:#F4F4F4;padding:5px;">
+<script type="text/javascript">function del_item(id){if (confirm('Вы подтверждаете удаление?')){var img=document.getElementById('di'+id);img.src='http://s88.ucoz.net/img/fr/OmnAjax.gif';_uPostForm('',{url:'http'+'://tushkan.net/index/',type:'POST',data:{ssid:'gpOLk6q_',a:'16',s:id}});}}function delgroup(f) {if (confirm('Вы подтверждаете удаление?')){document.getElementById('dpms').style.display='none';var frm=eval('document.'+f);_uPostForm(f,{type:'POST',url:frm.action});}}</script>
+
+<div align="left">[ <a class="pmCatLink" href="/user/incomingmessages">Принятые(<b><? echo count($this->incoming_messages); ?></b>)</a> | 
+<a style="text-decoration:none;" class="pmCatLinkActive" href="/user/outgoingmessages">Отправленные(<b><? echo count($this->outgoing_messages); ?></b>)</a> | 
+<a class="pmCatLink" href="/user/sendprivmsg">Отправить ЛС</a> |  
+<a class="pmCatLink" href="/index/8-<? echo $user_online->data['user_id']; ?>">Мой профиль</a> ]</div><hr>
+<script type="text/javascript">function checkall(t){if (t.checked){if (document.pmdform.s.length>0){for (i=0;i<document.pmdform.s.length;i++){if (document.pmdform.s[i].value!=0){document.pmdform.s[i].checked=true;}}}else {document.pmdform.s.checked=true;}}else {if (document.pmdform.s.length>0){for (i=0;i<document.pmdform.s.length;i++){document.pmdform.s[i].checked=false;}}else {document.pmdform.s.checked=false;}}}function checkit() {var is=0;if (document.pmdform.s.length>0){for (i=0;i<document.pmdform.s.length;i++){if (document.pmdform.s[i].checked==true){is=1; break;}}}else {if (document.pmdform.s.checked==true){is=1;}}if (is==1){document.getElementById('dpms').style.display='';}else {document.getElementById('dpms').style.display='none';}}</script>
+<form method="post" name="pmdform" id="pmdform" action="/index/" style="margin:0px" onsubmit="delgroup('pmdform');return false;">
+<? $msg = $this->one_message; ?>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<? $user_to_id = (int) substr($msg['to_address'],2); ?>
+<td width="90%"><b><? if($msg['message_subject'] != ""){ echo $msg['message_subject']; }else{ echo "[Без темы]"; } ?></b> &nbsp; (<a href="/index/8-<? echo $user_to_id; ?>"><? $user_to = (array) Model_User::getUserById($user_to_id); echo $user_to['username'] ?></a>)</td>
+<td align="right" style="white-space: nowrap;"><? echo date("d.m.Y, H:i", $msg['message_time']) ?></td>
+</tr>
+<tr><td colspan="2"><hr></td></tr>
+<tr>
+<td colspan="2"><? echo $msg['message_text']; ?>
+</td>
+</tr>
+</tbody>
+</table>
+
+<input type="hidden" name="a" value="16">
+<input type="hidden" name="t" value="1">
+<input type="hidden" name="ssid" value="gpOLk6q_">
+</form>
+<hr>
+<?if($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8"){?>
+<table border="0" cellpadding="4" cellspacing="1" width="100%"><tbody><tr><td align="center">
+<a href="/tncontrol/users" target="_blank"><input type="button" class="allUsersBtn" style="width:150px;" value="Список пользователей"></a>&nbsp;
+</td></tr></tbody></table>
+<?}?>
+</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+<?}else{
+    echo "Вы не авторизовались на сайте";
+}?>

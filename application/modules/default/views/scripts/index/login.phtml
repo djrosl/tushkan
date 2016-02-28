@@ -1,0 +1,26 @@
+<?php
+
+$user = $this->user;
+$SID = $user->data['session_id'];
+if (!$user->data['is_registered']) {
+   echo '<div id="login">';
+   echo '<form method="post" class="headerspace">';
+         
+   echo '      <ul>';
+   echo '      <li><label for="username">Username:</label>&nbsp;<input type="text" name="username" id="username" size="5" class="inputbox" title="Username" />  </li>';
+   echo '         <li><label for="password">Password:</label>&nbsp;<input type="password" name="password" id="password" size="5" class="inputbox" title="Password" /></li>';
+   echo '         <li><label for="autologin">Log me on automatically each visit <input type="checkbox" name="autologin" id="autologin" class="checkbox" /></label> <input type="submit" name="login" value="Login" class="button2" /></li>';
+   echo '         </ul>';
+   echo '         <input type="hidden" name="redirect" value="'.$returnAddress.'">';
+   echo '         </fieldset>';
+   echo '      </form>';
+   echo '   </div>';
+
+}
+
+if ($user->data['is_registered']) {
+   echo '<a href="/forum/ucp.php?mode=logout&sid='.$SID.'">Logout</a>';
+
+}
+
+?>

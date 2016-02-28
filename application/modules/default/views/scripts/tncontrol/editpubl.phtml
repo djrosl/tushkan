@@ -1,0 +1,8 @@
+<script>$(document).ready(function(){ CKEDITOR.instances['text'].on('key', function () {$('.btn-group.first').prevAll('.control-label:first').slideUp('fast');});
+        CKEDITOR.instances['text2'].on('key', function () {$('.btn-group.second').prevAll('.control-label:first').slideUp('fast'); });});</script>
+<script>$(document).ready(function(){$('.cke_s textarea').keyup(function () { $('.btn-group.first').prevAll('.control-label:first').slideUp('fast');});});</script>
+<script>$(document).ready(function(){$('.cke_s2 textarea').keyup(function () { $('.btn-group.second').prevAll('.control-label:first').slideUp('fast');});});</script>
+<script src="/admins/publ.js"></script>
+<script>$(document).ready(function(){$('li .active').removeClass('active');$('#publ').addClass('active');});</script>
+<script type="text/javascript" src="/admins/ckeditor/ckeditor.js"></script>
+<?php echo $this->adminforms('Редактирование статьи', 'editpubl');?>

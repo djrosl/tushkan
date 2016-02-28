@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="/admins/datepicker/css/datepicker.css">
+<script src="/admins/datepicker/js/bootstrap-datepicker.js"></script>
+<script src="/admins/datepicker/js/service_book_date.js"></script>
+<style>.pagination{float: right;}.pagination .active{background: dodgerblue; color: white; }</style>
+<script>$(document).ready(function(){$('li .active').removeClass('active');$('#news').addClass('active');});</script>
+<script src="/admins/commstat.js"></script>
+<div id="filter_p">
+    <? echo $this->admintable('Статистика материалов', 'statmat', false);?>
+</div>
+<script>
+    $(document).ready(function($){
+        $('.fil_from').datepicker({format: 'dd.mm.yyyy',autoclose: true,language: 'ru'});
+        $('.datepicker-days tbody').on('click', function(){  $('.datepicker').hide() });});
+    $(document).ready(function($){
+        $('.fil_to').datepicker({format: 'dd.mm.yyyy',autoclose: true,language: 'ru'});
+        $('.datepicker-days tbody').on('click', function(){  $('.datepicker').hide() });});
+</script>

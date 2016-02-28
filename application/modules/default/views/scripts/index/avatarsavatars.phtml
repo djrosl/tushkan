@@ -1,0 +1,69 @@
+<?
+$title = $this->headTitle("Avatars");
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+?>
+<html>
+<head>
+<style>
+a:link {text-decoration:none; color:#4D6D91}
+a:visited {text-decoration:none; color:#4D6D91}
+a:hover {text-decoration:underline; color:#000000}
+td, body {font-family:Tahoma,Arial,Helvetica; font-size:8pt}
+input,textarea,select {font-size:10px; font-family:verdana,arial,helvetica}
+.page {font-size:7pt}
+</style>
+<script type="text/javascript">
+function avatar(url){
+parent.window.opener.document.getElementById('siF12').value=url;
+if (confirm('Аватар выбран. Закрыть окно?')){parent.close();}
+}
+function avatar_url(url){
+document.avatar.ava.value=url;
+}
+</script>
+</head>
+<body bgcolor="#FFFFFF" topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0" style="padding:5px">
+
+<? if(!$this->cat_name){ ?>
+<br /><br /><br /><br /><br /><br />
+<center>Выберите категорию аватаров</center>
+<?}else{?>
+
+<p align="center"><font color="#4D6D91"><b><? echo $this->cat_name; ?></b> [<span dir="ltr"><? echo $this->ava_size."x".$this->ava_size; ?></span>]</font>
+<table border="0" width="100%" cellpadding="3">
+<tbody>
+<tr>
+<td width="40%">В категории <b><? echo $this->allcount; ?></b> аватаров</td>
+<td align="right">Страницы: <?php if($this->allcount > 30){ echo $this->paginationControl($this->avatars, 'Sliding','partials/paginator_avatars_1.phtml'); } ?>
+</td>
+</tr>
+
+<tr><td colspan="2" align="center">
+
+<div class="avatars_content" style="max-width: 490px;">
+<? foreach($this->avatars as $avatar){ ?>
+<span valign="top" style="border:1px solid black;display:block;float:left;padding: 3px;margin: 2px;">
+<a href="javascript:avatar('/avatar/<? echo $this->category."/".$avatar; ?>')" style="float: left;">
+<img alt="" title="Click to Select" width="<? echo $this->ava_size; ?>" height="<? echo $this->ava_size; ?>" onmouseover="avatar_url('/avatar/<? echo $this->category."/".$avatar; ?>')" border="0" src="/avatar/<? echo $this->category."/".$avatar; ?>">
+</a>
+</span>
+<? } ?>
+</div>
+
+</td></tr>
+
+<tr><td colspan="2" align="center" class="page">
+<?php if($this->allcount > 30){ echo $this->paginationControl($this->avatars, 'Sliding','partials/paginator_avatars_2.phtml'); } ?>
+</td></tr>
+</tbody></table>
+<br>
+</p>
+<div align="center"><form name="avatar">
+<input style="width:350px;text-align:center;" type="text" name="ava" size="30" onmouseover="select(this)">
+</form>
+</div>
+<?}?>
+</body>
+</html>

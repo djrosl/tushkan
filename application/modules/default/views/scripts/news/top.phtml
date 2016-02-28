@@ -1,0 +1,48 @@
+<?php
+function getClearTitle($title, $sym = ')', $addSym = true) {
+    $p = explode($sym, $title);
+    return $p[0].($addSym ? $sym : '');
+}
+
+
+$kw = 'Лучшие фильмы, по рейтингу';
+$description = 'Лучшие фильмы по рейтингу';
+if($this->order == 'view') {
+    $kw = 'Лучшие фильмы, по просмотрам';
+    $description = 'Лучшие фильмы по просмотрам';
+} else if ($this->order == 'comments') {
+    $kw = 'Лучшие фильмы, по комметариям';
+    $description = 'Самые комментирумеые фильмы';
+}
+
+$this->headTitle($this->title);
+$this->headMeta()->setName('keywords', $kw.', бесплатно, в хорошем качестве, без регистрации');
+$this->headMeta()->setName('description', $description);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+$user_online = Zend_Registry::get("user");
+$what = $this->order == 'rating' ? 'Рейтинг' : ($this->order == 'view' ? 'Просмотры' : 'Комментарии');
+$rowNum = 1;
+?>
+
+<div id="allEntries" style="font-size:14px;">
+    <div style="text-align:center;">
+        <h1><?php echo $this->title; ?></h1>
+    </div>
+    <table width="650">
+        <tr>
+            <th align="left" width="5%">№</th>
+            <th align="left" width="85%">Название ленты</th>
+            <th align="right" width="10%"><?php echo $what; ?></th>
+        </tr>
+    <?php foreach ($this->films as $key => $film){ ?>
+        <tr height="20">
+          <td style="border-bottom:1px dashed #aaa;"><?php echo $rowNum++; ?></td>
+          <td style="border-bottom:1px dashed #aaa;">
+              <a style="font-weight:bold;" href="/news/<? echo $film['sbscr']; ?>/<? echo date('Y-m-d', $film['urltime']); ?>-<? echo $film['id']; ?>" title="<?php echo $film['title']; ?>"><?php echo getClearTitle($film['title']); ?></a>
+          </td>
+          <td align="right" style="border-bottom:1px dashed #aaa;"><?php echo $film[$this->orderField]; ?></td>
+        </tr>
+    <? } ?>
+    </table>
+</div>

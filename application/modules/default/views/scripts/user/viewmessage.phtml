@@ -1,0 +1,151 @@
+<?
+$title = $this->headTitle();
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+$user_online = Zend_Registry::get("user");
+if($user_online->data['is_registered']){
+?>
+<html style="height: 100%;"><head>
+<title>Личные сообщения</title>
+<link type="text/css" rel="StyleSheet" href="/css/main.css">
+<link type="text/css" rel="StyleSheet" href="/css/base.css">
+<link type="text/css" rel="StyleSheet" href="/css/layer1.css">
+<script type="text/javascript" src="/js/jquery-1.7.2.js"></script>
+<script type="text/javascript">window.ulb = {photoPage: "Перейти на страницу с фотографией.",closeBtn: "Закрыть", error: "Запрошенный контент не может быть загружен. Пожалуйста, попробуйте позже.", next: "Вперед", prev: "Предыдущий", btnPlay: "Начать слайдшоу", btnToggle: "Изменить размер"}</script>
+<link href="/css/ulightbox.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/js/ulightbox.js"></script>
+<script type="text/javascript" src="/js/uwnd.js?2"></script>
+<style type="text/css">.UhideBlockL {display:none}</style>
+<script type="text/javascript">new Image().src = "http://counter.yadro.ru/hit;noadsru?r"+escape(document.referrer)+((typeof(screen)=="undefined")?"":";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+";"+Math.random();</script>
+</head>
+<body topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="2" cellspacing="1" style="background:#A9B8C2;" width="100%">
+<tbody>
+<tr><td style="background:#D4DFF7;" align="center"><b>Личные сообщения</b></td></tr>
+<tr><td align="center" style="background:#F4F4F4;padding:5px;">
+<script type="text/javascript">function del_item(id){if (confirm('Вы подтверждаете удаление?')){var img=document.getElementById('di'+id);img.src='http://s88.ucoz.net/img/fr/OmnAjax.gif';_uPostForm('',{url:'http'+'://tushkan.net/index/',type:'POST',data:{ssid:'gpOLk6q_',a:'16',s:id}});}}function delgroup(f) {if (confirm('Вы подтверждаете удаление?')){document.getElementById('dpms').style.display='none';var frm=eval('document.'+f);_uPostForm(f,{type:'POST',url:frm.action});}}</script>
+
+<div align="left">[ <a class="pmCatLink" href="/user/incomingmessages">Принятые(<b><? echo count($this->incoming_messages); ?></b>)</a> | 
+<a style="text-decoration:none;" class="pmCatLinkActive" href="/user/outgoingmessages">Отправленные(<b><? echo count($this->outgoing_messages); ?></b>)</a> | 
+<a class="pmCatLink" href="/user/sendprivmsg">Отправить ЛС</a> |  
+<a class="pmCatLink" href="/index/8-<? echo $user_online->data['user_id']; ?>">Мой профиль</a> ]</div><hr>
+<script type="text/javascript">function checkall(t){if (t.checked){if (document.pmdform.s.length>0){for (i=0;i<document.pmdform.s.length;i++){if (document.pmdform.s[i].value!=0){document.pmdform.s[i].checked=true;}}}else {document.pmdform.s.checked=true;}}else {if (document.pmdform.s.length>0){for (i=0;i<document.pmdform.s.length;i++){document.pmdform.s[i].checked=false;}}else {document.pmdform.s.checked=false;}}}function checkit() {var is=0;if (document.pmdform.s.length>0){for (i=0;i<document.pmdform.s.length;i++){if (document.pmdform.s[i].checked==true){is=1; break;}}}else {if (document.pmdform.s.checked==true){is=1;}}if (is==1){document.getElementById('dpms').style.display='';}else {document.getElementById('dpms').style.display='none';}}</script>
+
+<? $msg = $this->one_message; ?>
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td width="90%"><b><? if($msg['message_subject'] != ""){ echo $msg['message_subject']; }else{ echo "[Без темы]"; } ?></b> &nbsp; (<a href="/index/8-<? echo $msg['author_id']; ?>"><? $author = (array) Model_User::getUserById($msg['author_id']); echo $author['username'] ?></a>)</td>
+<td align="right" style="white-space: nowrap;"><? echo date("d.m.Y, H:i", $msg['message_time']) ?></td>
+</tr>
+<tr><td colspan="2"><hr></td></tr>
+<tr>
+<td colspan="2"><? echo $msg['message_text']; ?>
+<div align="right" id="snewmes">[ <a href="javascript://" onclick="new_message(1);return false;" rel="nofollow">Написать ответ</a> ]</div>
+</td>
+</tr>
+</tbody>
+</table>
+<script type="text/javascript">function new_message(t){if (t==1){try{ document.getElementById('newmess').style.display='';document.getElementById('message').focus();document.getElementById('snewmes').style.display='none';}catch(e){}}else {try{document.getElementById('newmess').style.display='none';document.getElementById('snewmes').style.display='';}catch(e){}}}
+</script>
+<? if($this->info != ""){ ?>
+<div class="info">
+<hr>
+<span style="color: red;"><? echo $this->info; ?></span>
+</div>
+<? if($this->info == "Успешно отправлено"){ ?>
+<script>
+setTimeout(function(){
+    $(".info").remove();
+}, 2000);
+</script>
+<?}?>
+<?}?>
+
+<div id="newmess" style="display: <? if($this->info != ""){echo "block";} else {echo "none";} ?>;"><hr>
+<form method="POST" name="addform" id="addform" style="margin:0">
+<table border="0" cellpadding="1" cellspacing="0" width="100%">
+<tbody><tr><td colspan="2"><div id="eMessage" align="center"></div></td></tr>
+<tr><td width="10%">Тема:</td><td>
+<input type="hidden" name="to_id" value="<? echo $msg['author_id']; ?>" />
+<input type="text" name="subject" value="Re: <? echo $msg['message_subject']; ?>" style="width:100%;" maxlength="100" size="20"></td></tr>
+<tr><td colspan="2">
+<div style="padding-bottom:2px">
+<script type="text/javascript" src="/js/bbcodes.js?2"></script>
+<span style="padding-right:1px;" id="bc1"><input type="button" title="Bold" value="b" onclick="simpletag('b','','','message','')" class="codeButtons" id="b" style="width:20px;font-weight:bold"></span>
+<span style="padding-right:1px;" id="bc2"><input type="button" title="Italic" value="i" onclick="simpletag('i','','','message','')" class="codeButtons" id="i" style="width:20px;font-style:italic"></span>
+<span style="padding-right:1px;" id="bc3"><input type="button" title="Underline" value="u" onclick="simpletag('u','','','message','')" class="codeButtons" id="u" style="width:20px;text-decoration:underline"></span>
+<span style="padding-right:1px;" id="bc4"><select id="fsize" class="codeButtons" onchange="alterfont(this.options[this.selectedIndex].value,'size','message','');this.selectedIndex=0;"><option value="0">SIZE</option><option value="6">6 pt</option><option value="7">7 pt</option><option value="8">8 pt</option><option value="9">9 pt</option><option value="10">10 pt</option><option value="11">11 pt</option><option value="12">12 pt</option><option value="13">13 pt</option><option value="14">14 pt</option><option value="15">15 pt</option><option value="16">16 pt</option><option value="17">17 pt</option><option value="18">18 pt</option><option value="19">19 pt</option><option value="20">20 pt</option><option value="21">21 pt</option><option value="22">22 pt</option></select></span>
+<span style="padding-right:1px;" id="bc6"><select id="fcolor" class="codeButtons" onchange="alterfont(this.options[this.selectedIndex].value, 'color','message','');this.selectedIndex=0;"><option value="0">COLOR</option><option value="blue" style="color:blue">Blue</option><option value="red" style="color:red">Red</option><option value="purple" style="color:purple">Purple</option><option value="orange" style="color:orange">Orange</option><option value="yellow" style="color:yellow">Yellow</option><option value="gray" style="color:gray">Gray</option><option value="green" style="color:green">Green</option></select></span>
+<span style="padding-right:1px;" id="bc7"><input type="button" title="URL" value="http://" onclick="tag_url('message','')" class="codeButtons" style="direction:ltr;width:45px;" id="url"></span>
+<span style="padding-right:1px;" id="bc8"><input type="button" title="E-mail" value="@" onclick="tag_email('message','')" class="codeButtons" style="width:30px;" id="email"></span>
+<span style="padding-right:1px;" id="bc9"><input type="button" title="Image" value="img" onclick="tag_image('message','')" class="codeButtons" style="width:35px;" id="img"></span><span style="padding-right:1px;" id="bc18"><input type="button" title="Hide from Guest" value="hide" onclick="simpletag('hide','','','message','')" class="codeButtons" style="width:40px;" id="hide"></span><span style="padding-right:1px;" id="bc12"><input type="button" title="List" value="list" onclick="tag_list('message','')" class="codeButtons" id="list" style="width:30px;"></span><span style="padding-right:1px;" id="bc13"><input type="button" title="Left" style="width:20px;text-align:left;" value="···" onclick="simpletag('l','cdl','···','message')" class="codeButtons" id="cdl"></span><span style="padding-right:1px;" id="bc14"><input type="button" title="Center" style="width:20px;text-align:center;" value="···" onclick="simpletag('c','cdc','···','message')" class="codeButtons" id="cdc"></span><span style="padding-right:1px;" id="bc15"><input type="button" title="Right" style="width:20px;text-align:right;" value="···" onclick="simpletag('r','cdr','···','message')" class="codeButtons" id="cdr"></span><span style="padding-right:1px;" id="bc16"><input type="button" title="All codes" style="width:60px;" value="All codes" onclick="window.open('http://tushkan.net/index/17','bbcodes','scrollbars=1,width=550,height=450,left=0,top=0');" class="codeButtons"></span><span style="padding-right:1px;" id="bc17"><input style="font-weight:bold;width:20px" type="button" value="/" class="codeButtons codeCloseAll" title="Close all opened codes" onclick="closeall('message','');"></span><input type="hidden" id="tagcount" value="0">
+</div>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr><td valign="top">
+<textarea rows="8" id="message" name="message" cols="40" style="height:135px;width:100%;"></textarea>
+</td><td width="5%" style="padding-left:3px;" valign="top" align="center">
+<script type="text/javascript">function emoticon(code,nm){if (code != ""){var txtarea=document.getElementById(nm);code = ' ' + code + ' ';if (document.selection) {txtarea.focus();var txtContent = txtarea.value;var str = document.selection.createRange();if (str.text == ""){str.text = code;} else if (txtContent.indexOf(str.text) != -1){str.text = code + str.text;} else {txtarea.value = txtContent + code;}}else{txtarea.value = txtarea.value + code;}}}</script>
+<table border="0" cellpadding="2" class="smiles" onmouseover="document.getElementById('asmltrtRqrP').style.display='';" onmouseout="document.getElementById('asmltrtRqrP').style.display='none';">
+<tbody><tr>
+<td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon('>(','message');return false;">
+<img alt="" style="margin:0;padding:0;border:0;" src="/sml/angry.gif" title="angry"></a></td>
+<td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':D','message');return false;">
+<img alt="" style="margin:0;padding:0;border:0;" src="/sml/biggrin.gif" title="biggrin"></a></td>
+<td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon('B)','message');return false;">
+<img alt="" style="margin:0;padding:0;border:0;" src="/sml/cool.gif" title="cool"></a></td></tr><tr>
+<td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':\'(','message');return false;">
+<img alt="" style="margin:0;padding:0;border:0;" src="/sml/cry.gif" title="cry"></a></td>
+<td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon('<_<','message');return false;">
+<img alt="" style="margin:0;padding:0;border:0;" src="/sml/dry.gif" title="dry"></a></td>
+<td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon('^_^','message');return false;">
+<img alt="" style="margin:0;padding:0;border:0;" src="/sml/happy.gif" title="happy"></a></td></tr><tr>
+<td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':(','message');return false;">
+<img alt="" style="margin:0;padding:0;border:0;" src="/sml/sad.gif" title="sad"></a></td>
+<td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':)','message');return false;">
+<img alt="" style="margin:0;padding:0;border:0;" src="/sml/smile.gif" title="smile"></a></td>
+<td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':o','message');return false;">
+<img alt="" style="margin:0;padding:0;border:0;" src="/sml/surprised.gif" title="surprised"></a></td></tr><tr>
+<td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':p','message');return false;">
+<img alt="" style="margin:0;padding:0;border:0;" src="/sml/tongue.gif" title="tongue"></a></td>
+<td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon('%)','message');return false;">
+<img alt="" style="margin:0;padding:0;border:0;" src="/sml/wacko.gif" title="wacko"></a></td>
+<td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(';)','message');return false;">
+<img alt="" style="margin:0;padding:0;border:0;" src="/sml/wink.gif" title="wink"></a></td></tr>
+<tr id="asmltrtRqrP" style="display:none;">
+<td colspan="3" align="center" id="allSmiles" nowrap=""><a href="javascript://" rel="nofollow" onclick="new _uWnd('Sml',' ',-250,-350,{autosize:0,closeonesc:1,resize:0},{url:'/index/35-2-0'});return false;">Все смайлы</a>
+</td></tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr><td colspan="2" align="center">
+<input style="font-weight:bold; width:130px;" type="submit" id="sbm" value="Отправить">
+<input type="reset" value="Отменить" style="width:130px;" onclick="document.getElementById('eMessage').innerHTML='';document.getElementById('sbm').disabled=false;new_message(0);"></td>
+</tr>
+</tbody>
+</table>
+</form>
+</div>
+
+<hr>
+<?if($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8"){?>
+<table border="0" cellpadding="4" cellspacing="1" width="100%"><tbody><tr><td align="center">
+<a href="/tncontrol/users" target="_blank"><input type="button" class="allUsersBtn" style="width:150px;" value="Список пользователей"></a>&nbsp;
+</td></tr></tbody></table>
+<?}?>
+</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+<?}else{
+    echo "Вы не авторизовались на сайте";
+}?>

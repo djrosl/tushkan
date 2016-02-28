@@ -1,0 +1,59 @@
+<div style="width:200px;float:left;margin-right:15px;">
+  <div style="float:left;margin:5px 5px 0 0;">Тип метки:</div>
+  <select class="form-control" onchange="window.location.href = '/tncontrol/tags' + (this.value == '' ? '' : '/type/' + this.value + '/');">
+      <option value="">Все</option>
+      <?php foreach($this->types as $type => $name) { ?>
+          <option <?php echo $this->currentType == $type ? 'selected' : ''; ?> value="<?php echo $type; ?>">
+              <?php echo $name; ?>
+          </option>
+      <?php } ?>
+  </select>
+</div>
+<div style="float:left;">
+  <input style=";margin-right:10px;float:left;width:200px;" id="kw" class="form-control" type="text" name="search" />
+  <input class="btn btn-sm btn-primary" type="button" value="Найти" onclick="window.location.href = '/tncontrol/tags' + ($('#kw').val() == '' ? '' : '/kw/' + $('#kw').val() + '/');" />
+</div>
+<div style="clear:both;"></div>
+
+<button onclick="$('#add-form').toggle()" class="btn btn-sm btn-primary addbutton">Добавить</button>
+<div id="add-form" style="display:none;margin:10px 0;border:1px solid #ccc;padding:10px;border-radius:10px;">
+    <form id="form-add">
+        <label>Название (уникально):</label>
+        <input onkeyup="this.value=Chpu(this.value)" maxlen="10" name="name" class="form-control" type="text" style="width: 50%" value="" />
+        <label>Заголовок:</label>
+        <input name="title" class="form-control" type="text" style="width: 50%" value="" />
+        <label>Заголовок страницы:</label>
+        <input name="header" class="form-control" type="text" style="width: 50%" value="" />
+        <label>H1 страницы:</label>
+        <input name="h1" class="form-control" type="text" style="width: 50%" value="" />
+        <label>H2 страницы:</label>
+        <input name="h2" class="form-control" type="text" style="width: 50%" value="" />
+        <label>Meta ключевые слова:</label>
+        <input name="meta_kw" class="form-control" type="text" style="width: 50%" value="" />
+        <label>Meta описание:</label>
+        <input name="meta_descr" class="form-control" type="text" style="width: 50%" value="" />
+        <label>Тип:</label>
+        <input style="width:20%;margin-right:5px;float:left;" maxlen="7" name="type" id="type" class="form-control" type="text" value="" />
+        <select class="form-control" onchange="$('#type').val(this.value)">
+            <option value="">Выбрать из базы</option>
+            <?php foreach($this->types as $type => $name) { ?>
+                <option <?php echo $this->currentType == $type ? 'selected' : ''; ?> value="<?php echo $type; ?>">
+                    <?php echo $name; ?>
+                </option>
+            <?php } ?>
+        </select>
+        <label>Ссылка (не обязательно):</label>
+        <input name="link" class="form-control" type="text" style="width: 50%" value="" />
+        <input type="submit" class="btn btn-success" value="Добавить" />
+        <input id="btn-canceladd" onclick="$('#add-form').hide();$('#form-add').trigger('reset');" type="button" class="btn btn-primary" value="Отмена" />
+    </form>
+</div>
+
+<script src="/admins/tags.js?v=2.04"></script>
+<?php echo $this->admintable('Метки', 'tags'); ?>
+<ul class="pagination">
+    <?php echo $this->paginationControl($this->pag, 'Sliding', 'pagination.phtml');  ?>
+</ul>
+<?php
+//print_r($this->types);
+?>

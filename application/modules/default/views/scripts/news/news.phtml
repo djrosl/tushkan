@@ -1,0 +1,156 @@
+<?php
+$memcache = Zend_Registry::get("memcache");
+/*$key = 'news_blocks_news_cat_'.$this->category['id'];
+if(($result = $memcache->get($key)) === false ) {
+    $news_blocks_res = Model_News::getNewsBlocksByCategoryNewsId($this->category['id']);
+    $memcache->set($key, $news_blocks_res, false, 3600);
+} else {
+    $news_blocks_res = $result;
+}
+if ($news_blocks_res){$news_blocks = (array)$news_blocks_res;}*/
+
+global $news_blocks; $news_blocks = getSeoInfo($this->category['id'], 'getNewsBlocksByCategoryNewsId');
+if($news_blocks){
+    $meta = "";
+    $meta .= $news_blocks['meta_keywords'].$news_blocks['meta_description'].$this->headMeta();
+    //Zend_Debug::dump($meta);die;
+    Zend_Registry::set("meta",$meta);
+    
+    if($this->page_number == 1){
+        $this->headTitle($news_blocks['title_main']); ?>
+    <div class="cattext"><? echo $news_blocks['title_up']; ?></div><hr />
+<?}else{
+    $this->headTitle($news_blocks['title_main']." (".$this->page_number." страница)");
+}
+}?>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tbody><tr>
+        <td align="right">
+            <?php echo $this->paginationControl($this->news, 'Sliding', 'partials/paginator_news.phtml'); ?>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div id="allEntries">
+    <? $user_online = Zend_Registry::get("user"); ?>
+    <? foreach ($this->news as $key=>$value){
+
+        $key = md5($value['tags']);
+        if(($tags = $memcache->get($key)) === false) {
+            $tags = Model_News::getNewsTagsInfo($value['tags']);
+            $memcache->set($key, $tags, false, 3600 * 24 * 7);
+        }
+
+        if( ($value['hide_on_site'] == 0) ||
+            ($value['hide_on_site'] == 1 && 
+              ($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8" || $user_online->data['group_id'] == "9")
+            )
+        ){ ?>
+        <div id="entryID_<? echo $value['id']; ?>">
+            <table style="width: 100%; border-collapse: collapse" border="0">
+                <tbody>
+                <tr>
+                    <td style="width: 39px; height: 37px; letter-spacing: 0px; word-spacing: 0px" class="film-kadr" rowspan="1"><br>
+                    </td>
+                    <td style="width: 600px;padding-left: 5px; letter-spacing: 0px; word-spacing: 0px" align="left">
+                        <div class="news_title">
+                            <?php $titleStr = getTitleTagText($value['title'], $value['catID']); ?>
+                            <h3 title="<? echo $titleStr; ?>"><font face="Arial"><a href="/news/<? echo $value['sbscr']; ?>/<? echo date('Y-m-d', $value['urltime']); ?>-<? echo $value['id']; ?>"><? echo $this->cutTitle($value['title']); ?></a></font></h3>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table style="width: 100%; border-collapse: collapse;" border="0">
+                <tbody>
+                <tr>
+                    <? if($value['other1'] != ""){?>
+                    <td style="letter-spacing: 0px; word-spacing: 0px; width: 150px; text-align: center; vertical-align: middle" rowspan="1" align="center">
+                        <a href="/news/<? echo $value['sbscr']; ?>/<? echo date('Y-m-d', $value['urltime']); ?>-<? echo $value['id']; ?>" title="<? echo $titleStr; ?>" class="highslide" onclick="return hs.expand(this, {captionId: 'caption1'})">
+                            <img style="border:2px solid #d5d5d5;-moz-border-radius:4px;border-radius:4px;" width="150" height="210" align="left" vspace="5" hspace="5" alt="" src="<? if(file_exists(CACHE_DIR.'/one_news_'.$value['id'].'.jpg')){ echo "/images_cached/one_news_".$value['id'].".jpg"; }else{ echo $value['other1']; } ?>">
+                        </a>
+                    </td>
+                    <?}?>
+                    <td style="vertical-align: top; background: #F0F0F0; letter-spacing: 0px; word-spacing: 0px; padding-left: 5px; padding-top: 3px; text-align: justify">
+
+                 <span class="item_player short_descr" style="font-size:12pt; font-family: Calibri, Arial, Helvetica, sans-serif; color:#020204; line-height: 1.2;"><?
+                    $item_message = str_replace("\\", "", $value['message']);
+                    $pos_1 = strpos($item_message,"\$CUT$");
+                    if($pos_1 === false){
+                        $str_2 = $item_message;
+                    }else{
+                        $str_2 = substr($item_message,0,$pos_1);
+                    }
+                    $item_message = str_replace("<hr>", "", $str_2);
+                    $item_message = str_replace("<hr />", "", $item_message);
+                    $item_message = str_replace('<hr size="2" width="100%">', '', $item_message);
+                    $item_message = $this->showFilmTags($tags, $item_message);
+                    echo "<hr>".$item_message;
+                    ?><span class="entDots">... </span>
+                     <span class="entryReadAll"><a class="entryReadAllLink" href="/news/<? echo $value['sbscr']; ?>/<? echo date('Y-m-d', $value['urltime']); ?>-<? echo $value['id']; ?>">.</a>
+                     </span>
+                 </span> <br><br></td></tr></tbody></table>
+            <table style="height: 23px; width: 650px; border-collapse: collapse" border="0"><tbody>
+                <tr style="background-color: #D7DCE2; border: 1px solid #82A2BB; height: 23px; width: 650px; background-repeat: no-repeat; background-position: 50% 100%;">
+
+                    <td width="80%" style="clear:none !important; height: 23px; letter-spacing: 0px; word-spacing: 0px; padding-left: 3px; padding-top: 0px;" align="left">
+                        <div class="news_descr" style="clear:right;">
+                            <? echo $value['cat_name']; ?>
+                            <? if($user_online->data['is_registered']){echo "| Просмотров: ".$value['reads1']; } ?>
+                            | Комментарии (<? if($value['num_com'] > 0){ echo $value['num_com']; }else{ echo "0"; } ?>) | Добавлен: <?
+                            $date_now = time();
+                            $date_time_array = getdate($date_now);
+                            $month = $date_time_array['mon'];
+                            $day = $date_time_array['mday'];
+                            $year = $date_time_array['year'];
+                            $date_time_array = getdate($value['addtime']);
+                            $month_2 = $date_time_array['mon'];
+                            $day_2 = $date_time_array['mday'];
+                            $year_2 = $date_time_array['year'];
+                            $date_1 = mktime(0,0,0,$month,$day,$year);
+                            $date_2 = mktime(0,0,0,$month_2,$day_2,$year_2);
+                            $date_3 = mktime(0,0,0,$month,$day-1,$year);
+                            if($date_1 == $date_2){
+                                echo "Сегодня ".date('H:i', $value['addtime']);
+                            }elseif($date_2 == $date_3){
+                                echo "Вчера ".date('H:i', $value['addtime']);
+                            }else{
+                                echo date('d.m.Y, H:i', $value['addtime']);
+                            }
+                            ?>
+                        </div></td>
+                    <? if($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8" || $user_online->data['group_id'] == "9"){ echo '<td><a href="/tncontrol/editnews/id/'.$value['id'].'" style="color:red;float:right;" title="Редактировать"><span class="edit_item_film_img"></span></a></td>'; }?>
+                    <td width="17%" style="padding-right: 2px;" align="right">
+                        <div class="photo_block">
+
+                            <a href="#" title="Минуснуть" onclick="uplusminusrating(2,<? echo $value['id']; ?>,1);return false">
+                                <div class="photo_m"></div></a>
+
+
+                            <a href="#" title="Плюсануть" onclick="uplusminusrating(2,<? echo $value['id']; ?>,4);return false">
+                                <div class="photo_p"></div></a>
+
+
+                            <div class="photo_plus">
+
+                <span title="Голосов: <? $tmp_1 = round($value['rating']*$value['rate_num']);
+                   $tmp_2 = 2*$value['rate_num'];
+                   $tmp_3 = $tmp_1 - $tmp_2;
+                   echo $tmp_3; ?>" id="rate_<? echo $value['id']; ?>"><? echo $tmp_3; ?></span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    <? } ?>
+    <? } ?>
+</div>
+<div class="catPages2" align="center" style="clear:both;" id="pagesBlock2"> 
+<?php echo $this->paginationControl($this->news, 'Sliding',
+                'partials/paginator_news_2.phtml'); ?>
+</div>
+
+<? /*<div class="cattext"> if($news_blocks && $this->page_number == 1){ echo $news_blocks['title_down']; } </div> */ ?>

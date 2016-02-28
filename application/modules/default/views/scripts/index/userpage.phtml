@@ -1,0 +1,382 @@
+<?
+$title = $this->headTitle();
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+$user = (array) Model_User::getUserById($this->user_id);
+$user_online = Zend_Registry::get("user");
+$MonthNames=array("Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря");
+function rdate($param, $time=0) {
+	if(intval($time)==0)$time=time();
+    $DaysNames = array("Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота");
+	if(strpos($param,'l')===false) return date($param, $time);
+		else return date(str_replace('l',$DaysNames[date('w',$time)],$param), $time);
+}
+function getZodiacalSign($month, $day) {
+    $signs = array("Козерог", "Водолей", "Рыбы", "Овен", "Телец", "Близнецы", "Рак", "Лев", "Девы", "Весы", "Скорпион", "Стрелец");
+    $signsstart = array(1=>21, 2=>20, 3=>20, 4=>20, 5=>20, 6=>20, 7=>21, 8=>22, 9=>23, 10=>23, 11=>23, 12=>23);
+    return $day < $signsstart[$month + 1] ? $signs[$month - 1] : $signs[$month % 12];
+}
+?>
+<html><head>
+<title>Информация о пользователе</title>
+<link type="text/css" rel="StyleSheet" href="/css/main.css">
+<link type="text/css" rel="StyleSheet" href="/css/base.css">
+<link type="text/css" rel="StyleSheet" href="/css/layer1.css">
+<script type="text/javascript" src="/js/jquery-1.7.2.js"></script>
+<script type="text/javascript">window.ulb = {photoPage: "Перейти на страницу с фотографией.",closeBtn: "Закрыть", error: "Запрошенный контент не может быть загружен. Пожалуйста, попробуйте позже.", next: "Вперед", prev: "Предыдущий", btnPlay: "Начать слайдшоу", btnToggle: "Изменить размер"}</script>
+<link href="/css/ulightbox.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/js/ulightbox.js"></script>
+<script type="text/javascript" src="/js/uwnd.js?2"></script>
+<style type="text/css">.UhideBlockL {display:none}</style>
+<script type="text/javascript">new Image().src = "http://counter.yadro.ru/hit;noadsru?r"+escape(document.referrer)+((typeof(screen)=="undefined")?"":";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+";"+Math.random();</script>
+<script type="text/javascript" src="/js/slaider_box.js"></script>
+<script type="text/javascript" src="/js/my.js"></script>
+<style>
+.popup_repute_plus{
+    background: url('/img/icon/plus.png') no-repeat 0 0;
+}
+.popup_repute_minus{
+    background: url('/img/icon/minus.png') no-repeat 0 0;
+}
+.popup_repute_none{
+    background: url('/img/icon/none.png') no-repeat 0 0;
+}
+fieldset.awards_marks,
+fieldset.awards_love,
+fieldset.awards_food,
+fieldset.awards_positive,
+fieldset.awards_animals,
+fieldset.awards_subjects,
+fieldset.awards_negative,
+fieldset.awards_rich{
+    padding-right: 220px!important;
+}
+.item_award{
+    float:left;
+    margin: 5px;
+}
+.item_award:hover{
+    background: #DFE8F6;
+    cursor: pointer;
+}
+.item_add_award{
+    float:left;
+    margin: 5px;
+}
+.item_add_award:hover{
+    background: #DFE8F6;
+    cursor: pointer;
+}
+</style>
+</head>
+<body topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" cellpadding="2" cellspacing="1" style="background:#A9B8C2;" width="100%">
+<tbody><tr><td style="background:#D4DFF7;" align="center"><b>Информация о пользователе</b></td></tr>
+<tr><td align="center" style="background:#F4F4F4;padding:5px;"><div align="center">
+<script type="text/javascript">if (window.name.length>2){window.resizeTo(750,420);}</script>
+<style type="text/css">.udtb {text-align:left;padding:3px;} .udtlb {clear:left;float:left;width:150px;}</style>
+<div style="position:relative;float:right;text-align:center;">
+<span class="user_avatar">
+<img alt="" border="0" src="<? if($user['user_avatar_type'] == "1"){echo "/forum/images/avatars/upload/3fd64ac252fd45cbb865c0e38dfe125f_";} echo $user['user_avatar']; ?>">
+</span>
+<br>
+<br>
+<? if($user_online->data['is_registered']){ ?>
+<? if($user['user_id'] == $user_online->data['user_id']){?>[ <a href="/index/11">Изменить данные</a> ]
+<? $count_unread = Model_Messenger::getIncomingMessagesUnread($user_online->data['user_id']);
+if($count_unread == false){
+    $count_unread = 0;
+}else{
+    $count_unread = count($count_unread);
+}
+?>
+<div style="padding-top:4px;" id="userPMread">[ <a href="/user/incomingmessages">Читать ЛС (<b><? echo $count_unread; ?></b>)</a> ]</div><? }else{ ?>
+<div style="padding-top:4px;" id="userPMread">[ <a href="/user/sendprivmsg/id/<? echo $user['user_id']; ?>" title="Отправить личное сообщение">Отправить ЛС</a> ]</div>
+<? } ?>
+<? } ?>
+</div>
+<?
+$count_comments = count(Model_Comments::getCommentsByUserId($user['user_id']));
+if($count_comments < 20){
+    $rank = 1;
+    $rank_str = "Ученик";
+}elseif($count_comments < 60){
+    $rank = 2;
+    $rank_str = "Новичок";
+}elseif($count_comments < 80){
+    $rank = 3;
+    $rank_str = "Читатель";
+}elseif($count_comments < 120){
+    $rank = 4;
+    $rank_str = "Грамотей";
+}elseif($count_comments < 200){
+    $rank = 5;
+    $rank_str = "Знаток";
+}elseif($count_comments < 500){
+    $rank = 6;
+    $rank_str = "Умный";
+}elseif($count_comments < 1000){
+    $rank = 7;
+    $rank_str = "Ученый";
+}elseif($count_comments < 2000){
+    $rank = 8;
+    $rank_str = "Влияющий";
+}elseif($count_comments < 5000){
+    $rank = 9;
+    $rank_str = "Наставник";
+}elseif($count_comments > 5000){
+    $rank = 10;
+    $rank_str = "Главный";
+}
+?>
+<div id="block1" class="udtb"><div class="udtlb">Пользователь:</div>
+<a href="javascript://" rel="nofollow" onclick="prompt('Адрес профиля данного пользователя','http://tushkan.net/index/8-<? echo $user['user_id'] ?>')">
+<b><? echo $user['username'] ?></b></a>
+<? if($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8"){ ?>
+[id: <b><? echo $user['user_id']; ?></b> ]
+<? } ?>
+<span title="Ранг: <? echo $rank; ?>"><img alt="" name="rankimg" border="0" src="/img/ranks/rank<? echo $rank;  ?>.gif" align="absmiddle"></span> [ <? echo $rank_str; ?> ]
+<? if($user_online->data['group_id'] == "5"){ echo '<a href="/tncontrol/edituser/id/'.$user['user_id'].'" title="Редактировать" target="_blank"><img src="/img/edit_icon.png" alt=""/></a>';} ?>
+</div>
+
+<div id="block2" class="udtb"><div class="udtlb">Группа:</div><?
+switch($user['group_name']){
+    case 'GUESTS' : $group = "Гости"; break;
+    case 'REGISTERED' : $group = "Пользователи"; break;
+    case 'REGISTERED_COPPA' : $group = "Зарегистрированные COPPA"; break;
+    case 'GLOBAL_MODERATORS' : $group = "Глобальные модераторы"; break;
+    case 'ADMINISTRATORS' : $group = "Администраторы"; break;
+    case 'BOTS' : $group = "Боты"; break;
+    case 'NEWLY_REGISTERED' : $group = "Недавно зарегистрированные"; break;
+    case 'MODERATORS' : $group = "Модераторы"; break;
+    case 'EDITORS' : $group = "Редакторы"; break;
+    case 'CERTIFIED' : $group = "Проверенные"; break;
+    case 'BANNED' : $group = "Забаненные"; break;
+    default : $group = "Не найдено"; break;
+}
+echo $group;
+?></div>
+
+<? if($user_online->data['is_registered']){ ?>
+<div id="block25" class="udtb"><div class="udtlb">Поощрения:</div>
+<?
+$awards = Model_User::getAllAwardsByUserId($user['user_id']);
+if($awards == false){
+    $count_awards = 0;
+}else{
+    $count_awards = count($awards);
+}
+?>
+<a href="javascript://" class="<? if($count_awards != 0){echo "awardsHistory";}?>" user_id="<? echo $user['user_id']; ?>" rel="nofollow" title="Список наград">Награды (<b><? echo $count_awards; ?></b>)</a><? if($user_online->data['user_id'] != $user['user_id']){ ?> [<a href="javascript://" class="awards_show_add_popup" user_id="<? echo $user['user_id']; ?>" username="<? echo $user['username']; ?>" rel="nofollow" >+</a>] <?}?>&nbsp;
+<?
+$count_repute = $user['user_rating_positive'] - $user['user_rating_negative'];
+?>
+<? $user_rep_hide = Model_User::checkUserReputeIsHide($user['user_id']);
+if($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8" || $user_online->data['group_id'] == "9" || !$user_rep_hide){?>
+<a title="Смотреть историю репутации" class="repHistory" user_id="<? echo $user['user_id']; ?>" href="javascript://" rel="nofollow" >Репутация (<b><? echo $count_repute; ?></b>)</a><? if($user_online->data['user_id'] != $user['user_id']){ ?> [<a href="javascript://" class="repute_show_add_popup" user_id="<? echo $user['user_id']; ?>" rel="nofollow">±</a>]<?}?>
+<?}?>
+</div>
+<? } ?>
+
+<? if($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8" || $user_online->data['user_id'] == $user['user_id']){
+switch($user['remark']){
+    case '20' : $remark_str = "1"; break;
+    case '40' : $remark_str = "2"; break;
+    case '60' : $remark_str = "3"; break;
+    case '80' : $remark_str = "4"; break;
+    case '100' : $remark_str = "5"; break;
+    default : $remark_str = "0"; break;
+}
+?>
+<div id="block3" class="udtb">
+    <div class="udtlb">Замечания:</div>
+        <a title="Смотреть историю замечаний" class="show_remark_history" user_id="<? echo $user['user_id']; ?>" href="javascript://" rel="nofollow"><? if($user['remark'] != ""){echo $user['remark'];}else{echo "0";} ?>%</a> &nbsp; 
+        <? if($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8"){?>
+        <a href="javascript://" class="show_popup_user_remarks" user_id="<? echo $user['user_id']; ?>" rel="nofollow">
+            <img alt="" style="margin:0;padding:0;border:0;" title="Изменить уровень замечаний" src="/img/fr/wm.gif" width="10" height="9">
+        </a>
+        <?}?>
+        <img alt="" style="margin:0;padding:0;border:0;" src="/img/fr/w<? echo $remark_str; ?>.gif" width="49" height="9">
+        <? if($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8"){?>
+        <a href="javascript://" class="show_popup_user_remarks" user_id="<? echo $user['user_id']; ?>" rel="nofollow">
+            <img alt="" style="margin:0;padding:0;border:0;" title="Изменить уровень замечаний" src="/img/fr/wp.gif" width="10" height="9">
+        </a>
+        <?}?>
+</div>
+<?}?>
+
+<div id="block5" class="udtb"><div class="udtlb">Имя:</div> <? echo $user['pf_real_name_n']; ?> [ <? if($user['user_gender'] == 1){echo "Мужчина";}elseif($user['user_gender'] == 2){echo "Женщина";} ?> ]</div>
+
+<?
+$online_stat = obtain_users_online(); 
+if(in_array($user['user_id'],$online_stat['online_users'])){
+    $user_status = "Online";
+}else{
+    $user_status = "Offline";
+}
+?>
+<div id="block6" class="udtb"><div class="udtlb">Статус:</div><span class="status<? echo $user_status; ?>"><? echo $user_status; ?></span></div>
+
+<? if($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8"){ ?>
+<div id="block7" class="udtb"><div class="udtlb">Регистрационный IP:</div> <a href="http://www.ripe.net/perl/whois?<? echo $user['user_ip']; ?>" target="_blank"><? echo $user['user_ip']; ?></a></div>
+<? } ?>
+
+<div id="block8" class="udtb"><div class="udtlb">Дата регистрации:</div><? echo rdate("l, d.m.Y, H:i",$user['user_regdate']) ?></div>
+
+<div id="block9" class="udtb"><div class="udtlb">Дата входа:</div><? echo rdate("l, d.m.Y, H:i",$user['user_lastvisit']) ?></div>
+<?
+$user_birthday = $user['user_birthday'];
+if($user_birthday != "0-0-0"){
+if($user_online->data['is_registered']){
+$pos1 = strpos($user_birthday,"-");
+$str1 = substr($user_birthday,0,$pos1);
+$day = (int) $str1;
+$str2 = substr($user_birthday,$pos1+1);
+$pos2 = strpos($str2,"-");
+$str3 = substr($str2,0,$pos2);
+$month = (int) $str3;
+$str4 = substr($str2,$pos2+1);
+$year = (int) $str4;
+?>
+<div id="block10" class="udtb"><div class="udtlb">Дата рождения:</div><? echo $day." ".$MonthNames[$month-1]." ".$year." [ <b>".floor((time()-mktime(0, 0, 0, $month, $day, $year))/(60*60*24*365.25))."</b> ".getZodiacalSign($month,$day)." ]"; ?></div>
+<? } }?>
+
+<div id="block11" class="udtb"><div class="udtlb">E-mail:</div>
+
+<? if($user_online->data['is_registered'] && $user_online->data['user_id'] != $user['user_id']){ ?>
+<a href="javascript://" class="send_priv_msg" rel="nofollow">Написать письмо пользователю</a>
+<script>
+$(".send_priv_msg").live("click",function(){
+    $("#popup_send_priv_msg").show();
+});
+$(".close_popup_send_priv_msg").live("click",function(){
+    $("#popup_send_priv_msg").hide();
+});
+</script>
+<? if($this->info == "Успешно отправлено"){ ?>
+<script>
+setTimeout(function(){
+    $(".info").remove();
+    $('#popup_send_priv_msg').hide();
+}, 2000);
+</script>
+<?}?>
+<div id="popup_send_priv_msg" style="position: fixed; z-index: 10004; overflow: visible; left: 50%;top: 50%;margin-left: -256px;margin-top: -103px;
+display: <? if($this->info != ""){echo "block";} else {echo "none";} ?>;">
+<div class="x-sh xsl" style="position: absolute; z-index: 1; width: 6px; left: -4px; top: 0px; height: 240px; display: block;"><div class="xstl"><div class="xsml"></div></div></div>
+<div class="x-sh xsr" style="position: absolute; z-index: 1; width: 6px; top: 0px; height: 240px; left: 510px; display: block;"><div class="xstr"><div class="xsmr"></div></div></div>
+<div class="x-sh xsb" style="position: absolute; z-index: 1; height: 6px; left: -4px; width: 520px; top: 240px; display: block;"><div class="xsbl"><div class="xsbr"><div class="xsbc"></div></div></div></div>
+<div id="_uwndWnd1" class="xw-plain x-unselectable xw-resize xw-active" unselectable="on" style="position: absolute; width: 512px; z-index: 2; left: 0px; overflow: visible;">
+<div class="xw-disabled" style="overflow: hidden; position: absolute; z-index: 30010; width: 512px; height: 207px; display: none;" unselectable="on"></div><div class="xw-tl" unselectable="on"><div class="xw-tr" unselectable="on"><div class="xw-tc" unselectable="on"><div class="xw-sps" unselectable="on"></div><div class="xw-hdr xw-draggable" unselectable="on">
+<div class="xt xt-close xt-close2 close_popup_send_priv_msg" unselectable="on"></div><div class="xt xt-maxi" unselectable="on" style="display: none;"></div><div class="xt xt-rest" unselectable="on" style="display: none;"></div><div class="xt xt-mini" unselectable="on" style="display: none;"></div><span class="xw-hdr-text" unselectable="on" title="">Написать письмо пользователю</span></div></div></div></div>
+<div class="xw-ml" unselectable="on"><div class="xw-mr" unselectable="on"><div class="xw-mc" unselectable="on"><div class="xw-body" unselectable="on">
+<div style="overflow: hidden; height: 200px;" unselectable="on"><div class="myWinCont" style="display: none; overflow: hidden;" align="center" unselectable="on"><div align="left" unselectable="on"><div class="myWinLoad" unselectable="on"></div></div></div><div class="myWinCont" style="overflow: auto; width: 490px; display: block; height: 100%;" align="center" unselectable="on">
+
+<? if($user_online->data['group_id'] == "11"){ ?>
+<div style="padding:20px" class="myWinError">Для вашего аккаунта любая активность временно заблокирована</div>
+<?}else{?>
+<form method="POST">
+<input type="hidden" name="to" value="<? echo $user['username']; ?>" />
+<table border="0" width="100%" cellpadding="2">
+<tbody>
+<? if($this->info != ""){?>
+<tr class="info"><td></td> <td><span style="color: red;"><? echo $this->info; ?></span></td></tr>
+<?}?>
+<tr>
+<td width="25%">Тема письма:</td>
+<td>
+<input type="text" name="subject" size="20" style="width:350px" maxlength="80"></td></tr>
+<tr><td valign="top">Текст письма:<div style="padding-top:3px;font-size:7pt">Макс. <b>500</b> символов.</div></td>
+<td>
+<textarea rows="4" name="message" cols="20" style="width:350px"></textarea>
+</td>
+</tr>
+<tr>
+<td>Код *:</td>
+<td>
+<input id="fCode" type="text" name="captcha[input]" />
+<input type="hidden" value="<? echo $this->captcha_id; ?>" name="captcha[id]" />
+<img alt="" style="margin:0;padding:0;border:0;cursor:pointer;" id="secImg" align="absmiddle" src="/captcha/<? echo $this->captcha_id; ?>.png" title="Обновить код безопасности">
+</td>
+</tr>
+<tr><td align="right"></td><td>
+<table border="0" cellpadding="0" cellspacing="0" onmousedown="this.className='downBtn'" onmouseover="this.className='overBtn'" onmouseout="this.className='outBtn'">
+<tbody><tr>
+<td>
+<div class="myBtnCont x-unselectable" unselectable="on">
+    <input style="font-weight:bold; width:130px;" type="submit" id="sbm" value="Отправить"></div>
+</td>
+<td style="visibility:hidden;"><input type="image" src="/img/ma/1px.gif" style="width:1px;"></td>
+</tr>
+</tbody></table>
+	</td></tr>
+</tbody></table>
+</form>
+<?}?>
+</div></div></div></div></div></div><div class="xw-bl" unselectable="on"><div class="xw-br" unselectable="on"><div class="xw-bc" unselectable="on"></div></div></div><div class="xw-blank" style="display: none;" unselectable="on">
+</div>
+</div>
+</div>
+
+
+
+<? }else{
+    if($user_online->data['is_registered']){
+        echo $user['user_email']; ?><span style="font-size:7pt"> (Адрес скрыт)</span><?
+    }else{
+        ?><span style="font-style: italic;">Адрес скрыт</span><?
+    }
+   }
+ ?>
+
+</div>
+
+<? if($user['user_website'] != ""){?>
+<div id="block12" class="udtb"><div class="udtlb">Сайт:</div> <? echo $user['user_website']; ?></div>
+<?}?>
+
+<? if($user['user_icq'] != ""){?>
+<div id="block13" class="udtb"><div class="udtlb">ICQ:</div> <? echo $user['user_icq']; ?></div>
+<?}?>
+
+<? if($user['user_from'] != ""){?>
+<div id="block20" class="udtb"><div class="udtlb">Город:</div> <? echo $user['user_from']; ?></div>
+<?}?>
+
+<? if($user['user_sig'] != ""){?>
+<div id="block21" class="udtb"><div class="udtlb">Подпись:</div> <? echo $user['user_sig']; ?></div>
+<?}?>
+
+<div id="block25" class="udtb" style="float: left;width: 100%;"><hr></div>
+<div id="block22" class="udtb" style="text-align:center;float: left;width: 100%;">
+<?
+$count_forum = Model_User::getCountUserPostsByUserId($user['user_id']);
+$count_news = count(Model_News::getNewsByUserId($user['user_id']));
+$count_publs = count(Model_Publ::getPublsByUserId($user['user_id']));
+$count_playlist = Model_User::getCountFilmoteka($user['user_id'], 2);
+$count_watched = Model_User::getCountFilmoteka($user['user_id'], 3);
+?>
+<? if($count_comments > 0 || $count_forum > 0 || $count_news > 0 || $count_publs > 0){?> | <?}?>
+<? if($count_comments > 0) {?><a href="/index/34-<? echo $user['user_id']; ?>" target="_blank">комментарии(<b><? echo $count_comments; ?></b>)</a> | <? } ?>
+<? if($count_forum > 0) {?><a href="/forum/search.php?author_id=<? echo $user['user_id']; ?>&sr=posts" target="_blank">форум(<b><? echo $count_forum; ?></b>)</a> | <? } ?>
+<? if($count_news > 0) {?><a href="/news/0-0-0-0-17-<? echo $user['user_id']; ?>" target="_blank">новости(<b><? echo $count_news; ?></b>)</a> | <? } ?>
+<? if($count_publs > 0) {?><a href="/publ/0-0-<? echo $user['user_id']; ?>-0-17" target="_blank">статьи(<b><? echo $count_publs; ?></b>)</a> | <? } ?>
+<? if($count_playlist > 0) {?><a href="/user/playlist/<? echo strtolower($user['user_id']); ?>/1" target="_blank">плейлист(<b><? echo $count_playlist; ?></b>)</a> | <? } ?>
+<? if($count_watched > 0) {?><a href="/user/watched/<? echo strtolower($user['user_id']); ?>/1" target="_blank">просмотренные фильмы(<b><? echo $count_watched; ?></b>)</a> | <? } ?>
+
+</div>
+
+<?if($user_online->data['group_id'] == "5"){?>
+<div id="block25" class="udtb" style="float: left;width: 100%;"><hr></div>
+<table border="0" cellpadding="4" cellspacing="1" width="100%"><tbody><tr><td align="center">
+<a href="/tncontrol/users" target="_blank"><input type="button" class="allUsersBtn" style="width:150px;" value="Список пользователей"></a>&nbsp;
+</td></tr></tbody></table>
+<?}?>
+
+ </div></td></tr>
+</tbody></table>
+
+</body>
+</html>

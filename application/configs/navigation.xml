@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configdata>
+    <nav>
+        <home>
+            <label>Главная</label>
+            <uri>/</uri>
+            
+                <pages>
+                    <news>
+                        <label>Архив материалов</label>
+                        <controller>news</controller>
+                        <action>index</action>
+                    </news>
+                    
+                    <publ>
+                    
+                        <label>Статьи</label>
+                        <controller>publ</controller>
+                        <action>index</action>
+                        
+                        <pages>
+                            
+                            <raznoe>
+                                <label>Разное</label>
+                                <controller>publ</controller>
+                                <action>1</action>
+                            </raznoe>
+                            
+                            <novosti_kino>
+                                <label>Новости кино</label>
+                                <controller>publ</controller>
+                                <action>novosti_kino</action>
+                            </novosti_kino>
+                            
+                            <kino>
+                                <label>Кино</label>
+                                <controller>publ</controller>
+                                <action>kino</action>
+                            </kino>
+                            
+                            <jumor>
+                                <label>Юмор</label>
+                                <controller>publ</controller>
+                                <action>jumor</action>
+                            </jumor>
+                            
+                            <serialy>
+                                <label>Сериалы</label>
+                                <controller>publ</controller>
+                                <action>serialy</action>
+                            </serialy>
+                            
+                            <recenzii_na_filmy>
+                                <label>Рецензии на фильмы</label>
+                                <controller>publ</controller>
+                                <action>recenzii_na_filmy</action>
+                            </recenzii_na_filmy>
+                            
+                            <biografija_akterov>
+                                <label>Биографии актеров</label>
+                                <controller>publ</controller>
+                                <action>biografija_akterov</action>
+                            </biografija_akterov>
+                            
+                        </pages>
+                    </publ>
+                    
+                    <trejlery>
+                        <label>Трейлеры</label>
+                        <controller>news</controller>
+                        <action>trejlery</action>
+                    </trejlery>
+                    
+                    <serialy>
+                        <label>Сериалы</label>
+                        <controller>news</controller>
+                        <action>serialy</action>
+                    </serialy>
+                    
+                    <anime>
+                        <label>Аниме</label>
+                        <controller>news</controller>
+                        <action>anime</action>
+                    </anime>
+                    
+                    <boeviki>
+                        <label>Боевики</label>
+                        <controller>news</controller>
+                        <action>boeviki</action>
+                    </boeviki>
+                    
+                    <voennye>
+                        <label>Военные</label>
+                        <controller>news</controller>
+                        <action>voennye</action>
+                    </voennye>
+                    
+                    <detektivi>
+                        <label>Детективы</label>
+                        <controller>news</controller>
+                        <action>detektivi</action>
+                    </detektivi>
+                    
+                    <documentalnie>
+                        <label>Документальные</label>
+                        <controller>news</controller>
+                        <action>documentalnie</action>
+                    </documentalnie>
+                    
+                    <drama>
+                        <label>Драма</label>
+                        <controller>news</controller>
+                        <action>drama</action>
+                    </drama>
+                    
+                    <istoricheskie>
+                        <label>Исторические</label>
+                        <controller>news</controller>
+                        <action>istoricheskie</action>
+                    </istoricheskie>
+                    
+                    <komedija>
+                        <label>Комедии</label>
+                        <controller>news</controller>
+                        <action>komedija</action>
+                    </komedija>
+                    
+                    <kriminal>
+                        <label>Криминал</label>
+                        <controller>news</controller>
+                        <action>kriminal</action>
+                    </kriminal>
+                    
+                    <melodrama>
+                        <label>Мелодрама</label>
+                        <controller>news</controller>
+                        <action>melodrama</action>
+                    </melodrama>
+                    
+                    <muzyka>
+                        <label>Музыка</label>
+                        <controller>news</controller>
+                        <action>muzyka</action>
+                    </muzyka>
+                    
+                    <multiki>
+                        <label>Мультфильмы</label>
+                        <controller>news</controller>
+                        <action>multiki</action>
+                    </multiki>
+                    
+                    <prikljuchenija>
+                        <label>Приключения</label>
+                        <controller>news</controller>
+                        <action>prikljuchenija</action>
+                    </prikljuchenija>
+                    
+                    <semejnye>
+                        <label>Семейные</label>
+                        <controller>news</controller>
+                        <action>semejnye</action>
+                    </semejnye>
+                    
+                    <sport>
+                        <label>Спорт</label>
+                        <controller>news</controller>
+                        <action>sport</action>
+                    </sport>
+                    
+                    <tv_peredachi>
+                        <label>ТВ-передачи</label>
+                        <controller>news</controller>
+                        <action>tv_peredachi</action>
+                    </tv_peredachi>
+                    
+                    <triller>
+                        <label>Триллеры</label>
+                        <controller>news</controller>
+                        <action>triller</action>
+                    </triller>
+                    
+                    <uzhasy>
+                        <label>Ужасы</label>
+                        <controller>news</controller>
+                        <action>uzhasy</action>
+                    </uzhasy>
+                    
+                    <fantastika>
+                        <label>Фантастика</label>
+                        <controller>news</controller>
+                        <action>fantastika</action>
+                    </fantastika>
+                    
+                    <ehto_interesno>
+                        <label>Это интересно</label>
+                        <controller>news</controller>
+                        <action>ehto_interesno</action>
+                    </ehto_interesno>
+                    
+                </pages>
+            
+        </home>
+    </nav>
+</configdata>

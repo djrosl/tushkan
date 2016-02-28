@@ -1,0 +1,4 @@
+<style>.pagination{float: right; }.pagination .active{background: dodgerblue;color: white; }</style>
+<script src="/admins/news.js"></script>
+<? echo $this->admintable('Новости', 'news');?>
+<ul class="pagination"><?php echo  $this->paginationControl($this->pag,'Sliding','pagination.phtml');  ?></ul>

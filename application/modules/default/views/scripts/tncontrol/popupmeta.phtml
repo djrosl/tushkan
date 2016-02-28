@@ -1,0 +1,18 @@
+<style>#facebox #wrapper{padding-left:0}</style>
+<script>
+    $(document).ready(function(){
+        $('.save_comment').click(function(){
+            var idc = $(this).attr('idc');
+            var text = $('#mess').val();
+            if(idc && text){
+                $.post('/tncontrol/ajax/fl/editmeta/id/'+idc, {content:text}, function(e){
+                    location.reload();
+                });
+            }
+        });
+    });
+</script>
+<h4>Редактирование мета тега</h4>
+<p><? echo $this->meta->location;?> (<b><? echo $this->meta->name;?></b>)</p>
+<textarea id="mess" class="form-control" style="height: 100px"><? echo $this->meta->content?></textarea>
+<button idc="<? echo $this->meta->id;?>" class="btn btn-success save_comment">Изменить</button>

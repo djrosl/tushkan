@@ -1,0 +1,169 @@
+<?php
+$server_uri = $this->url();
+$str = substr($server_uri,1); // убираем первый слеш "/"
+$is_publ = strpos($str, "publ");
+$page_number = 0;
+$category_name = "";
+if($is_publ === false){
+    var_dump("error url");die;
+}else{
+    $str = substr($str,5); // убираем строку "publ"
+    $is_slash = strpos($str, "/");
+    if($is_slash === false){ // если нету в строке "/"
+        $min_pos_1 = strpos($str, "-");
+        if($min_pos_1 === false){
+            $category_id = (int)($str);
+        }else{
+            $str2 = substr($str,0,$min_pos_1);
+            $category_id = (int)($str2);
+            $str3 = substr($str,$min_pos_1+1);
+            $min_pos_2 = strpos($str3, "-");
+            $str4 = substr($str3,0,$min_pos_2);
+            $page_number = (int)($str4);
+        }
+    }else{
+        $category_name = substr($str,0,$is_slash);
+        $str2 = substr($str,$is_slash+1);
+        $min_pos_1 = strpos($str2, "-");
+        if($min_pos_1 === false){
+            $category_id = (int)($str2);
+        }else{
+            $str3 = substr($str2,0,$min_pos_1);
+            $category_id = (int)($str3);
+            $str4 = substr($str2,$min_pos_1+1);
+            $min_pos_2 = strpos($str4, "-");
+            $str5 = substr($str4,0,$min_pos_2);
+            $page_number = (int)($str5);
+        }
+    }
+
+}
+
+?>
+<?php if ($this->pageCount): ?>
+<span class="pagesBlockuz1">
+<!-- Previous page link -->
+<?php if (isset($this->previous)): ?>
+    <a class="swchItem" href="<?php if($category_name != ""){ echo "/publ/".$category_name."/".$category_id."-".$this->previous."-2"; }
+    else{ echo "/publ/".$category_id."-".$this->previous."-2"; }
+    ?>">
+       <span>«</span>
+    </a>
+<?php else: ?>
+  <span class="disabled" style="display: none;">«</span>
+<?php endif; ?>
+
+<?php if (isset($this->previous)): ?>
+        <? if(($this->current) < 6 ){?>
+        <? } else {?>
+            <a class="swchItem" href="<?php if($category_name != ""){ echo "/publ/".$category_name."/".$category_id."-".$this->first."-2"; }
+    else{ echo "/publ/".$category_id."-".$this->first."-2"; }
+    ?>">
+        <span><?php echo $this->first; ?></span>
+    </a>
+    
+    <a class="swchItem" href="<?php if($category_name != ""){ echo "/publ/".$category_name."/".$category_id."-".($this->first+1)."-2"; }
+    else{ echo "/publ/".$category_id."-".($this->first+1)."-2"; }
+    ?>">
+        <span><?php echo ($this->first+1); ?></span>
+    </a>
+            ...
+        <?} ?>
+    <? endif;?>
+    
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) == 5 ){?>
+            <a class="swchItem" href="<?php if($category_name != ""){ echo "/publ/".$category_name."/".$category_id."-".$this->first."-2"; }
+    else{ echo "/publ/".$category_id."-".$this->first."-2"; }
+    ?>">
+        <span><?php echo $this->first; ?></span>
+    </a>
+    
+    <a class="swchItem" href="<?php if($category_name != ""){ echo "/publ/".$category_name."/".$category_id."-".($this->first+1)."-2"; }
+    else{ echo "/publ/".$category_id."-".($this->first+1)."-2"; }
+    ?>">
+        <span><?php echo ($this->first+1); ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+    
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) == 4 ){?>
+            <a class="swchItem" href="<?php if($category_name != ""){ echo "/publ/".$category_name."/".$category_id."-".$this->first."-2"; }
+    else{ echo "/publ/".$category_id."-".$this->first."-2"; }
+    ?>">
+        <span><?php echo $this->first; ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+
+<!-- Numbered page links -->
+<?php foreach ($this->pagesInRange as $page): ?>
+  <?php if ($page != $this->current): ?>
+    <a class="swchItem" href="<?php if($category_name != ""){ echo "/publ/".$category_name."/".$category_id."-".$page."-2"; }
+    else{ echo "/publ/".$category_id."-".$page."-2"; }
+    ?>">
+        <span><?php echo $page; ?></span>
+    </a>
+  <?php else: ?>
+        <b class="swchItemA"><span><?php echo $page; ?></span></b>
+  <?php endif; ?>
+<?php endforeach; ?>
+
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) > ($this->pageCount - 5) ){?>
+        <? } else {?>
+            ...
+            <a class="swchItem" href="<?php if($category_name != ""){ echo "/publ/".$category_name."/".$category_id."-".($this->last-1)."-2"; }
+    else{ echo "/publ/".$category_id."-".($this->last-1)."-2"; }
+    ?>">
+        <span><?php echo ($this->last-1); ?></span>
+    </a>
+    
+    <a class="swchItem" href="<?php if($category_name != ""){ echo "/publ/".$category_name."/".$category_id."-".$this->last."-2"; }
+    else{ echo "/publ/".$category_id."-".$this->last."-2"; }
+    ?>">
+        <span><?php echo $this->last; ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+    
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) == ($this->pageCount - 3) && ($this->pageCount > 4)){?>
+    
+    <a class="swchItem" href="<?php if($category_name != ""){ echo "/publ/".$category_name."/".$category_id."-".$this->last."-2"; }
+    else{ echo "/publ/".$category_id."-".$this->last."-2"; }
+    ?>">
+        <span><?php echo $this->last; ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+    
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) == ($this->pageCount - 4) ){?>
+            <a class="swchItem" href="<?php if($category_name != ""){ echo "/publ/".$category_name."/".$category_id."-".($this->last-1)."-2"; }
+    else{ echo "/publ/".$category_id."-".($this->last-1)."-2"; }
+    ?>">
+        <span><?php echo ($this->last-1); ?></span>
+    </a>
+    
+    <a class="swchItem" href="<?php if($category_name != ""){ echo "/publ/".$category_name."/".$category_id."-".$this->last."-2"; }
+    else{ echo "/publ/".$category_id."-".$this->last."-2"; }
+    ?>">
+        <span><?php echo $this->last; ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+
+<!-- Next page link -->
+<?php if (isset($this->next)): ?>
+    <a class="swchItem" href="<?php if($category_name != ""){ echo "/publ/".$category_name."/".$category_id."-".$this->next."-2"; }
+    else{ echo "/publ/".$category_id."-".$this->next."-2"; }
+    ?>">
+        <span>»</span>
+    </a>
+<?php else: ?>
+  <span class="disabled" style="display: none;">»</span>
+<?php endif; ?>
+</span>
+<?php endif; ?>

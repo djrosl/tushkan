@@ -1,0 +1,15 @@
+<?
+$title = $this->headTitle("Выбор аватара");
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+?>
+<html>
+<head>
+</head>
+<frameset cols="170,*" frameborder="1" border="1" framespacing="0">
+<frame name="menu" src="/index/avatarsmenu" noresize="">
+<frame name="avatars" src="/index/avatarsavatars">
+</frameset>
+<noframes>This page contains Frames, but your browser doesn't support them!</noframes>
+</html>

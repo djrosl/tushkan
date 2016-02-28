@@ -1,0 +1,5 @@
+<style>.pagination{float: right;}.pagination .active{background: dodgerblue;color: white;}</style>
+<script>$(document).ready(function(){$('li .active').removeClass('active');$('#settings').addClass('active');});</script>
+<script src="/admins/settings.js"></script>
+<? echo $this->admintable('Параметры', 'settings');?>
+<ul class="pagination"><?php echo  $this->paginationControl($this->pag,'Sliding','pagination.phtml');  ?></ul>

@@ -1,0 +1,10 @@
+﻿(function($) {
+ $(function() {
+
+   $('ul.tabs').delegate('li:not(.current)', 'click', function() {
+     $(this).addClass('current').siblings().removeClass('current')
+       .parents('div.sectiontable').find('div.box').eq($(this).index()).fadeIn(150).siblings('div.box').hide();
+   })
+
+})
+})(jQuery)

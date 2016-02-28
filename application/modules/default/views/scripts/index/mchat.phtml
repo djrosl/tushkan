@@ -1,0 +1,38 @@
+<?
+$title = $this->headTitle();
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+?>
+<html>
+<head>
+<script type="text/javascript" src="/js/jquery-1.7.2.js"></script>
+<link type="text/css" rel="StyleSheet" href="/css/main.css">
+<link type="text/css" rel="StyleSheet" href="/css/layer1.css">
+<link type="text/css" rel="StyleSheet" href="/tabs/tabs.css">
+<script type="text/javascript" src="/js/chat.js"></script>
+</head>
+<body style="background: white;">
+<div id="chat" style="height: 600px;width: 100%;float: left;overflow: auto;background: white;">
+<?
+    $messages = Model_Chat::getLastMessages();
+    foreach($messages as $key=>$message){
+        ?>
+        <div class="cBlock1" style="padding:0 4px 5px 2px; margin-bottom:3px;">
+        <div style="float:right;font-size:8px;" title="Сегодня"><? echo date('H:i',$message['addtime']) ?></div>
+        <div style="text-align:left;">
+        <a href="/index/8-<? echo $message['user_id']; ?>" rel="nofollow" title="<? echo $message['username']; ?>" target="_blank">
+<!--        <img alt="" src="/img/icon/profile.png" width="13" border="0" style="vertical-align:-2px">-->
+            <span class="user_chat_ico"></span>
+
+        </a>
+        <a href="javascript:void('Apply to')" onclick="parent.window.document.getElementById('mchatMsgF').focus();parent.window.document.getElementById('mchatMsgF').value+='[i]<? echo $message['username']; ?>[/i], ';return false;"><b><? echo $message['username']; ?></b></a>
+        </div>
+        <div class="cMessage" style="text-align:left;"><? echo $message['message']; ?></div>
+        </div>
+        <?
+    }
+?>
+</div>
+</body>
+</html>

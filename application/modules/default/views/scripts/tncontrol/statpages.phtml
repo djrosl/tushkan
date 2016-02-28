@@ -1,0 +1,5 @@
+<style>.pagination{float: right;}.pagination .active{background: dodgerblue; color: white;}</style>
+<script>$(document).ready(function(){$('li .active').removeClass('active');$('#statp').addClass('active');});</script>
+<script src="/admins/statpages.js"></script>
+<? echo $this->admintable('Статические страницы', 'statpages');?>
+<ul class="pagination"><?php echo  $this->paginationControl($this->pag,'Sliding','pagination.phtml');  ?></ul>

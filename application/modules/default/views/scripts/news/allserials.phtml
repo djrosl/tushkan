@@ -1,0 +1,22 @@
+<?php
+$this->headTitle($this->title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta", $meta);
+$memcache = Zend_Registry::get("memcache");
+?>
+<div id="allEntries">
+    <h1>Все сериалы на Tushkan.TV</h1>
+    <?php $user_online = Zend_Registry::get("user");
+    foreach ($this->news as $key=>$value){
+    if(($value['hide_on_site'] == 0) ||
+            ($value['hide_on_site'] == 1 &&
+              ($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8" || $user_online->data['group_id'] == "9")
+            )) { ?>
+        <div id="entryID_<? echo $value['id']; ?>">
+            <h2 style="font-family:Arial" title="<? echo $value['title']; ?>">
+            <a href="/news/<? echo $value['sbscr']; ?>/<? echo date('Y-m-d', $value['urltime']); ?>-<? echo $value['id']; ?>"><? echo $this->cutTitle($value['title']); ?></a>
+            </h2>
+        </div>
+    <? } ?>
+    <? } ?>
+</div>

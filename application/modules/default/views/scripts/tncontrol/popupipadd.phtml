@@ -1,0 +1,34 @@
+<style>#facebox #wrapper{padding-left:0} #facebox{width: 400px; margin-left: -200px} #facebox .body{width: 390px}
+    #facebox input[type=text]{width: 65px; float: left} #facebox .point{ float: left;font-size: 19px;line-height: 40px;}
+    .save_ip{margin: 0 auto;}.sec_ip{width: 100%; float: left}</style>
+<script>
+    $(document).ready(function(){
+        $('.save_ip').click(function(){
+            var ip = $('.one').val()+'.'+$('.two').val()+'.'+$('.three').val()+'.'+$('.four').val();
+            if($('.status').prop('checked')){
+                var status = 1;
+            }else{
+                var status = 0;
+            }
+            if(ip){
+                $.post('/tncontrol/ajax/fl/addip', {ip:ip.toLowerCase(), status:status}, function(){
+                    location.reload();
+                });
+            }
+        });
+        $('input[type=text]').keyup(function(){
+            if($(this).val().length == 3){
+                $(this).nextAll('input').first().focus();
+            }
+        });
+    });
+</script>
+<div class="sec_ip">
+    <label>Ip Адрес</label>
+    <input maxlength="3" type="text" class="form-control one" ><p class="point">.</p>
+    <input maxlength="3" type="text" class="form-control two" ><p class="point">.</p>
+    <input maxlength="3" type="text" class="form-control three" ><p class="point">.</p>
+    <input maxlength="3" type="text" class="form-control four" >
+</div>
+<p><input class="status" type="checkbox" checked> Активный</p>
+<button class="btn btn-large btn-success save_ip">Сохранить</button>

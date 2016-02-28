@@ -1,0 +1,13 @@
+<?php
+$title = $this->headTitle();
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+?>
+<script type="text/javascript">$('.breadcrumbs').hide();</script>
+<? if($this->info){ ?>
+<div style="width: 656px;">
+<span style="text-align: center;margin: 0 auto;display: block;color: red;"><? echo $this->info; ?></span>
+<hr class="manHr">
+</div>
+<? } ?>

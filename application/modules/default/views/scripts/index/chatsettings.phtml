@@ -1,0 +1,83 @@
+<?
+$title = $this->headTitle();
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+$user = Zend_Registry::get("user");
+if($user->data['is_registered']){
+    if($user->data['group_id'] == "5" || $user->data['group_id'] == "8"){
+?>
+<html>
+<head>
+<title>Редактирование комментария</title>
+<script type="text/javascript" src="/js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="/js/uwnd.js?2"></script>
+<link type="text/css" rel="StyleSheet" href="/css/layer1.css">
+<link type="text/css" rel="Stylesheet" href="/css/panel1.css">
+<script type="text/javascript" src="/js/all.js"></script>
+</head>
+<body style="padding: 5px;">
+
+<div class="xw-tl"><div class="xw-tr"><div class="xw-tc xw-tsps"></div></div></div>
+<div class="xw-ml">
+    <div class="xw-mr">
+        <div class="xw-mc contentBg" style="height: 96%;overflow-y: auto;width: 99.3%;overflow-x: hidden;">
+            <?  if(count($this->all_messages) > 0) {
+                foreach($this->all_messages as $message){
+            ?>
+            <div id="comEntT<? echo $message['id']; ?>">
+                <div id="entryID<? echo $message['id']; ?>" style="padding:2px;" onmouseover="this.className='myTblTD2 myBdBottom';" onmouseout="this.className='myTblTD1 myBdBottom';" class="myTblTD1 myBdBottom">
+                <div style="float:right">
+                <span title="<? echo date("H:i",$message['addtime']); ?>" style="font-size: 10px;">
+                    <? echo $message['ip_adress']." - ";
+                    $date_now = time();
+                    $date_time_array = getdate($date_now);
+                    $month = $date_time_array['mon'];
+                    $day = $date_time_array['mday'];
+                    $year = $date_time_array['year'];
+                    $date_time_array = getdate($message['addtime']);
+                    $month_2 = $date_time_array['mon'];
+                    $day_2 = $date_time_array['mday'];
+                    $year_2 = $date_time_array['year'];
+                    $date_1 = mktime(0,0,0,$month,$day,$year);
+                    $date_2 = mktime(0,0,0,$month_2,$day_2,$year_2);
+                    $date_3 = mktime(0,0,0,$month,$day-1,$year);
+                    if($date_1 == $date_2){
+                        echo "Сегодня ".date('H:i', $message['addtime']);
+                    }elseif($date_2 == $date_3){
+                        echo "Вчера ".date('H:i', $message['addtime']);
+                    }else{
+                        echo date('d.m.Y, H:i', $message['addtime']);
+                    }
+                    ?>
+                <span>
+                <span id="mnc<? echo $message['id']; ?>">
+                <a href="javascript://" class="chat_edit_message" message_id="<? echo $message['id']; ?>"><img title="Редактировать" border="0" align="absmiddle" src="/img/edit_icon.png" width="16" height="16"></a>
+                <a href="javascript://" class="chat_delete_message" message_id="<? echo $message['id']; ?>"><img title="Удалить" border="0" align="absmiddle" src="/img/delete.png" width="16" height="16"></a>
+                </span>
+                </span>
+                </span>
+                </div>
+                <b><a href="javascript://" rel="nofollow"><? echo $message['username']; ?></a></b>
+                <div class="message_text"><? echo $message['message']; ?></div>
+                </div>
+            </div>
+            <?}?>
+            <?}else{?>
+                <div style="padding:20px">Материалов нет</div>
+            <?}?>
+        </div>
+    </div>
+</div>
+<div class="xw-bl"><div class="xw-br"><div class="xw-bc"><div class="xw-footer"></div></div></div></div>
+
+</body>
+</html>
+<?
+    }else{
+        echo "У вас недостаточно прав";
+    }
+}else{
+    echo "Вы не авторизовались на сайте";
+}
+?>

@@ -1,0 +1,6 @@
+<style>.pagination{float: right;}.pagination .active{background: dodgerblue;color: white;}</style>
+<script>$(document).ready(function(){$('li .active').removeClass('active');$('#comments').addClass('active');});</script>
+<script src="/admins/comments.js"></script>
+<script src="/admins/search.js"></script>
+<? echo $this->admintable('Коментарии', 'comments');?>
+<ul class="pagination"><?php echo  $this->paginationControl($this->pag,'Sliding','pagination.phtml');  ?></ul>

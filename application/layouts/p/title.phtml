@@ -1,0 +1,16 @@
+
+<?php
+$user = Zend_Registry::get('user');
+
+switch ($user->data['group_id'])
+{
+    case '5':
+        echo ' <a class="navbar-brand" href="/tncontrol">Панель администратора</a>';
+        break;
+    case '8':
+        echo ' <a class="navbar-brand" href="/tncontrol">Панель модератора</a>';
+        break;
+    case '9':
+        echo ' <a class="navbar-brand" href="/tncontrol">Панель редактора</a>';
+        break;
+}

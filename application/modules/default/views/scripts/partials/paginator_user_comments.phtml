@@ -1,0 +1,49 @@
+<? $user_id = Zend_Controller_Front::getInstance()->getRequest()->getParam("id"); 
+$server_uri = $_SERVER["REQUEST_URI"];
+$min_pos_1 = strpos($server_uri, "-");
+$str1 = substr($server_uri,$min_pos_1+1);
+
+$min_pos_2 = strpos($str1, "-");
+if($min_pos_2 === false){
+    $user_id = (int)($str1);
+    $page_number = 1;
+}else{
+    $str_uid = substr($str1,0,$min_pos_2);
+    $user_id = (int)($str_uid);
+    $str_pn = substr($str1,$min_pos_2+1);
+    $page_number = (int)($str_pn);
+}
+?>
+<?php if ($this->pageCount): ?>
+<span class="pagesBlock1">
+<!-- Previous page link -->
+<?php if (isset($this->previous)): ?>
+    <a href="<?php echo "/index/34-".$user_id."-".$this->previous; ?>">
+    <span>«</span>
+    </a>    
+<?php else: ?>
+  <span class="disabled" style="display: none;">«</span>
+<?php endif; ?>
+
+<!-- Numbered page links -->
+
+<?php foreach ($this->pagesInRange as $page): ?>
+  <?php if ($page != $this->current): ?>
+    <a href="<?php echo "/index/34-".$user_id."-".$page; ?>">
+    <span><?php echo $page; ?></span>
+    </a>
+  <?php else: ?>
+        <b class="swchItemA"><span><?php echo $page; ?></span></b>
+  <?php endif; ?>
+<?php endforeach; ?>
+
+<!-- Next page link -->
+<?php if (isset($this->next)): ?>
+    <a href="<?php echo "/index/34-".$user_id."-".$this->next; ?>">
+        <span>»</span>
+    </a>
+<?php else: ?>
+  <span class="disabled" style="display: none;">»</span>
+<?php endif; ?>
+</span>
+<?php endif; ?>

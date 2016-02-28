@@ -1,0 +1,222 @@
+
+<?php
+echo $this->headTitle("ТВ Онлайн. Телевидение здесь на Tushkan.NET");
+$meta_arr = Model_MetaTags::getMetaTagsByLocation("tv");
+$meta = "";
+foreach($meta_arr as $item){
+    $meta .= '<meta name="'.$item['name'].'" content="'.$item['content'].'" />
+';
+}
+$meta .= $this->headMeta();
+Zend_Registry::set("meta",$meta);
+$user_online = Zend_Registry::get("user");
+echo $this->one_page['message'];
+?>
+<style>.breadcrumbs_tv{display: none;}.cattext{margin-top: -10px;}</style>
+<table align="center" style="width: 649px;  border-collapse: collapse; margin: 0;margin-left: 3px;">
+    <tbody>
+    <tr>
+    <td>
+    <center>
+    <noindex>
+    <script src="/js/social-likes.min.js"></script>
+    <link rel="stylesheet" href="/css/social-likes_classic.css">
+    <div class="social-image" style="display: none; background: rgb(0, 0, 0);">
+        <link rel="image_src" id="image_src" href="http://tushkan.net/img/11.png">
+    </div>
+    <div id="share2" class="social-likes" data-url="http://tushkan.net/index/tv_onlajn/0-51" data-title="<? echo $str_title; ?>">
+    	<div class="vkontakte" title="Поделиться ссылкой во Вконтакте">Поделиться</div>
+        <div class="facebook" title="Поделиться ссылкой на Фейсбуке">Нравится</div>
+    	<div class="twitter" title="Поделиться ссылкой в Твиттере">Твитнуть</div>
+    	<div class="odnoklassniki" title="Поделиться ссылкой в Одноклассниках">Класс!</div>
+        <div class="mailru" title="Поделиться ссылкой в Моём мире">Нравится</div>
+    </div>
+    </noindex>
+    </center>
+<hr />
+    </td>
+    </tr>
+	
+	<tr><td>
+        <noindex>
+            <center>
+                <div id="banner_under_news" style="float: left;"><script type="text/javascript" src="/js/banners/data_under_news.js"></script></div>
+            </center>
+        </noindex>
+        </td></tr>
+    </tbody>
+</table>
+<table align="center" style="width: 649px; background-color: #E1E6EC; border-collapse: collapse; margin: 0;margin-left: 3px;">
+    <tbody><tr><td style="border-color: #ada286; border-width: 1px; border-style: solid; letter-spacing: 0px; word-spacing: 0px; padding: 3px 3px 3px 17px;">
+            <div style="font-face: Arial; font-size: 11pt; color: #005995; font-weight:600">Советуем так же посмотреть:</div>
+        </td></tr>
+    <tr><td style="border-color: #ada286; border-width: 1px; border-style: solid; letter-spacing: 0px; word-spacing: 0px; padding: 5px 0 0 10px;">
+            <div id="recommend_to_view"><? echo $this->recommendToView(); ?></div>
+        </td></tr>
+    </tbody>
+</table>
+<? if($user_online->data['is_registered']){
+    echo "<br>Просмотров: <b>".$this->one_page['reads1']."</b>";
+}
+?>
+
+<? if($this->show_comments == 'on'){ ?>
+
+<? if($user_online->data['is_registered']){ ?>
+<script type="text/javascript">
+function addcom(f){
+    var message = $(".commFl").val();
+    if(message != ""){
+        if (document.getElementById('addcBut')){
+            document.getElementById('addcBut').disabled=true;
+        }else {
+            try{document.addform.submit.disabled=true;}
+            catch(e){}
+        }
+        if (document.getElementById('eMessage')){
+            document.getElementById('eMessage').innerHTML='<span style="color:#8B8B8B"><img src="/img/ma/m/i2.gif" border="0" align="absmiddle" width="13" height="13"> Идет передача данных...</span>';
+        }
+        
+        var user_id = $("#c_user_id").val();
+        var material_id = $("#c_material_id").val();
+        var module_id = $("#c_module_id").val();
+        var page_number = $("#c_page_number").val();
+        $.post('/index/newcomment/', {user_id:user_id,material_id:material_id,module_id:module_id,message:message,pn:page_number}, function(e){
+            if(e.status == 'spam'){
+                $('#eMessage').html('<span style="color:red;">Сообщение содержит запрещенные слова</span>');
+                document.getElementById('addcBut').disabled=false;
+            }else if(e.status == 'ok'){
+                document.getElementById('addcBut').disabled=false;
+                $(".commFl").val('');
+                location.reload();
+            }
+        })
+    }else{
+        if (document.getElementById('eMessage')){
+            document.getElementById('eMessage').innerHTML='<span style="color:red">Нельзя добавить пустой комментарий</span>';
+        }
+    }
+    
+}
+</script>
+<div id="postFormContent" class="">
+<form method="post" name="addform" id="acform" style="margin:0" action="/index/newcomment" onsubmit="addcom();return false;"><input type="hidden" name="sos" value="4149968531">
+
+<table border="0" width="100%" cellspacing="1" cellpadding="2" class="commTable">
+<tbody><tr><td class="commTd2" colspan="2">
+
+<div class="commError" id="eMessage" align="center"><? echo $this->info; ?></div>
+
+</td></tr>
+
+<tr><td class="commTd2" colspan="2">
+<?if($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8" || $user_online->data['group_id'] == "9" || $user_online->data['group_id'] == "10"){?>
+<div style="padding-bottom:2px">
+<script type="text/javascript" src="/js/bbcodes.js?2"></script><span style="padding-right:1px;" id="bc1"><input type="button" title="Bold" value="b" onclick="simpletag('b','','','message','')" class="codeButtons" id="b" style="width:20px;font-weight:bold"></span><span style="padding-right:1px;" id="bc2"><input type="button" title="Italic" value="i" onclick="simpletag('i','','','message','')" class="codeButtons" id="i" style="width:20px;font-style:italic"></span><span style="padding-right:1px;" id="bc3"><input type="button" title="Underline" value="u" onclick="simpletag('u','','','message','')" class="codeButtons" id="u" style="width:20px;text-decoration:underline"></span><span style="padding-right:1px;" id="bc4"><select id="fsize" class="codeButtons" onchange="alterfont(this.options[this.selectedIndex].value,'size','message','');this.selectedIndex=0;"><option value="0">SIZE</option><option value="6">6 pt</option><option value="7">7 pt</option><option value="8">8 pt</option><option value="9">9 pt</option><option value="10">10 pt</option><option value="11">11 pt</option><option value="12">12 pt</option><option value="13">13 pt</option><option value="14">14 pt</option><option value="15">15 pt</option><option value="16">16 pt</option><option value="17">17 pt</option><option value="18">18 pt</option><option value="19">19 pt</option><option value="20">20 pt</option><option value="21">21 pt</option><option value="22">22 pt</option></select></span><span style="padding-right:1px;" id="bc6"><select id="fcolor" class="codeButtons" onchange="alterfont(this.options[this.selectedIndex].value, 'color','message','');this.selectedIndex=0;"><option value="0">COLOR</option><option value="blue" style="color:blue">Blue</option><option value="red" style="color:red">Red</option><option value="purple" style="color:purple">Purple</option><option value="orange" style="color:orange">Orange</option><option value="yellow" style="color:yellow">Yellow</option><option value="gray" style="color:gray">Gray</option><option value="green" style="color:green">Green</option></select></span>
+<span style="padding-right:1px;" id="bc7"><input type="button" title="URL" value="http://" onclick="tag_url('message','')" class="codeButtons" style="direction:ltr;width:45px;" id="url"></span>
+<span style="padding-right:1px;" id="bc8"><input type="button" title="E-mail" value="@" onclick="tag_email('message','')" class="codeButtons" style="width:30px;" id="email"></span>
+<span style="padding-right:1px;" id="bc9"><input type="button" title="Image" value="img" onclick="tag_image('message','')" class="codeButtons" style="width:35px;" id="img"></span><span style="padding-right:1px;" id="bc18"><input type="button" title="Hide from Guest" value="hide" onclick="simpletag('hide','','','message','')" class="codeButtons" style="width:40px;" id="hide"></span><span style="padding-right:1px;" id="bc12"><input type="button" title="List" value="list" onclick="tag_list('message','')" class="codeButtons" id="list" style="width:30px;"></span><span style="padding-right:1px;" id="bc13"><input type="button" title="Left" style="width:20px;text-align:left;" value="···" onclick="simpletag('l','cdl','···','message')" class="codeButtons" id="cdl"></span><span style="padding-right:1px;" id="bc14"><input type="button" title="Center" style="width:20px;text-align:center;" value="···" onclick="simpletag('c','cdc','···','message')" class="codeButtons" id="cdc"></span><span style="padding-right:1px;" id="bc15"><input type="button" title="Right" style="width:20px;text-align:right;" value="···" onclick="simpletag('r','cdr','···','message')" class="codeButtons" id="cdr"></span><span style="padding-right:1px;" id="bc16"><input type="button" title="All codes" style="width:60px;" value="All codes" onclick="window.open('/index/showbbcodes','bbcodes','scrollbars=1,width=550,height=450,left=0,top=0');" class="codeButtons"></span><span style="padding-right:1px;" id="bc17"><input style="font-weight:bold;width:20px" type="button" value="/" class="codeButtons codeCloseAll" title="Close all opened codes" onclick="closeall('message','');"></span><input type="hidden" id="tagcount" value="0">
+</div>
+<?}?>
+<table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td valign="top"><textarea class="commFl" style="height: 135px; margin: 0px; width: 561px;" rows="8" name="message" id="message" cols="50"></textarea></td><td width="5%" valign="top" align="center" style="padding-left:3px;">
+<table border="0" cellpadding="2" class="smiles" onmouseover="document.getElementById('asmltrSoVNa').style.display='';" onmouseout="document.getElementById('asmltrSoVNa').style.display='none';"><tbody><tr><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon('>(','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/angry.gif" title="angry"></a></td><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':D','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/biggrin.gif" title="biggrin"></a></td><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon('B)','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/cool.gif" title="cool"></a></td></tr><tr><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':\'(','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/cry.gif" title="cry"></a></td><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon('<_<','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/dry.gif" title="dry"></a></td><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon('^_^','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/happy.gif" title="happy"></a></td></tr><tr><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':(','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/sad.gif" title="sad"></a></td><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':)','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/smile.gif" title="smile"></a></td><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':o','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/surprised.gif" title="surprised"></a></td></tr><tr><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':p','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/tongue.gif" title="tongue"></a></td><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon('%)','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/wacko.gif" title="wacko"></a></td><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(';)','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/wink.gif" title="wink"></a></td></tr><tr id="asmltrSoVNa" style="display:none;"><td colspan="3" align="center" id="allSmiles" nowrap=""><a href="javascript://" rel="nofollow" class="show_popup_smiles_comments">Все смайлы</a></td></tr></tbody></table></td></tr></tbody></table></td></tr>
+<tr><td width="15%" class="commTd1" nowrap="">Подписка:</td><td class="commTd2"><select name="subs"><option value="0">Без подписки</option><option value="1">Все комментарии к материалу</option><option value="2" selected="">Ответы на мой комментарий</option></select></td></tr>
+
+<tr><td class="commTd2" colspan="2" align="center"><input type="button" class="gbutton" id="addcBut" name="submit" group_id="<? echo $user_online->data['group_id']; ?>" value="- Добавить комментарий -"></td></tr></tbody></table>
+
+ 
+<script type="text/javascript">
+$('#addcBut').click(function(){
+    if($(this).attr("group_id") != "11"){
+        if($('#send_to_newsfeed:checked').length){
+        $('#eMessage').html('<span style="color:#8B8B8B;"><img src="/img/ma/m/i2.gif" border="0" align="absmiddle" width="13" height="13"> Идет передача данных...</span>');
+        _uPostForm('acform', {
+        success: function(data){
+        if($(data).find('cmd[t=eMessage]').text().indexOf('myWinSuccess') > 0) $.post('/php/friends/comment_to_newsfeed.php', {
+        url: location.href,
+        message: $('#message').val()
+        }, function(){
+        $('#eMessage').html($(data).find('cmd[t=eMessage]').text());
+        $('#newEntryB').append($(data).find('cmd[t=newEntryB]').text());
+        eval($(data).find('cmd[p=js]').text());
+        }); else {
+        $('#eMessage').html($(data).find('cmd[t=eMessage]').text());
+        eval($(data).find('cmd[p=js]').text());
+        };
+        }
+        });
+        } else return addcom();
+    }else{
+        $('#eMessage').html('<span style="color:red;">Для вашего аккаунта любая активность временно заблокирована</span>');
+    }
+});
+</script>
+<input type="hidden" id="c_user_id" name="a" value="<? echo $user_online->data['user_id']; ?>">
+<input type="hidden" id="c_material_id" name="m" value="17804">
+<input type="hidden" id="c_module_id" name="id" value="8">
+<input type="hidden" id="c_page_number" name="pn" value="<? echo $this->page_number; ?>">
+<input id="csoc_type" type="hidden" name="soc_type"><input id="cdata" type="hidden" name="data">
+</form>
+</div>
+<? }else{ ?>
+<div align="center" class="commReg">Добавлять комментарии могут только зарегистрированные пользователи.
+<br>[ <a href="/index/registration">Регистрация</a> | 
+<a href="javascript://" class="login_popup" rel="nofollow" >Вход</a> ]
+</div>
+<? } ?>
+
+<div class="tabs">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td width="60%" height="25">Всего комментариев:<b><? echo $this->count_comments; ?></b>
+</td>
+<td align="right" height="25">
+<?php  if($this->comments->getTotalItemCount() > 20){ echo $this->paginationControl($this->comments, 'Sliding',
+                'partials/paginator_comments_news.phtml'); } ?>
+</td>
+</tr>
+
+<tr>
+<td colspan="2">
+
+<div id="myGrid" style="display:none;">
+    <div style="position:fixed;width:100%;text-align:center;padding-top:250px;">
+        <img alt="" src="/img/ma/m/i3.gif" style="border:0;width:220px;height:19px;">
+    </div>
+</div>
+
+<div id="newEntryT"></div>
+<? echo $this->materialComments($this->comments,17804,8,$this->comments_keys,$this->page_number); ?>
+</td>
+</tr>
+
+<tr>
+<td colspan="2" align="center">
+<?php if($this->comments->getTotalItemCount() > 20){ echo $this->paginationControl($this->comments, 'Sliding',
+                'partials/paginator_comments_news_2.phtml'); } ?>
+</td>
+</tr>
+
+<tr>
+<td colspan="2" height="10"><hr />
+<div style="background: #EFFDCC; font-size: 12pt; font-family: Times New Roman; text-align: justify;">
+Ты только что вернулся домой из ненавистного офиса, наконец вырвался от токарного станка или убежал из пар в институте и ничего больше в жизни не хочется, только отдохнуть, посмотреть любимую телевизионную передачу или сериал о бравых ментах, которые спасают весь мир. Вот только телевизор ты давно выбросил на помойку, оставив место для ноутбука или персонального компьютера. Не стоит паниковать, или бежать к соседям, как это было в далекие советские времена, когда едва ли не весь подъезд собирался в тесной квартире счастливчика, которому удалось правдами-неправдами приобрести желанный ящик. Стоит только включить свой ноут и зайти на Тушкан.нет, где ты сможешь найти все необходимое и насладиться просмотром чего-то интересного и расслабляющего.
+<br /><br />
+Здесь не нужно платить деньги за регистрацию или просмотр программ и сериалов, здесь все на халяву и прямо сейчас. Если хочешь смотреть ТВ-передачи онлайн, милости просим. Тушкан.нет подготовил просто поразительною подборку каналов российского телевидения. У нас не бывает простоев и плохого качества, мы приложили колоссальные усилия, чтобы подарить тебе, уважаемый посетитель, возможность окунуться в безграничный мир телевидения.
+<br /><br />
+Чтобы облегчить жизнь нашим зрителям, мы сформировали телепрограмму, в которой до мельчайших деталей расписан график выхода на экраны программ, мультфильмов и кино. У нас можно смотреть онлайн все самые рейтинговые федеральные и мало кому известные каналы, которые интересуют какую-то специфическую аудиторию, как рыбаков или технарей. Каждый, кто найдет время и возможность заглянуть на Тушкан на вечеринку, сможет найти что-то интересное для себя, что-то, что подарит приятные эмоции и доставит удовольствие. Мы, как и положено ответственным и исполнительным телевизионщикам, для которых зритель и его хорошее настроение всегда на первом месте, стараемся придерживаться всех канонов, стараемся идти в ногу со временем и предоставлять нашим посетителям все самое лучшее, будь то телевизионные программы онлайн, юмористические шоу или сериалы далекого прошлого, когда кинематограф только зарождался и становился. Мы делаем все от нас зависящее, чтобы на портале постоянно обновлялся перечень каналов, пополнялся какими-то новинками онлайн телевидения.
+<br /><br />
+Для удобства просмотра на Тушкан.нет существует специализированный архив, куда попадают те выпуски программ, фильмов и сериалов, которые недавно транслировались на разных каналах. Это сделано специально для людей, которые по разным причинам пропустили выпуск любимого шоу или серию какого-то популярного многосерийного проекта. Стоит только зайти в Архив, вбить в поиске нужный телепродукт и перед вами появится то, что вы так хотели найти. 
+<br /><br />
+С нами ты никогда и ничего не пропустишь, будешь в курсе последних событий и всегда будешь знать, что на Тушкан.нет тебя ждут с распростертыми объятиями. Здесь ты не один из миллионов, а один-единственный, для тебя мы работаем и ради тебя делаем наш портал лучше. Наши ежедневные усилия и бессонные ночи в поисках чего-то новенького и интригующего, призваны удовлетворить любые фантазии. Мы самосовершенствуемся с каждым новым днем, прекрасно понимая, что ты не просто так пришел в гости на Тушкан, а хочешь отдохнуть и насладиться несколькими свободными часиками. Поэтому мы не хотим тратить попусту твое время, не хотим, чтобы ты бесцельно бродил и в конечном итоге не нашел то, ради чего пришел. Мы знаем, что наши зрители заслуживают только на лучшее, а потому готовы без колебаний и промедлений предоставить это лучшее и самое ценное, что у нас есть.
+</div>
+</td>
+</tr>
+
+</tbody>
+</table>
+
+</div>
+
+<? } ?>

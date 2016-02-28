@@ -1,0 +1,38 @@
+<?
+$search_text = Zend_Controller_Front::getInstance()->getRequest()->getParam("q");
+$pn = Zend_Controller_Front::getInstance()->getRequest()->getParam("page");
+?>
+<?php if ($this->pageCount): ?>
+<div class="pagesBlockuz1">
+
+<!-- Previous page link -->
+<?php if (isset($this->previous)): ?>
+    <a class="swchItem" href="<?php echo "/search/?q=".$search_text."&sfSbm=Искать&a=45&page=".$this->previous; ?>">
+        <span>«</span>
+    </a>
+<?php else: ?>
+    <span class="disabled" style="display: none;">«</span>
+<?php endif; ?>
+
+<!-- Numbered page links -->
+<?php foreach ($this->pagesInRange as $page): ?>
+    <?php if ($page != $this->current): ?>
+        <a class="swchItem" href="<?php echo "/search/?q=".$search_text."&sfSbm=Искать&a=45&page=".$page; ?>">
+            <span><?php echo $page; ?></span>
+        </a>
+    <?php else: ?>
+        <b class="swchItemA"><span><?php echo $page; ?></span></b>
+    <?php endif; ?>
+<?php endforeach; ?>
+
+<!-- Next page link -->
+<?php if (isset($this->next)): ?>
+    <a class="swchItem" href="<?php echo "/search/?q=".$search_text."&sfSbm=Искать&a=45&page=".$this->next; ?>">
+        <span>»</span>
+    </a>
+<?php else: ?>
+    <span class="disabled" style="display: none;">»</span>
+<?php endif; ?>
+
+</div>
+<?php endif; ?>

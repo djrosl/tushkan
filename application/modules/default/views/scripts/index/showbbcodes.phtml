@@ -1,0 +1,139 @@
+<?
+$title = $this->headTitle();
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+?>
+<html><head>
+<title>BB-Коды</title>
+<style>
+body,td {font-size:11px; font-family:verdana,arial,helvetica;}
+a:link {color: #868686; text-decoration: none}
+a:active {color: #868686; text-decoration: none;}
+a:visited {color: #868686; text-decoration: none;}
+a:hover {color: #000000; text-decoration: underline;}
+.code {color:blue;font-weight:normal;font-size:8pt;}
+.tb0 {background:#BFBFBF;}
+.td0 {background:#6E6E6E;color:#FFFFFF;}
+.td1 {background:#F3F3F3;}
+.td2 {background:#F9F9F9;}
+body {background:#F9F9F9;}
+</style>
+</head>
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" rightmargin="0" bottommargin="10" marginheight="0" marginwidth="0">
+<table border="0" width="100%" cellspacing="1" cellpadding="3" class="tb0">
+<tbody><tr>
+<td width="60%" align="center" class="td0"><b>Пример использования</b></td>
+<td align="center" class="td0"><b>Результат</b></td>
+</tr>
+<tr>
+<td class="td1"><font class="code">[b]</font>Жирный текст<font class="code">[/b]</font></td>
+<td class="td2"><b>Жирный текст</b></td>
+</tr>
+<tr>
+<td class="td1"><font class="code">[i]</font>Наклонный текст<font class="code">[/i]</font></td>
+<td class="td2"><i>Наклонный текст</i></td>
+</tr>
+<tr>
+<td class="td1"><font class="code">[s]</font>Зачеркнутый текст<font class="code">[/s]</font></td>
+<td class="td2"><strike>Зачеркнутый текст</strike></td>
+</tr>
+<tr>
+<td class="td1"><font class="code">[u]</font>Подчеркнутый текст<font class="code">[/u]</font></td>
+<td class="td2"><u>Подчеркнутый текст</u></td>
+</tr>
+
+<tr>
+<td class="td1"><font class="code">[size=10]</font>Размер шрифта<font class="code">[/size]</font><br>
+(Размер: 8..25)</td>
+<td class="td2"><font size="5">Размер шрифта</font></td>
+</tr>
+<tr>
+<td class="td1"><font class="code">[color=red]</font>Цвет шрифта<font class="code">[/color]</font></td>
+<td class="td2"><font color="red">Цвет шрифта</font></td>
+</tr>
+<tr>
+<td class="td1"><font class="code">[font=Comic Sans MS]</font>Другой шрифт<font class="code">[/font]</font></td>
+<td class="td2"><font face="Comic Sans MS">Другой шрифт</font></td>
+</tr>
+
+<tr>
+<td class="td1"><font class="code">[spoiler]</font>Any text goes here...<font class="code">[/spoiler]</font></td>
+<td class="td2"><input type="button" value="Show hidden text" onclick="if (document.getElementById('ksdfjd23').style.display=='none'){document.getElementById('ksdfjd23').style.display=''}else{document.getElementById('ksdfjd23').style.display='none'}"><div style="display:none;" id="ksdfjd23">Hidden text</div></td>
+</tr>
+
+<tr>
+<td class="td1"><font class="code">[video]</font><span style="font-size:7pt">http://youtube.com/watch?v=DbzFNj8HVmc</span><font class="code">[/video]</font></td>
+<td class="td2" align="center"><img alt="" border="0" src="http://s88.ucoz.net/img/ma/yt.gif"></td>
+</tr>
+<tr>
+<td class="td1"><font class="code">[audio]</font>http://any_site.com/music.mp3<font class="code">[/audio]</font></td>
+<td class="td2" align="center"><img alt="" border="0" src="http://s88.ucoz.net/img/ma/mp.gif"></td>
+</tr>
+<tr>
+<td valign="top" class="td1"><font class="code">[code]</font>Код программы<font class="code">[/code]</font></td>
+<td class="td2">
+<table border="0" align="center" width="95%" cellpadding="3" cellspacing="1">
+<tbody><tr>
+<td><b><span style="font-size: 10px">Code</span></b></td>
+</tr>
+<tr>
+<td bgcolor="#F5F5F5" style="border:1px solid #c0c0c0;">Код программы</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+<tr>
+<td valign="top" class="td1"><font class="code">[quote]</font>Цитата из сообщения<font class="code">[/quote]</font><br>
+</td>
+<td class="td2">
+<table border="0" align="center" width="95%" cellpadding="3" cellspacing="1">
+<tbody><tr>
+<td><b><span style="font-size: 10px">Quote</span></b></td>
+</tr>
+<tr>
+<td bgcolor="#F5F5F5" style="border:1px solid #c0c0c0;">Цитата из сообщения</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+<tr>
+<td valign="top" class="td1"><font class="code">[quote=Alex]</font>Цитата из сообщения<font class="code">[/quote]</font></td>
+<td class="td2">
+<table border="0" align="center" width="95%" cellpadding="3" cellspacing="1">
+<tbody><tr>
+<td><span style="font-size: 10px"><b>Quote </b>(Alex)</span></td>
+</tr>
+<tr>
+<td bgcolor="#F5F5F5" style="border:1px solid #c0c0c0;">Цитата из сообщения</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+<tr>
+<td valign="top" class="td1"><font class="code">[url]</font>http://www.google.com<font class="code">[/url]</font></td>
+<td class="td2"><b></b><a href="http://www.google.com" target="_blank">http://www.google.com</a>
+</td>
+</tr>
+
+<tr>
+<td valign="top" class="td1"><font class="code">[img]</font>http://www.site.com/img.gif<font class="code">[/img]</font></td>
+<td class="td2"><img alt="" border="0" src="http://s88.ucoz.net/img/ma/sm.gif"></td>
+</tr>
+<tr>
+<td valign="top" class="td1"><font class="code">[list]</font><br>
+<font class="code">[*]</font>пункт 1<font class="code">[/*]</font><br>
+<font class="code">[*]</font>пункт 2<font class="code">[/*]</font><br>
+<font class="code">
+[/list]</font></td>
+<td class="td2"><ul class="uz">
+<li>пункт 1
+</li><li>пункт 2
+</li></ul>
+</td>
+</tr>
+
+</tbody></table>
+<p align="center"><a href="javascript://" onclick="window.close(self)" style="text-decoration:none;">« Закрыть окно »</a></p>
+
+</body></html>

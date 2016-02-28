@@ -1,0 +1,26 @@
+#tab1, #tab2, #tab3 {display:none; position:fixed;}
+.menu1 > a,
+.menu1 #tab2:target ~ a:nth-of-type(1), 
+.menu1 #tab3:target ~ a:nth-of-type(1) {
+ background: #fff;
+ padding: 8px 32px 8px 31px;
+ border: 1px solid #CAD3DA;
+border-radius: 8px 8px 0 0;
+ line-height: 31px; 
+font-size: 10px;
+text-shadow: #CAD3DA 1px 1px 2px; color:#d69f80;}
+.menu1 > a:nth-of-type(1),
+.menu1 #tab2:target ~ a:nth-of-type(2), 
+.menu1 #tab3:target ~ a:nth-of-type(3) {border-bottom: #F4F6F7; background: #DC9248; font-size: 14px; text-shadow:#CAD3DA 1px 1px 3px; color:#F7F7F7;}
+.menu1 > a:hover { text-decoration:none;}
+.menu1 > div,
+.menu1 #tab2:target ~ div:nth-of-type(1), 
+.menu1 #tab3:target ~ div:nth-of-type(1) {
+ display: none;
+ padding: 0px;
+ border: 0px solid #CAD3DA;
+ border-top: #fff;
+ background: none;}
+.menu1 > div:nth-of-type(1),
+.menu1 #tab2:target ~ div:nth-of-type(2), 
+.menu1 #tab3:target ~ div:nth-of-type(3) { display: block; }

@@ -1,0 +1,37 @@
+<?
+$title = $this->headTitle("Recommend");
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+?>
+<html>
+<head>
+<link type="text/css" rel="StyleSheet" href="/css/main.css">
+</head>
+<body style="background: #E1E6EC;">
+
+<div id="menu-cont2" style="width: 630px;">
+    <?  $last_films = Model_News::getLastFilms();
+        foreach($last_films as $film){
+    ?>
+    <div class="filmsmenu">
+        <ul>
+            <li>
+                <div class="filmmenu_img">
+                    <div class="filmmenu_text">
+                        <a href="/news/<? echo $film['sbscr'] ?>/<? echo date('Y-m-d', $film['urltime']); ?>-<? echo $film['id'] ?>" title="">
+                            <script type="text/javascript"> var str = '<? echo $film['title'] ?>'; str = str.replace(/Смотреть онлайн бесплатно в хорошем качестве/," "); str = str.replace(/Футбол. Чемпионат мира/," "); str = str.replace(/Смотреть фильм онлайн/," "); str = str.replace(/Смотреть мультфильм онлайн/," "); str = str.replace(/Смотреть сериал онлайн/," "); str = str.replace(/Смотреть онлайн/," "); str = str.replace(/(\(2013\))/," "); str = str.replace(/(\(2012\))/," "); str = str.replace(/(\(2011\))/," "); str = str.replace(/(\(2010\))/," "); document.write(str); </script>
+                        </a>
+                    </div>
+                    <a href="/news/<? echo $film['sbscr'] ?>/<? echo date('Y-m-d', $film['urltime']); ?>-<? echo $film['id'] ?>">
+                        <img src="<? echo $film['other1'] ?>" alt="<? echo $film['title'] ?>">
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <? } ?>
+</div>
+
+</body>
+</html>

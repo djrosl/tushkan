@@ -1,0 +1,5 @@
+<style>.pagination{float: right;}.pagination .active{background: dodgerblue; color: white; }</style>
+<script>$(document).ready(function(){$('li .active').removeClass('active');$('#pools').addClass('active');});</script>
+<script src="/admins/poolsl.js"></script>
+<? echo $this->admintable('Опросы', 'pools');?>
+<ul class="pagination"><?php echo  $this->paginationControl($this->pag,'Sliding','pagination.phtml');  ?></ul>

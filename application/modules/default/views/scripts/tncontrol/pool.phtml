@@ -1,0 +1,109 @@
+<script>$(document).ready(function(){$('li .active').removeClass('active');$('#pools').addClass('active');});</script>
+<script src="/admins/poolsl.js"></script>
+<div class="pool">
+    <? if ($this->pool['k1']){?>
+        <h3>Редактировать опрос</h3>
+    <? } else {?>
+        <h3>Добавить опрос</h3>
+    <? } ?>
+    <label>Вопрос:</label><input type="text" class="form-control" value="<? echo $this->pool['k7'];?>" id="quest">
+    <div class="separator"></div>
+
+    <label>Ответ 1:</label>
+    <div class="sub_pool">
+        <input type="text" class="form-control" value="<? echo $this->pool['k8'];?>" id="a1">
+        <input type="text" class="form-control" value="<? echo $this->pool['k23'];?>" id="b1">
+    </div>
+
+    <label>Ответ 2:</label>
+    <div class="sub_pool">
+        <input type="text" class="form-control" value="<? echo $this->pool['k9'];?>" id="a2">
+        <input type="text" class="form-control" value="<? echo $this->pool['k24'];?>" id="b2">
+    </div>
+    <label>Ответ 3:</label>
+    <div class="sub_pool">
+        <input type="text" class="form-control" value="<? echo $this->pool['k10'];?>" id="a3">
+        <input type="text" class="form-control" value="<? echo $this->pool['k25'];?>" id="b3">
+    </div>
+    <label>Ответ 4:</label>
+    <div class="sub_pool">
+        <input type="text" class="form-control" value="<? echo $this->pool['k11'];?>" id="a4">
+        <input type="text" class="form-control" value="<? echo $this->pool['k26'];?>" id="b4">
+    </div>
+    <label>Ответ 5:</label>
+    <div class="sub_pool">
+        <input type="text" class="form-control" value="<? echo $this->pool['k12'];?>" id="a5">
+        <input type="text" class="form-control" value="<? echo $this->pool['k27'];?>" id="b5">
+    </div>
+    <label>Ответ 6:</label>
+    <div class="sub_pool">
+        <input type="text" class="form-control" value="<? echo $this->pool['k13'];?>" id="a6">
+        <input type="text" class="form-control" value="<? echo $this->pool['k28'];?>" id="b6">
+    </div>
+    <label>Ответ 7:</label>
+    <div class="sub_pool">
+        <input type="text" class="form-control" value="<? echo $this->pool['k14'];?>" id="a7">
+        <input type="text" class="form-control" value="<? echo $this->pool['k29'];?>" id="b7">
+    </div>
+    <label>Ответ 8:</label>
+    <div class="sub_pool">
+        <input type="text" class="form-control" value="<? echo $this->pool['k15'];?>" id="a8">
+        <input type="text" class="form-control" value="<? echo $this->pool['k30'];?>" id="b8">
+    </div>
+    <label>Ответ 9:</label>
+    <div class="sub_pool">
+        <input type="text" class="form-control" value="<? echo $this->pool['k16'];?>" id="a9">
+        <input type="text" class="form-control" value="<? echo $this->pool['k31'];?>" id="b9">
+    </div>
+    <label>Ответ 10:</label>
+    <div class="sub_pool">
+        <input type="text" class="form-control" value="<? echo $this->pool['k17'];?>" id="a10">
+        <input type="text" class="form-control" value="<? echo $this->pool['k32'];?>" id="b10">
+    </div>
+    <label>Ответ 11:</label>
+    <div class="sub_pool">
+        <input type="text" class="form-control" value="<? echo $this->pool['k18'];?>" id="a11">
+        <input type="text" class="form-control" value="<? echo $this->pool['k33'];?>" id="b11">
+    </div>
+    <label>Ответ 12:</label>
+    <div class="sub_pool">
+        <input type="text" class="form-control" value="<? echo $this->pool['k19'];?>" id="a12">
+        <input type="text" class="form-control" value="<? echo $this->pool['k34'];?>" id="b12">
+    </div>
+    <label>Ответ 13:</label>
+    <div class="sub_pool">
+        <input type="text" class="form-control" value="<? echo $this->pool['k20'];?>" id="a13">
+        <input type="text" class="form-control" value="<? echo $this->pool['k35'];?>" id="b13">
+    </div>
+    <label>Ответ 14:</label>
+    <div class="sub_pool">
+        <input type="text" class="form-control" value="<? echo $this->pool['k21'];?>" id="a14">
+        <input type="text" class="form-control" value="<? echo $this->pool['k36'];?>" id="b14">
+    </div>
+    <label>Ответ 15:</label>
+    <div class="sub_pool">
+        <input type="text" class="form-control" value="<? echo $this->pool['k22'];?>" id="a15">
+        <input type="text" class="form-control" value="<? echo $this->pool['k37'];?>" id="b15">
+    </div>
+    <div class="separator"></div>
+    <label>Тип формы опроса:</label>
+    <select class="form-control" id="pool_type">
+        <? if ($this->pool['k2'] == 1){ ?>
+            <option value="1" selected>Radio</option>
+            <option value="2">Chekbox</option>
+        <? }else{?>
+            <option value="1" >Radio</option>
+            <option value="2" selected>Chekbox</option>
+        <? } ?>
+
+    </select>
+    <label>Надпись на кнопке:</label><input type="text" class="form-control" value="<? echo $this->pool['k6'];?>" id="button">
+    <label>Активный опрос:
+        <? if ($this->pool['k3'] == 1){ ?>
+            <input type="checkbox" checked class="form-control" id="activity">
+        <? }else{?>
+            <input type="checkbox" class="form-control" id="activity">
+        <? } ?></label>
+    <input type="hidden" id="idpool" value="<? echo $this->pool['k1'];?>">
+    <button class="btn btn-large btn-success save_pool">Сохранить</button>
+</div>

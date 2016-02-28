@@ -1,0 +1,104 @@
+<? $user_id = Zend_Controller_Front::getInstance()->getRequest()->getParam("id");
+$server_uri = $_SERVER["REQUEST_URI"];
+$page_number = 1;
+$min_pos_1 = strpos($server_uri, "-");
+$str1 = substr($server_uri,$min_pos_1+1);
+$min_pos_2 = strpos($str1, "-");
+$str2 = substr($str1,$min_pos_2+1);
+$min_pos_3 = strpos($str2, "-");
+$str_pn = substr($str2,0,$min_pos_3);
+$page_number = (int)($str_pn);
+
+$str3 = substr($str2,$min_pos_3+1);
+$min_pos_4 = strpos($str3, "-");
+$str4 = substr($str3,$min_pos_4+1);
+$min_pos_5 = strpos($str4, "-");
+$str_uid = substr($str4,$min_pos_5+1);
+$user_id = (int)($str_uid);
+?>
+<? $item_per_page = 18; // количество итемов на странице ?>
+<?php if ($this->pageCount): ?>
+<span class="pagesBlockuz1">
+
+<?php if (isset($this->previous)): ?>
+        <? if(($this->current) < 6 ){?>
+        <? } else {?>
+            <a class="swchItem" href="<?php echo "/news/0-0-".$this->first."-0-17-".$user_id; ?>">
+        <span><?php echo $this->first."-".($item_per_page); ?></span>
+    </a>
+    
+    <a class="swchItem" href="<?php echo "/news/0-0-".($this->first+1)."-0-17-".$user_id; ?>">
+        <span><?php echo (($item_per_page * $this->first)+1)."-".($item_per_page * ($this->first+1)); ?></span>
+    </a>
+            ...
+        <?} ?>
+    <? endif;?>
+    
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) == 5 ){?>
+            <a class="swchItem" href="<?php echo "/news/0-0-".$this->first."-0-17-".$user_id; ?>">
+        <span><?php echo $this->first."-".($item_per_page); ?></span>
+    </a>
+    
+    <a class="swchItem" href="<?php echo "/news/0-0-".($this->first+1)."-0-17-".$user_id; ?>">
+        <span><?php echo (($item_per_page * $this->first)+1)."-".($item_per_page * ($this->first+1)); ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+    
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) == 4 ){?>
+            <a class="swchItem" href="<?php echo "/news/0-0-".$this->first."-0-17-".$user_id; ?>">
+        <span><?php echo $this->first."-".($item_per_page); ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+
+<!-- Numbered page links -->
+<?php foreach ($this->pagesInRange as $page): ?>
+  <?php if ($page != $this->current): ?>
+    <a class="swchItem" href="<?php echo "/news/0-0-".$page."-0-17-".$user_id; ?>">
+        <span><?php if($page == 1){echo $page."-".($item_per_page);}else{ echo ((($item_per_page) * ($page - 1))+1)."-".(($item_per_page) * ($page)); } ?></span>
+    </a>
+  <?php else: ?>
+        <b class="swchItemA"><span><?php if($page == 1){echo $page."-".($item_per_page);}else{ echo ((($item_per_page) * ($page - 1))+1)."-".(($item_per_page) * ($page)); } ?></span></b>
+  <?php endif; ?>
+<?php endforeach; ?>
+
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) > ($this->pageCount - 5) ){?>
+        <? } else {?>
+            ...
+            <a class="swchItem" href="<?php echo "/news/0-0-".($this->last-1)."-0-17-".$user_id; ?>">
+        <span><?php echo (($item_per_page * (($this->last)-2))+1)."-".($item_per_page * (($this->last)-1)); ?></span>
+    </a>
+    
+    <a class="swchItem" href="<?php echo "/news/0-0-".$this->last."-0-17-".$user_id; ?>">
+        <span><?php echo (($item_per_page * (($this->last)-1))+1)."-".($this->totalItemCount); ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+    
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) == ($this->pageCount - 3) ){?>
+    
+    <a class="swchItem" href="<?php echo "/news/0-0-".$this->last."-0-17-".$user_id; ?>">
+        <span><?php echo (($item_per_page * (($this->last)-1))+1)."-".($this->totalItemCount); ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+    
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) == ($this->pageCount - 4) ){?>
+            <a class="swchItem" href="<?php echo "/news/0-0-".($this->last-1)."-0-17-".$user_id; ?>">
+        <span><?php echo (($item_per_page * (($this->last)-2))+1)."-".($item_per_page * (($this->last)-1)); ?></span>
+    </a>
+    
+    <a class="swchItem" href="<?php echo "/news/0-0-".$this->last."-0-17-".$user_id; ?>">
+        <span><?php echo (($item_per_page * (($this->last)-1))+1)."-".($this->totalItemCount); ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+
+</span>
+<?php endif; ?>

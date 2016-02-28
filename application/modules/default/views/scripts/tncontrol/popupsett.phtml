@@ -1,0 +1,59 @@
+<style>#facebox #wrapper{padding-left:0} #facebox{width: 600px; margin-left: -300px} #facebox .body{width: 590px}</style>
+<script>
+    $(document).ready(function($){
+        $('.save_sett').click(function(){
+            var key = $('#key').val();
+            var value = $('#value').val();
+            var id = $(this).attr('idu');
+            var params = {key:key, value:value};
+            if(key && value){
+                if(id){
+                    $.post('/tncontrol/ajax/fl/editsett/id/'+id,{params:params}, function(e){
+                        jQuery('.alert').html('');
+                        jQuery('.alert').append('<p>Настройки сохранены</p>');
+                        jQuery('.alert').removeClass('alert-danger');
+                        jQuery('.alert').addClass('alert-success');
+                        jQuery('.alert').slideDown('slow');
+                        setTimeout(function(){
+                            location.reload();
+                        }, 2000)
+                    });
+                }else{
+                    $.post('/tncontrol/ajax/fl/addsett/',{params:params}, function(e){
+                        jQuery('.alert').html('');
+                        jQuery('.alert').append('<p>Настройки сохранены</p>');
+                        jQuery('.alert').removeClass('alert-danger');
+                        jQuery('.alert').addClass('alert-success');
+                        jQuery('.alert').slideDown('slow');
+                        setTimeout(function(){
+                            location.reload();
+                        }, 2000)
+                    });
+                }
+
+            }else{
+                jQuery('.alert').html('');
+                jQuery('.alert').append('<p>Заполните все поля</p>');
+                jQuery('.alert').removeClass('alert-success');
+                jQuery('.alert').addClass('alert-danger');
+                jQuery('.alert').slideDown('slow');
+                setTimeout(closeError,3000);
+            }
+        });function closeError(){
+            jQuery('.alert').slideUp('slow');
+            jQuery('.alert').html("");
+        }
+
+    });
+</script>
+<div>
+    <? if ($this->sett->id) { ?>
+        <h3>Изменение настройки</h3>
+    <? } else {?>
+        <h3>Добавление настройки</h3>
+    <? } ?>
+    <label>Введите параметр:</label><input id="key" type="text" class="form-control" value="<? echo $this->sett->key; ?>">
+    <label>Введите значение:</label><textarea id="value" class="form-control"><? echo $this->sett->value;?></textarea>
+    <button idu="<? echo $this->sett->id;?>" class="btn btn-large btn-success save_sett">Сохранить</button>
+    <div style="display:none; margin-top: 5px"  class="alert alert-success"><p>Успешная авторизация</p></div>
+</div>

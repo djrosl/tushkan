@@ -1,0 +1,303 @@
+<?php
+function rdate($param, $time=0) {
+	if(intval($time)==0)$time=time();
+	$MonthNames=array("Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря");
+	if(strpos($param,'M')===false) return date($param, $time);
+		else return date(str_replace('M',$MonthNames[date('n',$time)-1],$param), $time);
+}
+
+$str_title = "Как заработать на комментариях к фильмам?";//." - ".rdate('d M Y', $this->one_news['addtime']);
+//var_dump($str_title);die;
+echo $this->headTitle($str_title);
+$meta_arr = Model_MetaTags::getMetaTagsByLocation("zarabotai");
+$meta = "";
+foreach($meta_arr as $item){
+    $meta .= '<meta name="'.$item['name'].'" content="'.$item['content'].'" />
+';
+}
+Zend_Registry::set("meta",$meta);
+
+$image = 'http://tushkan.net/_si/0/01786237.jpg';
+$page_url = 'http://tushkan.net/news/kak_zarabotat_na_kommentarijakh_k_filmam/2015-05-14-16858';
+$this->doctype('XHTML1_RDFA');
+$this->headMeta()->appendProperty('og:title', $str_title);
+$this->headMeta()->appendProperty('og:type', 'website');
+$this->headMeta()->appendProperty('og:image', $image);
+$this->headMeta()->appendProperty('og:url', $page_url);
+$this->headMeta()->appendProperty('og:site_name', 'Tushkan.net');
+
+?>
+<style>.breadcrumbs_tv{display: none;}</style>
+<table border="0" width="100%" cellspacing="1" cellpadding="2" class="eBlock">
+    <tbody>
+    <tr>
+        <td width="90%">
+            <? $user = Zend_Registry::get("user"); ?>
+            <?  if($user->data['group_id'] == "5" || $user->data['group_id'] == "8" || $user->data['group_id'] == "9"){
+                    echo '<a href="/tncontrol/editstatpage/id/'.$this->one_news['id'].'" style="color:red;float:right;" title="Редактировать"><img src="/img/edit_icon.png" alt=""/></a>';
+                }
+            ?>
+            <div align="center">
+                <div class="news_title">
+                    <font face="Arial">
+                        <h1><? echo $this->one_news['title'];?></h1>
+                    </font>
+                </div>
+                <h2><? echo $this->category['name'];?></h2>
+            </div>
+        </td>
+    </tr>
+<tr>
+<td align="center">
+
+            <style type="text/css">
+                .u-star-rating-30 { list-style:none;margin:0px;padding:0px;width:150px;height:30px;position:relative;background: url('/s.s/img/stars/3/30.png') top left repeat-x }
+                .u-star-rating-30 li{ padding:0px;margin:0px;float:left }
+                .u-star-rating-30 li a { display:block;width:30px;height: 30px;line-height:30px;text-decoration:none;text-indent:-9000px;z-index:20;position:absolute;padding: 0px;overflow:hidden }
+                .u-star-rating-30 li a:hover { background: url('/s.s/img/stars/3/30.png') left center;z-index:2;left:0px;border:none }
+                .u-star-rating-30 a.u-one-star { left:0px }
+                .u-star-rating-30 a.u-one-star:hover { width:30px }
+                .u-star-rating-30 a.u-two-stars { left:30px }
+                .u-star-rating-30 a.u-two-stars:hover { width:60px }
+                .u-star-rating-30 a.u-three-stars { left:60px }
+                .u-star-rating-30 a.u-three-stars:hover { width:90px }
+                .u-star-rating-30 a.u-four-stars { left:90px }
+                .u-star-rating-30 a.u-four-stars:hover { width:120px }
+                .u-star-rating-30 a.u-five-stars { left:120px }
+                .u-star-rating-30 a.u-five-stars:hover { width:150px }
+                .u-star-rating-30 li.u-current-rating { top:0 !important; left:0 !important;margin:0 !important;padding:0 !important;outline:none;background: url('/s.s/img/stars/3/30.png') left bottom;position: absolute;height:30px !important;line-height:30px !important;display:block;text-indent:-9000px;z-index:1 }
+            </style>
+            <ul id="uStarRating<? echo $this->one_news['id'];?>" class="uStarRating<? echo $this->one_news['id'];?> u-star-rating-30" title="Рейтинг: <? echo $this->one_news['rating'];?>/<? echo $this->one_news['rate_num'];?>">
+                <li class="u-current-rating uCurStarRating<? echo $this->one_news['id'];?>" id="uCurStarRating<? echo $this->one_news['id'];?>" style="width: <? $rating = $this->one_news["rating"]; $percent = ($rating*100)/5; echo $percent;?>%;"></li>
+                <li class="u-star-li-<? echo $this->one_news['id'];?>"><a href="#" onclick="ustarrating('2','<? echo $this->one_news['id'];?>','1');return false;" class="u-one-star">1</a></li>
+                <li class="u-star-li-<? echo $this->one_news['id'];?>"><a href="#" onclick="ustarrating('2','<? echo $this->one_news['id'];?>','2');return false;" class="u-two-stars">2</a></li>
+                <li class="u-star-li-<? echo $this->one_news['id'];?>"><a href="#" onclick="ustarrating('2','<? echo $this->one_news['id'];?>','3');return false;" class="u-three-stars">3</a></li>
+                <li class="u-star-li-<? echo $this->one_news['id'];?>"><a href="#" onclick="ustarrating('2','<? echo $this->one_news['id'];?>','4');return false;" class="u-four-stars">4</a></li>
+                <li class="u-star-li-<? echo $this->one_news['id'];?>"><a href="#" onclick="ustarrating('2','<? echo $this->one_news['id'];?>','5');return false;" class="u-five-stars">5</a></li></ul>
+            <div style="font-size:10px"><!--<s3119>-->Рейтинг<!--</s>-->:
+                <b>
+                <span id="entRating<? echo $this->one_news['id'];?>"><? echo $this->one_news['rating'];?></span>
+                </b>
+                /<span id="entRated<? echo $this->one_news['id'];?>"><? echo $this->one_news['rate_num'];?></span>
+            </div>
+</td>
+</tr>
+
+<tr>
+<td class="eMessage">
+            <img src="<? echo $this->one_news['other1'];?>" width="0">
+
+
+<div align="center">
+<? if($this->one_news['other1'] != "") {?><img width="300" height="430" border="1" vspace="4" hspace="10" alt="" src="<? echo $this->one_news['other1'];?>"><?}?>
+</div>
+
+</td>
+</tr>
+
+    <tr>
+    <td>
+    <center>
+    <noindex>
+    <script src="/js/social-likes.min.js"></script>
+    <link rel="stylesheet" href="/css/social-likes_classic.css">
+    <div class="social-image" style="display: none; background: rgb(0, 0, 0);">
+        <link rel="image_src" id="image_src" href="<? echo $image; ?>">
+    </div>
+    <div id="share2" class="social-likes" data-url="<? echo $page_url; ?>" data-title="<? echo $str_title; ?>">
+    	<div class="vkontakte" title="Поделиться ссылкой во Вконтакте">Поделиться</div>
+        <div class="facebook" title="Поделиться ссылкой на Фейсбуке">Нравится</div>
+    	<div class="twitter" title="Поделиться ссылкой в Твиттере">Твитнуть</div>
+    	<div class="odnoklassniki" title="Поделиться ссылкой в Одноклассниках">Класс!</div>
+        <div class="mailru" title="Поделиться ссылкой в Моём мире">Нравится</div>
+    </div>
+    </noindex>
+    </center>
+    </td>
+    </tr>
+
+    <tr>
+    <td>
+            <div style="width:100%; background: #F0F0F0; font-size: 12pt; font-family: Times New Roman; text-align: justify;">
+                <? $item_message = str_replace("\\", "", $this->one_news['message']); $item_message = str_replace("\$CUT$", "", $item_message); echo $item_message;?>
+                </div>
+    </td>
+    </tr>
+    
+    <tr>
+    <td>
+        <noindex>
+            <center>
+                <? $banner = Model_Banners::getBannerByCat('under_news'); echo $banner['code']; ?>
+            </center>
+        </noindex>
+    </td>
+    </tr>
+    </tbody>
+</table>
+
+<table align="center" style="width: 655px; background-color: #E1E6EC; border-collapse: collapse; margin: 0">
+    <tbody><tr><td style="border-color: #ada286; border-width: 1px; border-style: solid; letter-spacing: 0px; word-spacing: 0px; padding: 3px 3px 3px 17px;">
+            <div style="font-face: Arial; font-size: 11pt; color: #005995; font-weight:600">Советуем так же посмотреть:</div>
+        </td></tr>
+    <tr><td style="border-color: #ada286; border-width: 1px; border-style: solid; letter-spacing: 0px; word-spacing: 0px; padding: 5px 0 0 10px;">
+            <div id="recommend_to_view"><script type="text/javascript" src="/js/rectoview.js"></script></div>
+        </td></tr>
+    <tr>
+        <td colspan="2" class="eDetails">
+            <? if($user->data['is_registered']){echo "Просмотров: ".$this->one_news['reads1']." |"; } ?>
+            <? echo date('d.m.Y H:i', $this->one_news['addtime']); ?> |
+            <a id="film_dont_work" style="cursor: pointer;">Не работает фильм?</a> | 
+            
+        </td></tr>
+    </tbody>
+</table>
+<br>
+
+<? if($this->show_comments == 'on'){ ?>
+
+<? $user_online = Zend_Registry::get("user"); ?>
+<? if($user_online->data['is_registered']){ ?>
+<script type="text/javascript">
+function addcom(f){
+    var message = $(".commFl").val();
+    if(message != ""){
+        if (document.getElementById('addcBut')){
+            document.getElementById('addcBut').disabled=true;
+        }else {
+            try{document.addform.submit.disabled=true;}
+            catch(e){}
+        }
+        if (document.getElementById('eMessage')){
+            document.getElementById('eMessage').innerHTML='<span style="color:#8B8B8B"><img src="/img/ma/m/i2.gif" border="0" align="absmiddle" width="13" height="13"> Идет передача данных...</span>';
+        }
+        
+        var user_id = $("#c_user_id").val();
+        var material_id = $("#c_material_id").val();
+        var module_id = $("#c_module_id").val();
+        var page_number = $("#c_page_number").val();
+        $.post('/index/newcomment/', {user_id:user_id,material_id:material_id,module_id:module_id,message:message,pn:page_number}, function(e){
+            if(e.status == 'spam'){
+                $('#eMessage').html('<span style="color:red;">Сообщение содержит запрещенные слова</span>');
+                document.getElementById('addcBut').disabled=false;
+            }else if(e.status == 'ok'){
+                document.getElementById('addcBut').disabled=false;
+                $(".commFl").val('');
+                location.reload();
+            }
+        })
+    }else{
+        if (document.getElementById('eMessage')){
+            document.getElementById('eMessage').innerHTML='<span style="color:red">Нельзя добавить пустой комментарий</span>';
+        }
+    }
+    
+}
+</script>
+<div id="postFormContent" class="">
+<form method="post" name="addform" id="acform" style="margin:0" action="/index/newcomment" onsubmit="addcom();return false;"> <script type="text/javascript">document.write(_y8M)</script><input type="hidden" name="sos" value="4149968531">
+
+<table border="0" width="100%" cellspacing="1" cellpadding="2" class="commTable">
+<tbody><tr><td class="commTd2" colspan="2">
+
+<div class="commError" id="eMessage" align="center"><? echo $this->info; ?></div>
+
+</td></tr>
+
+<tr><td class="commTd2" colspan="2">
+<?if($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8" || $user_online->data['group_id'] == "9" || $user_online->data['group_id'] == "10"){?>
+<div style="padding-bottom:2px">
+<script type="text/javascript" src="/js/bbcodes.js?2"></script><span style="padding-right:1px;" id="bc1"><input type="button" title="Bold" value="b" onclick="simpletag('b','','','message','')" class="codeButtons" id="b" style="width:20px;font-weight:bold"></span><span style="padding-right:1px;" id="bc2"><input type="button" title="Italic" value="i" onclick="simpletag('i','','','message','')" class="codeButtons" id="i" style="width:20px;font-style:italic"></span><span style="padding-right:1px;" id="bc3"><input type="button" title="Underline" value="u" onclick="simpletag('u','','','message','')" class="codeButtons" id="u" style="width:20px;text-decoration:underline"></span><span style="padding-right:1px;" id="bc4"><select id="fsize" class="codeButtons" onchange="alterfont(this.options[this.selectedIndex].value,'size','message','');this.selectedIndex=0;"><option value="0">SIZE</option><option value="6">6 pt</option><option value="7">7 pt</option><option value="8">8 pt</option><option value="9">9 pt</option><option value="10">10 pt</option><option value="11">11 pt</option><option value="12">12 pt</option><option value="13">13 pt</option><option value="14">14 pt</option><option value="15">15 pt</option><option value="16">16 pt</option><option value="17">17 pt</option><option value="18">18 pt</option><option value="19">19 pt</option><option value="20">20 pt</option><option value="21">21 pt</option><option value="22">22 pt</option></select></span><span style="padding-right:1px;" id="bc6"><select id="fcolor" class="codeButtons" onchange="alterfont(this.options[this.selectedIndex].value, 'color','message','');this.selectedIndex=0;"><option value="0">COLOR</option><option value="blue" style="color:blue">Blue</option><option value="red" style="color:red">Red</option><option value="purple" style="color:purple">Purple</option><option value="orange" style="color:orange">Orange</option><option value="yellow" style="color:yellow">Yellow</option><option value="gray" style="color:gray">Gray</option><option value="green" style="color:green">Green</option></select></span>
+<span style="padding-right:1px;" id="bc7"><input type="button" title="URL" value="http://" onclick="tag_url('message','')" class="codeButtons" style="direction:ltr;width:45px;" id="url"></span>
+<span style="padding-right:1px;" id="bc8"><input type="button" title="E-mail" value="@" onclick="tag_email('message','')" class="codeButtons" style="width:30px;" id="email"></span>
+<span style="padding-right:1px;" id="bc9"><input type="button" title="Image" value="img" onclick="tag_image('message','')" class="codeButtons" style="width:35px;" id="img"></span><span style="padding-right:1px;" id="bc18"><input type="button" title="Hide from Guest" value="hide" onclick="simpletag('hide','','','message','')" class="codeButtons" style="width:40px;" id="hide"></span><span style="padding-right:1px;" id="bc12"><input type="button" title="List" value="list" onclick="tag_list('message','')" class="codeButtons" id="list" style="width:30px;"></span><span style="padding-right:1px;" id="bc13"><input type="button" title="Left" style="width:20px;text-align:left;" value="···" onclick="simpletag('l','cdl','···','message')" class="codeButtons" id="cdl"></span><span style="padding-right:1px;" id="bc14"><input type="button" title="Center" style="width:20px;text-align:center;" value="···" onclick="simpletag('c','cdc','···','message')" class="codeButtons" id="cdc"></span><span style="padding-right:1px;" id="bc15"><input type="button" title="Right" style="width:20px;text-align:right;" value="···" onclick="simpletag('r','cdr','···','message')" class="codeButtons" id="cdr"></span><span style="padding-right:1px;" id="bc16"><input type="button" title="All codes" style="width:60px;" value="All codes" onclick="window.open('/index/showbbcodes','bbcodes','scrollbars=1,width=550,height=450,left=0,top=0');" class="codeButtons"></span><span style="padding-right:1px;" id="bc17"><input style="font-weight:bold;width:20px" type="button" value="/" class="codeButtons codeCloseAll" title="Close all opened codes" onclick="closeall('message','');"></span><input type="hidden" id="tagcount" value="0">
+</div>
+<?}?>
+<table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td valign="top"><textarea class="commFl" style="height: 135px; margin: 0px; width: 561px;" rows="8" name="message" id="message" cols="50"></textarea></td><td width="5%" valign="top" align="center" style="padding-left:3px;"><script type="text/javascript">function emoticon(code,nm){if (code != ""){var txtarea=document.getElementById(nm);code = ' ' + code + ' ';if (document.selection) {txtarea.focus();var txtContent = txtarea.value;var str = document.selection.createRange();if (str.text == ""){str.text = code;} else if (txtContent.indexOf(str.text) != -1){str.text = code + str.text;} else {txtarea.value = txtContent + code;}}else{txtarea.value = txtarea.value + code;}}}</script><table border="0" cellpadding="2" class="smiles" onmouseover="document.getElementById('asmltrSoVNa').style.display='';" onmouseout="document.getElementById('asmltrSoVNa').style.display='none';"><tbody><tr><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon('>(','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/angry.gif" title="angry"></a></td><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':D','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/biggrin.gif" title="biggrin"></a></td><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon('B)','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/cool.gif" title="cool"></a></td></tr><tr><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':\'(','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/cry.gif" title="cry"></a></td><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon('>_>','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/dry.gif" title="dry"></a></td><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon('^_^','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/happy.gif" title="happy"></a></td></tr><tr><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':(','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/sad.gif" title="sad"></a></td><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':)','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/smile.gif" title="smile"></a></td><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':o','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/surprised.gif" title="surprised"></a></td></tr><tr><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(':p','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/tongue.gif" title="tongue"></a></td><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon('%)','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/wacko.gif" title="wacko"></a></td><td class="sml1" align="center"><a href="javascript://" rel="nofollow" onclick="emoticon(';)','message');return false;"><img alt="" style="margin:0;padding:0;border:0;" src="/sml/wink.gif" title="wink"></a></td></tr><tr id="asmltrSoVNa" style="display:none;"><td colspan="3" align="center" id="allSmiles" nowrap=""><a href="javascript://" rel="nofollow" class="show_popup_smiles_comments">Все смайлы</a></td></tr></tbody></table></td></tr></tbody></table></td></tr>
+<tr><td width="15%" class="commTd1" nowrap="">Подписка:</td><td class="commTd2"><select name="subs"><option value="0">Без подписки</option><option value="1">Все комментарии к материалу</option><option value="2" selected="">Ответы на мой комментарий</option></select></td></tr>
+
+<tr><td class="commTd2" colspan="2" align="center"><input type="button" class="gbutton" id="addcBut" name="submit" group_id="<? echo $user_online->data['group_id']; ?>" value="- Добавить комментарий -"></td></tr></tbody></table>
+
+ 
+<script type="text/javascript">
+$('#addcBut').click(function(){
+    if($(this).attr("group_id") != "11"){
+        if($('#send_to_newsfeed:checked').length){
+        $('#eMessage').html('<span style="color:#8B8B8B;"><img src="/img/ma/m/i2.gif" border="0" align="absmiddle" width="13" height="13"> Идет передача данных...</span>');
+        _uPostForm('acform', {
+        success: function(data){
+        if($(data).find('cmd[t=eMessage]').text().indexOf('myWinSuccess') > 0) $.post('/php/friends/comment_to_newsfeed.php', {
+        url: location.href,
+        message: $('#message').val()
+        }, function(){
+        $('#eMessage').html($(data).find('cmd[t=eMessage]').text());
+        $('#newEntryB').append($(data).find('cmd[t=newEntryB]').text());
+        eval($(data).find('cmd[p=js]').text());
+        }); else {
+        $('#eMessage').html($(data).find('cmd[t=eMessage]').text());
+        eval($(data).find('cmd[p=js]').text());
+        };
+        }
+        });
+        } else return addcom();
+    }else{
+        $('#eMessage').html('<span style="color:red;">Для вашего аккаунта любая активность временно заблокирована</span>');
+    }
+});
+</script>
+<input type="hidden" id="c_user_id" name="a" value="<? echo $user_online->data['user_id']; ?>">
+<input type="hidden" id="c_material_id" name="m" value="<? echo $this->one_news['id']; ?>">
+<input type="hidden" id="c_module_id" name="id" value="2">
+<input type="hidden" id="c_page_number" name="pn" value="<? echo $this->page_number; ?>">
+<input id="csoc_type" type="hidden" name="soc_type"><input id="cdata" type="hidden" name="data">
+</form>
+</div>
+<? }else{ ?>
+<div align="center" class="commReg">Добавлять комментарии могут только зарегистрированные пользователи.
+<br>[ <a href="/index/registration">Регистрация</a> | 
+<a href="javascript://" class="login_popup" rel="nofollow" >Вход</a> ]
+</div>
+<? } ?>
+<div class="tabs">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td width="60%" height="25">Всего комментариев:<b><? echo $this->count_comments; ?></b>
+</td>
+<td align="right" height="25">
+<?php if($this->comments->getTotalItemCount() > 20){ echo $this->paginationControl($this->comments, 'Sliding',
+                'partials/paginator_comments_news.phtml'); } ?>
+</td>
+</tr>
+
+<tr>
+<td colspan="2">
+
+<div id="myGrid" style="display:none;">
+    <div style="position:fixed;width:100%;text-align:center;padding-top:250px;">
+        <img alt="" src="/img/ma/m/i3.gif" style="border:0;width:220px;height:19px;">
+    </div>
+</div>
+
+<div id="newEntryT"></div>
+<? echo $this->materialComments($this->comments,$this->one_news['id'],2,$this->comments_keys,$this->page_number); ?>
+</td>
+</tr>
+
+<tr>
+<td colspan="2" align="center">
+<?php if($this->comments->getTotalItemCount() > 20){ echo $this->paginationControl($this->comments, 'Sliding',
+                'partials/paginator_comments_news_2.phtml'); } ?>
+</td>
+</tr>
+
+<tr>
+<td colspan="2" height="10"></td>
+</tr>
+
+</tbody>
+</table>
+
+</div>
+
+<? } ?>

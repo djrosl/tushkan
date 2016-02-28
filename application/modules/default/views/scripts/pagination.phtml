@@ -1,0 +1,29 @@
+<?php if ($this->pageCount): ?>
+    <?php //echo $this->firstItemNumber; ?>  <?php // echo $this->lastItemNumber; ?>
+    <?php //echo $this->totalItemCount; ?>
+    <!-- Ссылка на предыдущую страницу -->
+    <!-- Нумерованные ссылки на страницы -->
+    <li class="all_page_nav"><a><?php echo 'Всего: '.$this->totalItemCount; ?></a></li>
+    <?php if (isset($this->previous)): ?>
+        <? if(($this->current) < 6 ){?>
+        <? } else {?>
+            <li><a href="<?php echo $this->url(array('page' => $this->first)); ?>"><?=$this->first?></a></li>
+            <li><a href="<?php echo $this->url(array('page' => $this->previous)); ?>">...</a></li>
+        <?} ?>
+    <? endif;?>
+
+    <?php foreach ($this->pagesInRange as $page): ?>
+        <?php if ($page != $this->current): ?>
+            <li><a href="<?php echo $this->url(array('page' => $page)); ?>">
+                    <?php echo $page; ?>
+                </a></li>
+        <?php else: ?>
+            <li class="act"><a class="active2"><?php echo $page; ?></a></li>
+        <?php endif; ?>
+    <?php endforeach; ?>
+    <?php if (isset($this->next)): ?>
+        <li class="next_nav"><a href="<?php echo $this->url(array('page' => $this->last)); ?>">последняя</a></li>
+        <li class="next_nav"><a href="<?php echo $this->url(array('page' => $this->next)); ?>">далее</a></li>
+    <?endif;?>
+
+<?php endif; ?>

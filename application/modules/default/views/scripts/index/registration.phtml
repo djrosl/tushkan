@@ -1,0 +1,209 @@
+<?
+$title = $this->headTitle('Страница регистрации - Смотреть онлайн фильмы бесплатно и без регистрации');
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+?>
+<div align="center">
+<script type="text/javascript">
+function ava(t){
+    if (t==1){
+        document.adduser.avatar.disabled=true;
+        document.adduser.avatar.style.display='none';
+        document.adduser.avau.style.display='';
+        document.adduser.avau.disabled=false;
+        document.getElementById('ava1').innerHTML='(GIF, JPEG)';
+    }else {
+        document.adduser.avau.disabled=true;
+        document.adduser.avau.style.display='none';
+        document.adduser.avatar.style.display='';
+        document.adduser.avatar.disabled=true;
+        document.getElementById('ava1').innerHTML='(www адрес)';
+        window.open('/index/avatars','Avatars','top=0,left=0,width=700,height=550');
+    }
+}
+$('.manFlSbm').live("click",function(){
+    document.adduser.avatar.disabled=false;
+});
+</script>
+<form method="post" enctype="multipart/form-data" name="adduser" style="margin:0px">
+<script type="text/javascript">$('.breadcrumbs').hide();</script>
+<table border="0" cellspacing="1" cellpadding="2" width="100%" class="manTable" id="siM633">
+
+<tbody>
+<? if($this->info){ ?>
+<tr id="siM1"><td colspan="2" align="center" class="manTdError" id="siM2">
+<span id="error-16"><? echo $this->info; ?></span>
+</td></tr>
+<tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+<? } ?>
+<tr id="siM42"><td class="manTd1" width="35%" id="siM43">Логин <font color="#FF0000" class="manStar">*</font>:</td><td class="manTd2" id="siM44">
+<input type="text" id="siF13" class="manFlLogin" name="user" value="<?php echo isset($_POST['user']) ? htmlspecialchars($_POST['user']) : ''; ?>" size="20" style="width:100%" maxlength="25"></td></tr><tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM45"><td class="manTd1" id="siM46">Пароль <font color="#FF0000" class="manStar">*</font>:</td><td class="manTd2" id="siM47">
+<input type="password" id="siF14" class="manFlPassw" name="password" size="20" style="width:100%" maxlength="15"></td></tr>
+
+<tr id="siM48"><td class="manTd1" id="siM49">Пароль (подтверждение) <font color="#FF0000" class="manStar">*</font>:</td><td class="manTd2" id="siM50">
+<input type="password" id="siF15" class="manFlPassw1" name="password1" size="20" style="width:100%" maxlength="15"></td></tr><tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM51"><td class="manTd1" id="siM52">Полное имя <font color="#FF0000" class="manStar">*</font>:</td><td class="manTd2" id="siM53">
+<input type="text" id="siF16" class="manFlaName" name="name" size="20" style="width:100%;" value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?>" maxlength="35"></td></tr><tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM54"><td class="manTd1" id="siM55">E-mail адрес <font color="#FF0000" class="manStar">*</font>:</td><td class="manTd2" id="siM56">
+<input type="text" id="siF17" class="manFlaEmail" name="email" size="20" style="width:100%;" value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>" maxlength="60" onchange="_uWnd.alert('Проверьте правильность вашего Email адреса, на этот адрес будет выслано письмо с кодом подтверждения. Если не подтвердить email, то любая активность, для которой используется электронная почта, будет заблокирована для вас.','',{w:250,h:100,tm:5000});"></td></tr><tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM30"><td class="manTd1" id="siM31">Дата рождения:</td><td class="manTd2" id="siM32">
+<select size="1" class="manFlbY" name="by" id="siF21">
+<option value="0">Год</option>
+<?
+$date_now = time();
+$date_time_array = getdate($date_now);
+$hours = $date_time_array['hours'];
+$minutes = $date_time_array['minutes'];
+$seconds = $date_time_array['seconds'];
+$month = $date_time_array['mon'];
+$day = $date_time_array['mday'];
+$year = $date_time_array['year'];
+$date_1 = mktime($hours,$minutes,$seconds,$month,$day,$year);
+
+$u_day = isset($_POST['bd']) ? htmlspecialchars($_POST['bd']) : '';
+$u_month = isset($_POST['bm']) ? htmlspecialchars($_POST['bm']) : '';
+$u_year = isset($_POST['by']) ? htmlspecialchars($_POST['by']) : '';
+
+for($i = $year - 4; $i > $year - 100; $i--){
+    if($i == $u_year){
+        echo '<option value="'.$i.'" selected>'.$i.'</option>';
+    }else{
+        echo '<option value="'.$i.'">'.$i.'</option>';
+    }
+}
+?>
+</select>-
+<select size="1" class="manFlbM" name="bm" id="siF2">
+<option value="0">Месяц</option>
+<?
+$MonthNames=array("Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь");
+for($i = 1; $i < 13; $i++){
+    if($i == $u_month){
+        echo '<option value="'.$i.'" selected>'.$MonthNames[$i-1].'</option>';
+    }else{
+        echo '<option value="'.$i.'">'.$MonthNames[$i-1].'</option>';
+    }
+}
+?>
+</select>-
+<select size="1" class="manFlbD" name="bd" id="siF3">
+<option value="0">День</option>
+<?
+for($i = 1; $i < 32; $i++){
+    if($i == $u_day){
+        echo '<option value="'.$i.'" selected>'.$i.'</option>';
+    }else{
+        echo '<option value="'.$i.'">'.$i.'</option>';
+    }
+}
+?>
+</select>
+<script type="text/javascript">calendarUtil.setAvailableDays(".manFlbD",".manFlbM",".manFlbY");</script></td>
+</tr>
+
+<tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM27"><td class="manTd1" id="siM28">Ваш пол:</td><td class="manTd2" id="siM29">
+<select size="1" class="manFlaGender" name="gender">
+<option value="1" <? if($_POST['gender'] == 1){echo 'selected="selected"';} ?>style="background:#EEEEEE;">Мужчина</option>
+<option value="2" <? if($_POST['gender'] == 2){echo 'selected="selected"';} ?>>Женщина</option>
+</select></td></tr>
+
+<tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM24"><td class="manTd1" id="siM25">Город:</td><td class="manTd2" id="siM26">
+<input type="text" id="siF8" class="manFlaCity" name="city" size="20" style="width:100%;" value="<?php echo isset($_POST['city']) ? htmlspecialchars($_POST['city']) : ''; ?>" maxlength="50"></td></tr><tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM36"><td class="manTd1" valign="top" id="siM37">Аватар <span id="ava1">(www адрес)</span>:</td><td class="manTd2" id="siM38">
+<input type="text" id="siF12" class="manFlAvaLink" name="avatar" disabled="disabled" size="20" style="width:100%;" value="<? echo isset($_POST['avatar']) ? htmlspecialchars($_POST['avatar']) : ''; ?>" maxlenth="150">
+<input type="file" id="siF11" class="manFlAvaFile" name="avau" style="width:100%;display:none;" size="20"><br>
+[ <a href="javascript://" rel="nofollow" onclick="ava(0);return false;">Выбрать аватар</a>
+ | <a href="javascript://" rel="nofollow" onclick="ava(1);return false;">Загрузить свой аватар (до 1мб)</a>
+  ]</td></tr><tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM39"><td class="manTd1" id="siM40">Подписаться на рассылку:</td>
+<td class="manTd2" id="siM41">
+<script type="text/javascript">function checkall(t){if (t.checked){for (i=0;i<document.adduser.mmcid.length;i++){if (document.adduser.mmcid[i].value!=0){document.adduser.mmcid[i].checked=true;}}}else {for (i=0;i<document.adduser.mmcid.length;i++){document.adduser.mmcid[i].checked=false;}}}</script>
+
+<table border="0" cellspacing="1" cellpadding="2" width="100%">
+<tbody><tr><td style="width:50%">
+<input id="c1" type="checkbox" name="mmcid" value="1"> <label for="c1">О кино</label></td><td style="width:50%">
+<input id="c2" type="checkbox" name="mmcid" value="2"> <label for="c2">Новости сайта</label></td></tr><tr><td style="width:50%">
+<input id="c0" type="checkbox" name="mmcid" value="0" onclick="checkall(this);"> <label for="c0"><u>Подписаться на все!</u></label></td></tr>
+</tbody>
+</table>
+</td>
+</tr>
+
+<tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM60"><td class="manTd1" id="siM61">Код безопасности <font color="red" class="manStar">*</font>:</td>
+<td class="manTd2" id="siM62">
+<input id="fCode" type="text" name="captcha[input]" />
+<input type="hidden" value="<? echo $this->captcha_id; ?>" class="captcha_id" name="captcha[id]" />
+<img alt="" style="margin:0;padding:0;border:0;cursor:pointer;" class="refresh_captcha" id="secImg" align="absmiddle" src="/captcha/<? echo $this->captcha_id; ?>.png" title="Обновить код безопасности">
+<img alt="" src="/img/ma/refresh.gif" border="0" align="absmiddle" class="refresh_captcha" style="cursor:pointer;" title="Обновить код безопасности">
+</td>
+</tr>
+
+<tr><td height="10" class="manTdSep" colspan="2"><hr class="manHr"></td></tr>
+
+<tr id="siM64"><td class="manTdBut" colspan="2" align="center" id="siM65"><input class="manFlSbm" id="siF20" type="submit" name="sbm" value="Регистрация"></td></tr>
+<tr><td align="right">Поле помеченное <font color="red">*</font></td><td><b>обязательно для заполнения<b></b></b></td></tr>
+</tbody></table><input type="hidden" name="a" value="4"><input type="hidden" name="s" value="0"></form><br><br><br>
+
+<div align="justify">
+<b> <span style="color:#881712; font-size:16pt; font-family: Arial">Правила сайта Tushkan.Net</span> </b>
+
+<span style="font-size:10pt">
+<br><br>
+ <b>Запрещается и в случае нарушения повлечет соответствующее ограничение действий на сайте на усмотрение Администрации:</b> 
+<br><br>
+1.Размещение несогласованной с администрацией сайта рекламы и ссылок на сторонние сайты.
+<br><br>
+2.Сообщение неправдивой информации о своей принадлежности к группе пользователей «Администратор», « Модератор» сайта <a href="/" target="_blank">http://tushkan.net </a>
+<br><br>
+3. Публичное обсуждение действий пользователей групп «Администратор», «Модератор»
+<br><br>
+4. Введение в заблуждение или предоставление неправдивой информации Администрации касательно событий на сайте.
+<br><br>
+5. Использование в общении выражений, способных оскорбить, ввести в заблуждение других пользователей сайта или спровоцировать между ними конфликт.
+<br><br>
+6. Использование нецензурных выражений, в том числе скрытого или завуалированного характера.
+<br><br>
+7. Совершение нарушений или подстрекательство к подобным действиям других пользователей ведущих к нарушению действующих законов РФ.
+<br><br>
+8. Оскорбление или дискриминация пользователей по следующим признакам:
+<br>8.1 - национальность или этническая принадлежность;
+<br>8.2 - возраст пользователя или срок пребывания на сайте с момента регистрации;
+<br>8.3 - социальная или профессиональная деятельность;
+<br>8.4 - религия, вероисповедание,
+<br>8.5 - политические взгляды;
+<br><br>
+9. Размещение сообщений содержащих многократное повторение одинаковых символов, знаков препинания в количестве более пяти, одинаковых смайликов более трех, картинки больших размеров (норма до 400*300, 40-50 кб.), и при клике которых осуществляется переход на сторонние сайты. Для подобных сообщений на форуме сайта созданы специальные темы.
+<br><br>
+10. Создание новых учетных записей с целью обхода примененных санкций по отношению к предыдущей учетной записи пользователя или для нарушения всех вышеперечисленных правил.
+<br><br>
+Уважаемые пользователи сайта, правила введены с целью урегулирования взаимоотношений между посетителями сайта всех групп. Убедительная просьба соблюдать их и проявлять уважительное отношение по отношению друг к другу. 
+<br><br>
+Если у вас есть предложения по поводу улучшения работы сайта или другие вопросы, обращайтесь в ЛС Администрации. Мы будем рады любому предложению, способному положительно повлиять на развитие проекта.
+<br><br>
+Если вы желаете заявить о правонарушении, обращайтесь к пользователям группы «Администратор» или «Модератор», гарантируем, что приложим максимум усилий для решения вопроса в кратчайшие сроки. 
+<br><br>
+С целью ускорения процесса принятия решений, просьба предоставлять скрин сообщения, которое стало причиной вашей жалобы.
+<br><br>
+Спорные вопросы будут предложены на обсуждение пользователей в специальной теме на форуме, где все стороны конфликта смогут представить свои доказательства.
+<br><br>
+Администрация сайта оставляет за собой право удаления любой информации, темы или сообщения по своему усмотрению.
+<br><br>
+Напоминаем, что при регистрации на сайте своей учетной записи пользователя, вы автоматически подтверждаете свое согласие со всеми вышеперечисленными правилами.
+</span>
+</div>
+
+</div>

@@ -1,0 +1,98 @@
+<?
+$user = (array) Model_User::getUserById($this->user_id);
+$title = $this->headTitle("Комментарии пользователя [".$user['username']."] - Смотреть онлайн фильмы бесплатно и без регистрации");
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+$user_online = Zend_Registry::get("user");
+?>
+<script>
+    $(document).ready(function(){
+        $("#breadcrumbs").append('<a href="/">Главная</a> » <b style="font-weight:normal;">Комментарии пользователя [<? echo $user['username']; ?>]</b>');
+    });
+</script>
+<table border="0" cellpadding="0" cellspacing="0" width="656px"><tbody><tr>
+<td width="60%"><!--<s5246>-->Найдено комментариев<!--</s>-->: <b><? echo $this->count_comments; ?></b>
+<br><!--<s5247>-->Показано комментариев<!--</s>-->: <b><? $item_per_page = 30; $page = $this->page; if($page == 1){echo $page."-".($item_per_page);}else{ echo ((($item_per_page) * ($page - 1))+1)."-".(($item_per_page) * ($page)); } ?></b></td>
+<td align="right"><!--<s3015>-->Страницы<!--</s>-->: 
+<?php if($this->count_comments > 30){ echo $this->paginationControl($this->comments, 'Sliding',
+    'partials/paginator_user_comments.phtml'); } ?>
+</td></tr></tbody>
+</table>
+<hr>
+<script type="text/javascript">function ban_item(id){if (confirm('Вы действительно хотите активировать данный материал?')){var img=document.getElementById('bi'+id);img.src='http://s88.ucoz.net/img/fr/EmnAjax.gif';_uPostForm('',{url:'http'+'://tushkan.net/index/86-'+id+'-1'});}}function del_item(id){if (confirm('Вы подтверждаете удаление?')){var img=document.getElementById('di'+id);img.src='http://s88.ucoz.net/img/fr/EmnAjax.gif';_uPostForm('',{url:'http'+'://tushkan.net/index/',type:'POST',data:{ssid:'GbwGF8ow',a:'38',s:id}});}}</script>
+<? foreach($this->comments as $comment){ ?>
+<div id="comEnt<? echo $comment['commentID']?>" class="comEnt report-spam-target " style="">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="cBlock1">
+<tbody>
+<tr>
+<td style="padding:3px;">
+<div style="float:right;font-size:11px;font-family:Arial,sans-serif;">
+<span id="report-spam-wrap-<? echo $comment['commentID'];?>" class="report-spam-wrap">
+<?  if($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8" || $user_online->data['group_id'] == "9" || ($comment['userID'] == $user_online->data['user_id'] && $user_online->data['group_id'] != "11")){
+        echo '<a class="editcomment" comment_id="'.$comment['commentID'].'" style="cursor:pointer;color:red;float:left;" title="Редактировать"><img src="/img/edit_icon.png" alt="" style="width:14px;"/></a>';
+    }
+    if($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "8" || $user_online->data['group_id'] == "9" || ($user_online->data['group_id'] == "10" && $comment['userID'] == $user_online->data['user_id'])){
+        echo '<a class="deletecomment" comment_id="'.$comment['commentID'].'" style="cursor:pointer;color:red;float:left;">Удалить</a>';
+    }
+?>
+<!--<a class="report-spam-btn report-spam-handled" data-message-id="<? echo $comment['commentID'];?>" href="javascript://" module_id="2" ip="<? echo $this->ip; ?>" data-not-spam="<?// if($this->comments_keys[$comment['commentID']]['spam'] == true){echo 1;}else{echo 0;} ?>"><? // if($this->comments_keys[$comment['commentID']]['spam'] == true){echo "Не спам";}else{echo "Спам";} ?></a>-->
+</span>
+<span <? if($comment['rate'] > 0){ echo 'class="myWinSuccess"';}elseif($comment['rate'] < 0){ echo 'class="myWinError"';}else{ echo 'style="color:gray;"';} ?> ><b><? if($comment['rate'] > 0){ echo "+";} echo $comment['rate'];?></b></span>
+<? if($user_online->data['is_registered']){ ?>
+<img alt="" src="/img/finger_up_green.png" align="absmiddle" width="13" border="0" class="comment_rate" rate="up" comment_id="<? echo $comment['commentID'];?>" user_id="<? echo $user_online->data['user_id']?>" module_id="2" style="cursor: pointer;" title="Хороший пост">
+<img alt="" src="/img/finger_down_red.png" align="absmiddle" width="13" border="0" class="comment_rate" rate="down" comment_id="<? echo $comment['commentID'];?>" user_id="<? echo $user_online->data['user_id']?>" module_id="2" style="cursor: pointer;" title="Плохой пост">
+<?}else{?>
+<img alt="" src="/img/finger_up_white.png" align="absmiddle" width="13" border="0" title="Хороший пост">
+<img alt="" src="/img/finger_down_white.png" align="absmiddle" width="13" border="0" title="Плохой пост">
+<?}?> 
+</div>
+<div class="cTop" style="text-align:left;"><a href="#ent<? echo $comment['commentID']; ?>" onclick="if (document.getElementById('comEnt<? echo $comment['commentID']; ?>')){$('body').scrollTo( { top:$('#comEnt<? echo $comment['commentID']; ?>').offset().top-22, left:0}, 500 );return false;}" name="ent<? echo $comment['commentID']; ?>"><b><? echo $this->comments_keys[$comment['commentID']]['key']; ?></b></a>
+<a href="javascript://" class="open_user_page" user_id="<? echo $comment['userID']; ?>" rel="nofollow"><b><? echo $comment['username']; ?></b></a> &nbsp; <span style="font-size:7pt;unicode-bidi:embed;">(<?
+                            $date_now = time();
+                            $date_time_array = getdate($date_now);
+                            $month = $date_time_array['mon'];
+                            $day = $date_time_array['mday'];
+                            $year = $date_time_array['year'];
+                            $date_time_array = getdate($comment['addTime']);
+                            $month_2 = $date_time_array['mon'];
+                            $day_2 = $date_time_array['mday'];
+                            $year_2 = $date_time_array['year'];
+                            $date_1 = mktime(0,0,0,$month,$day,$year);
+                            $date_2 = mktime(0,0,0,$month_2,$day_2,$year_2);
+                            $date_3 = mktime(0,0,0,$month,$day-1,$year);
+                            if($date_1 == $date_2){
+                                echo "Сегодня ".date('H:i', $comment['addTime']);
+                            }elseif($date_2 == $date_3){
+                                echo "Вчера ".date('H:i', $comment['addTime']);
+                            }else{
+                                echo date('d-m-Y H:i', $comment['addTime']);
+                            }
+                            ?>)</span>
+[<a href="<?
+if($comment['moduleID'] == 2){
+    $one_news = (array) Model_News::getOneNewsById($comment['materialID']);
+    echo "/news/".$one_news['sbscr']."/".date('Y-m-d', $one_news['urltime'])."-".$one_news['id'];
+}elseif($comment['moduleID'] == 3){
+    $one_publ = (array) Model_Publ::getOnePublById($comment['materialID']);
+    if($one_publ['catID'] != ""){
+        $curr_category = (array) Model_Publ::getCategoryById($one_publ['catID']);
+    }
+    echo "/publ/";
+    if($curr_category['password'] != ""){ echo $curr_category['password']."/";}
+    echo $one_publ['url']."/".$one_publ['catID']."-1-0-".$one_publ['id'];
+}
+?>" target="_blank" title="Перейти на страницу материала">Материал</a>]
+</div>
+<div class="cMessage" style="text-align:left;clear:both;padding:2px 0;"><a href="javascript://" rel="nofollow" title="<? echo $comment['username']; ?>" style="padding-right:4px;">
+<? if($comment['user_avatar'] != "") {?>
+<img alt="" align="left" src="<? if($comment['user_avatar_type'] == "1"){echo "/forum/images/avatars/upload/3fd64ac252fd45cbb865c0e38dfe125f_";} echo $comment['user_avatar']; ?>" width="30" border="0">
+<? } ?>
+</a><? echo $comment['message']; ?></div>
+</td></tr></tbody></table><br>
+</div>
+<?}?>
+<div style="text-align:center;">
+<?php if($this->count_comments > 30){ echo $this->paginationControl($this->comments, 'Sliding',
+    'partials/paginator_user_comments_2.phtml'); } ?>
+</div>

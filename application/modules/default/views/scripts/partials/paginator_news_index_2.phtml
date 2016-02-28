@@ -1,0 +1,92 @@
+<? $item_per_page = MOVIE_ON_PAGE; // количество итемов на странице ?>
+<?php if ($this->pageCount): ?>
+<span class="pagesBlockuz1">
+
+<?php if (isset($this->previous)): ?>
+        <? if(($this->current) < 6 ){?>
+        <? } else {?>
+            <a class="swchItem" href="<?php echo "/"; ?>">
+        <span><?php echo $this->first."-".($item_per_page); ?></span>
+    </a>
+    
+    <a class="swchItem" href="<?php echo "/news/?page".($this->first+1); ?>">
+        <span><?php echo (($item_per_page * $this->first)+1)."-".($item_per_page * ($this->first+1)); ?></span>
+    </a>
+            ...
+        <?} ?>
+    <? endif;?>
+    
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) == 5 ){?>
+            <a class="swchItem" href="<?php echo "/"; ?>">
+        <span><?php echo $this->first."-".($item_per_page); ?></span>
+    </a>
+    
+    <a class="swchItem" href="<?php echo "/news/?page".($this->first+1)?>">
+        <span><?php echo (($item_per_page * $this->first)+1)."-".($item_per_page * ($this->first+1)); ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+    
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) == 4 ){?>
+            <a class="swchItem" href="<?php echo "/"; ?>">
+        <span><?php echo $this->first."-".($item_per_page); ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+
+<!-- Numbered page links -->
+<?php foreach ($this->pagesInRange as $page): ?>
+  <?php if ($page != $this->current): ?>
+    <? if($page == 1) {?>
+    <a class="swchItem" href="<?php echo "/"; ?>">
+        <span><?php if($page == 1){echo $page."-".($item_per_page);}else{ echo ((($item_per_page) * ($page - 1))+1)."-".(($item_per_page) * ($page)); } ?></span>
+    </a>
+    <? } else{?>
+    <a class="swchItem" href="<?php echo "/news/?page".$page; ?>">
+        <span><?php if($page == 1 && $this->totalItemCount < $item_per_page){echo $page."-".($this->totalItemCount);}elseif($page == 1 && $this->totalItemCount >= $item_per_page){echo $page."-".($item_per_page);}elseif($page == $this->last){ echo ((($item_per_page) * ($page - 1))+1)."-".($this->totalItemCount); }else{ echo ((($item_per_page) * ($page - 1))+1)."-".(($item_per_page) * ($page)); } ?></span>
+    </a>
+    <? } ?>
+  <?php else: ?>
+        <b class="swchItemA"><span><?php if($page == 1 && $this->totalItemCount < $item_per_page){echo $page."-".($this->totalItemCount);}elseif($page == 1 && $this->totalItemCount >= $item_per_page){echo $page."-".($item_per_page);}elseif($page == $this->last){ echo ((($item_per_page) * ($page - 1))+1)."-".($this->totalItemCount); }else{ echo ((($item_per_page) * ($page - 1))+1)."-".(($item_per_page) * ($page)); } ?></span></b>
+  <?php endif; ?>
+<?php endforeach; ?>
+
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) > ($this->pageCount - 5) ){?>
+        <? } else {?>
+            ...
+            <a class="swchItem" href="<?php echo "/news/?page".($this->last-1); ?>">
+        <span><?php echo (($item_per_page * (($this->last)-2))+1)."-".($item_per_page * (($this->last)-1)); ?></span>
+    </a>
+    
+    <a class="swchItem" href="<?php echo "/news/?page".$this->last; ?>">
+        <span><?php echo (($item_per_page * (($this->last)-1))+1)."-".($this->totalItemCount); ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+    
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) == ($this->pageCount - 3) ){?>
+    
+    <a class="swchItem" href="<?php echo "/news/?page".$this->last; ?>">
+        <span><?php echo (($item_per_page * (($this->last)-1))+1)."-".($this->totalItemCount); ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+    
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) == ($this->pageCount - 4) ){?>
+            <a class="swchItem" href="<?php echo "/news/?page".($this->last-1); ?>">
+        <span><?php echo (($item_per_page * (($this->last)-2))+1)."-".($item_per_page * (($this->last)-1)); ?></span>
+    </a>
+    
+    <a class="swchItem" href="<?php echo "/news/?page".$this->last; ?>">
+        <span><?php echo (($item_per_page * (($this->last)-1))+1)."-".($this->totalItemCount); ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+
+</span>
+<?php endif; ?>

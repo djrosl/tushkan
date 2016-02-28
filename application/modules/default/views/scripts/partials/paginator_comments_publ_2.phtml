@@ -1,0 +1,65 @@
+<?php
+$comments_order = Zend_Controller_Front::getInstance()->getRequest()->getParam("comments_order");
+$server_uri = $this->url();
+$str = substr($server_uri,1); // убираем первый слеш "/"
+$param2 = 0;
+$category_name = "";
+$str = substr($str,5);
+$is_slash = strpos($str, "/");
+if($is_slash === false){ // если нету в строке "/"
+    $min_pos_1 = strpos($str, "-");
+    if($min_pos_1 === false){
+        $param1 = (int)($str);
+    }else{
+        $str2 = substr($str,0,$min_pos_1);
+        $param1 = (int)($str2);
+        $str3 = substr($str,$min_pos_1+1);
+        $min_pos_2 = strpos($str3, "-");
+        $str4 = substr($str3,0,$min_pos_2);
+        $param2 = (int)($str4);
+    }
+}else{
+    $category_name = substr($str,0,$is_slash);
+    $str2 = substr($str,$is_slash+1);
+    $min_pos_1 = strpos($str2, "-");
+    if($min_pos_1 === false){
+        $param1 = (int)($str2);
+    }else{
+        $str3 = substr($str2,0,$min_pos_1);
+        $slash_pos = strpos($str3, "/");
+        $str_tmp = substr($str3,$slash_pos+1);
+        $item_url = substr($str3,0,$slash_pos);
+        $param1 = (int)($str_tmp);
+        $str4 = substr($str2,$min_pos_1+1);
+        $min_pos_2 = strpos($str4, "-");
+        $str5 = substr($str4,0,$min_pos_2);
+        $param2 = (int)($str5);
+        $str6 = substr($str4,$min_pos_2+1);
+        $min_pos_3 = strpos($str6, "-");
+        $str7 = substr($str6,0,$min_pos_3);
+        $param3 = (int)($str7);
+        $str8 = substr($str6,$min_pos_3+1);
+        $param4 = (int)($str8);
+        //var_dump("param1 = ".$param1.", param2 = ".$param2.", param3 = ".$param3.", param4 = ".$param4);die;
+    }
+}
+
+?>
+<?php if ($this->pageCount): ?>
+<span class="pagesBlock1">
+
+<!-- Numbered page links -->
+
+<?php foreach ($this->pagesInRange as $page): ?>
+  <?php if ($page != $this->current): ?>
+    <a href="<?php if($category_name != ""){ echo "/publ/".$category_name."/".$item_url."/".$param1."-".$page."-".$param3."-".$param4; }
+    if($comments_order != ""){ echo "?comments_order=".$comments_order; } ?>">
+        <span><?php if($page == 1){echo $page."-10";}else{ echo ($page-1)."1-".$page."0"; } ?></span>
+    </a>
+  <?php else: ?>
+        <b class="swchItemA"><span><?php if($page == 1){echo $page."-10";}else{ echo ($page-1)."1-".$page."0"; } ?></span></b>
+  <?php endif; ?>
+<?php endforeach; ?>
+
+</span>
+<?php endif; ?>

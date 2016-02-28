@@ -1,0 +1,86 @@
+<?
+$user = (array) Model_User::getUserById($this->user_id);
+$title = $this->headTitle("Материалы пользователя [".$user['username']."] - Каталог статей - Смотреть онлайн фильмы бесплатно и без регистрации");
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+$user_online = Zend_Registry::get("user");
+?>
+<script>
+    $(document).ready(function(){
+        $("#breadcrumbs").append('<a href="/">Главная</a> » <a href="/publ">Статьи</a> » <b style="font-weight:normal;">Материалы пользователя [<? echo $user['username']; ?>]</b>');
+    });
+</script>
+<table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
+<td width="60%"><!--<s5219>-->В разделе материалов<!--</s>-->: <b><? echo $this->count_publs; ?></b><br><!--<s5220>-->Показано материалов<!--</s>-->: <b>1-10</b></td>
+<td align="right"><!--<s3015>-->Страницы<!--</s>-->: 
+<?php if($this->count_publs > 10){ echo $this->paginationControl($this->publs, 'Sliding',
+    'partials/paginator_user_publs.phtml'); } ?>
+</td></tr></tbody>
+</table>
+<hr>
+<script type="text/javascript">function ban_item(id){if (confirm('Вы действительно хотите активировать данный материал?')){var img=document.getElementById('bi'+id);img.src='http://s88.ucoz.net/img/fr/EmnAjax.gif';_uPostForm('',{url:'http'+'://tushkan.net/index/86-'+id+'-1'});}}function del_item(id){if (confirm('Вы подтверждаете удаление?')){var img=document.getElementById('di'+id);img.src='http://s88.ucoz.net/img/fr/EmnAjax.gif';_uPostForm('',{url:'http'+'://tushkan.net/index/',type:'POST',data:{ssid:'GbwGF8ow',a:'38',s:id}});}}</script>
+<div id="allEntries" style="width: 656px;">
+<? foreach ($this->publs as $value){ ?>
+<div id="entryID_<? echo $value['id']; ?>">
+    <table style="width: 100%; border-collapse: collapse" cellspacing="1" cellpadding="1">
+        <tbody>
+        <tr>
+            <td style="padding-left: 5px; letter-spacing: 0px; word-spacing: 0px" align="left">
+                <div class="news_title"><a href="/publ/<?if($value['cat_pass'] != ""){ echo $value['cat_pass']."/";}?><? echo $value['url']; ?>/<? echo $value['catID']; ?>-1-0-<? echo $value['id']; ?>"> <font face="Arial"><h3><? echo $value['title']; ?></h3></font> </a></div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table style="width: 100%; border-collapse: collapse" cellspacing="1" cellpadding="1">
+        <tbody>
+        <tr><td></td></tr>
+        <tr>
+            <td>
+                <? if($value['asite'] != "") {?>
+                <hr>
+                <div align="center">
+                    <a href="/publ/<?if($value['cat_pass'] != ""){ echo $value['cat_pass']."/";}?><? echo $value['url']; ?>/<? echo $value['catID']; ?>-1-0-<? echo $value['id']; ?>" alt="<? echo $value['title']; ?>" title="<? echo $value['title']; ?>" class="highslide" onclick="return hs.expand(this, {captionId: 'caption1'})">
+                    <img width="300" border="1" align="center" vspace="4" hspace="10" src="<? echo $value['asite']; ?>"></a>
+                </div>
+                <? } ?>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top; letter-spacing: 0px; word-spacing: 0px; padding-left: 5px; padding-top: 3px; text-align: justify">
+
+                <span style="font-size:12pt; font-family: Times New Roman; color:#2e2e2e">
+                    <? echo $value['brief']; ?>
+                </span> <br><br>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table style="width: 100%; border-collapse: collapse" border="0">
+        <tbody>
+        <tr style="background-image: url(&quot;/lis/ramka_ny.png&quot;); background-repeat: no-repeat; background-position: 50% 100%;">
+
+            <td width="70%" style="clear:none !important; height: 23px; letter-spacing: 0px; word-spacing: 0px; padding-left: 3px; padding-top: 3px;" align="left">
+                <div class="news_descr" style="clear:right;">
+                    <a href="/publ/<?if($value['cat_pass'] != ""){ echo $value['cat_pass']."/";}?><? echo $value['catID'];?>"><? echo $value['cat_name'];?></a>
+                    | Комментарии (<a href="/publ/<?if($value['cat_pass'] != ""){ echo $value['cat_pass']."/";}?><? echo $value['url']; ?>/<? echo $value['catID']; ?>-1-0-<? echo $value['id']; ?>#comments"><? echo $value['num_com']; ?></a>) | Добавлен: <? echo date('d.m.Y', $value['addtime']); ?>
+                </div>
+            </td>
+            <? if($user_online->data['group_id'] == "5" || $user_online->data['group_id'] == "9"){ echo '<td><a href="/tncontrol/editpubl/id/'.$value['id'].'" style="color:red;float:right;" title="Редактировать"><img src="/img/edit_icon.png" alt=""/></a></td>'; }?>
+            <td width="17%" style="clear:none !important; height: 23px;">
+                <div class="dalee">
+                    <a class="dalee" href="/publ/<?if($value['cat_pass'] != ""){ echo $value['cat_pass']."/";}?><? echo $value['url']; ?>/<? echo $value['catID']; ?>-1-0-<? echo $value['id']; ?>">Подробнее</a>
+                </div>
+            </td>
+
+        </tr>
+        </tbody>
+    </table><br>
+</div>
+<? } ?>
+</div>
+<div style="text-align:center;">
+<?php if($this->count_publs > 10){ echo $this->paginationControl($this->publs, 'Sliding',
+    'partials/paginator_user_publs_2.phtml'); } ?>
+</div>

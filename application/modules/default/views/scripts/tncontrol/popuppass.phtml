@@ -1,0 +1,51 @@
+<style>#facebox #wrapper{padding-left:0} #facebox{width: 400px; margin-left: -200px} #facebox .body{width: 390px}</style>
+<script>
+    $(document).ready(function($){
+        $('.save_pass').click(function(){
+            var pass = $('#pass').val();
+            var re_ress = $('#re_pass').val();
+            if(pass == re_ress){
+                $.post('/tncontrol/pass/fl/pass/id/'+$(this).attr('idu'), {pass:pass}, function(e){
+                    if(e == 1){
+                        jQuery('.alert').html('');
+                        jQuery('.alert').append('<p>Пароль успешно изменен</p>');
+                        jQuery('.alert').removeClass('alert-danger');
+                        jQuery('.alert').addClass('alert-success');
+                        jQuery('.alert').slideDown('slow');
+                        setTimeout(function(){
+                            $.facebox.close();
+                        }, 2000)
+                    }if(e == 'access_denied'){
+                        jQuery('.alert').html('');
+                        jQuery('.alert').append('<p>Вы не имеета прав доступа</p>');
+                        jQuery('.alert').removeClass('alert-success');
+                        jQuery('.alert').addClass('alert-danger');
+                        jQuery('.alert').slideDown('slow');
+                        setTimeout(function(){
+                            $.facebox.close();
+                        }, 2000)
+                    }
+
+                });
+            }else{
+                jQuery('.alert').html('');
+                jQuery('.alert').append('<p>Пароли не совпадают</p>');
+                jQuery('.alert').removeClass('alert-success');
+                jQuery('.alert').addClass('alert-danger');
+                jQuery('.alert').slideDown('slow');
+                setTimeout(closeError,3000);
+            }
+        });function closeError(){
+            jQuery('.alert').slideUp('slow');
+            jQuery('.alert').html("");
+        }
+
+    });
+</script>
+<div>
+    <h3>Изменение пароля</h3>
+    <label>Введите новый пароль:</label><input id="pass" type="text" class="form-control">
+    <label>Повторите пароль:</label><input type="text" id="re_pass" class="form-control">
+    <button idu="<? echo $this->id;?>" class="btn btn-large btn-success save_pass">Сохранить</button>
+    <div style="display:none; margin-top: 5px"  class="alert alert-success"><p>Успешная авторизация</p></div>
+</div>

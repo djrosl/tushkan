@@ -1,0 +1,36 @@
+<script>$(document).ready(function(){$('li .active').removeClass('active');$('#settings').addClass('active');});</script>
+<script src="/admins/banners.js"></script>
+<div class="banner">
+    <? if ($this->banner['id']){?>
+        <h3>Редактирование баннер</h3>
+    <? } else {?>
+        <h3>Добавление баннер</h3>
+    <? } ?>
+    <label>Название баннера:</label><input type="text" class="form-control" value="<? echo $this->banner['title'];?>" id="title">
+    <div class="separator"></div>
+    <label>Категория баннера:</label>
+    <select class="form-control" id="banner_cat">
+        <? foreach ($this->category as $k=>$v): if ($this->banner['category'] == $k){$select = 'selected';}else{ $select = '';}?>
+        <option <? echo $select; ?> value="<? echo $k; ?>"><? echo $v;?></option>
+        <? endforeach; ?>
+    </select>
+    <div class="separator"></div>
+    <label>Полный код баннера:</label>
+    <textarea id="banner_code" class="form-control"><? echo $this->banner['code']?></textarea>
+    <input type="hidden" id="idbanner" value="<? echo $this->banner['id'];?>">
+    <div class="separator"></div>
+    <label>Приоритет:</label>
+    <select class="form-control" id="priority">
+        <? for ($i = 1; $i <= 10; $i ++){ if ($this->banner['priority'] == $i){$select = 'selected';}else{ $select = '';} ?>
+            <option <? echo $select; ?> value="<? echo $i; ?>" > <? echo $i;?></option>
+        <? } ?>
+    </select>
+    <div class="separator"></div>
+    <label>Статус:</label>
+    <select class="form-control" id="status">
+        <? foreach ($this->status as $k=>$v) : if ($this->banner['status'] == $k){$select = 'selected';}else{ $select = '';}  ?>
+            <option value="<? echo $k; ?>" <? echo $select;?>><? echo $v;?></option>
+        <? endforeach;?>
+    </select>
+    <button class="btn btn-large btn-success save_banner">Сохранить</button>
+</div>

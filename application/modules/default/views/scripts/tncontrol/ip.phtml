@@ -1,0 +1,36 @@
+<style>#facebox #wrapper{padding-left:0} #facebox{width: 400px; margin-left: -200px} #facebox .body{width: 390px}
+    #facebox input[type=text]{width: 65px; float: left} #facebox .point{ float: left;font-size: 19px;line-height: 40px;}
+    .save_ip{margin: 0 auto;}.sec_ip{width: 100%; float: left}</style>
+<script>
+$(document).ready(function(){
+    $('.save_ip').click(function(){
+        var ip_id = $('.sec_ip').attr('ip');
+        var ip = $('.one').val()+'.'+$('.two').val()+'.'+$('.three').val()+'.'+$('.four').val();
+        if($('.status').prop('checked')){
+            var status = 1;
+        }else{
+            var status = 0;
+        }
+        if(ip && ip_id){
+            $.post('/tncontrol/ajax/fl/editip', {id:ip_id, ip:ip.toLowerCase(), status:status}, function(){
+                location.reload();
+            });
+        }
+    });
+    $('input[type=text]').keyup(function(){
+        if($(this).val().length == 3){
+            $(this).nextAll('input').first().focus();
+        }
+    });
+});
+</script>
+<div class="sec_ip" ip="<? echo $this->ip->id;?>">
+    <label>Ip Адрес</label>
+    <input maxlength="3" type="text" class="form-control one" value="<? echo $this->ex_ip[0];?>"><p class="point">.</p>
+    <input maxlength="3" type="text" class="form-control two" value="<? echo $this->ex_ip[1];?>"><p class="point">.</p>
+    <input maxlength="3" type="text" class="form-control three" value="<? echo $this->ex_ip[2];?>"><p class="point">.</p>
+    <input maxlength="3" type="text" class="form-control four" value="<? echo $this->ex_ip[3];?>">
+</div>
+<? if ($this->ip->status == 1){$ch = 'checked';}else{$ch='';}?>
+<p><input class="status" type="checkbox" <? echo $ch;?>> Активный</p>
+<button class="btn btn-large btn-success save_ip">Сохранить</button>

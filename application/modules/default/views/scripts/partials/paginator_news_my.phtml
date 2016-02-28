@@ -1,0 +1,117 @@
+<?php
+global $filmotekaType, $userName, $userId;
+$baseTplPage = '/user/'.$filmotekaType.'/'.$userId.'/';
+$baseTpl = $baseTplPage.'1';
+if ($this->pageCount): ?>
+<span class="pagesBlockuz1">
+<!-- Previous page link -->
+<?php if (isset($this->previous)): ?>
+    <? if($this->previous == 1) {?>
+    <a class="swchItem" href="<?php echo $baseTpl; ?>">
+        <span>«</span>
+    </a>
+    <? }else{?>
+    <a class="swchItem" href="<?php echo $baseTplPage.$this->previous; ?>">
+        <span>«</span>
+    </a>
+    <? } ?>
+<?php else: ?>
+  <span class="disabled" style="display: none;">«</span>
+<?php endif; ?>
+
+<?php if (isset($this->previous)): ?>
+        <? if(($this->current) < 6 ){?>
+        <? } else {?>
+            <a class="swchItem" href="<?php echo $baseTpl; ?>">
+        <span><?php echo $this->first; ?></span>
+    </a>
+
+    <a class="swchItem" href="<?php echo $baseTplPage.($this->first+1); ?>">
+        <span><?php echo ($this->first+1); ?></span>
+    </a>
+            ...
+        <?} ?>
+    <? endif;?>
+
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) == 5 ){?>
+            <a class="swchItem" href="<?php echo $baseTpl; ?>">
+        <span><?php echo $this->first; ?></span>
+    </a>
+
+    <a class="swchItem" href="<?php echo $baseTplPage.($this->first+1)?>">
+        <span><?php echo ($this->first+1); ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) == 4 ){?>
+            <a class="swchItem" href="<?php echo $baseTpl; ?>">
+        <span><?php echo $this->first; ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+
+<!-- Numbered page links -->
+<?php foreach ($this->pagesInRange as $page): ?>
+  <?php if ($page != $this->current): ?>
+    <? if($page == 1) {?>
+        <a class="swchItem" href="<?php echo $baseTpl; ?>">
+            <span><?php echo $page; ?></span>
+        </a>
+        <? } else{?>
+        <a class="swchItem" href="<?php echo $baseTplPage.$page; ?>">
+            <span><?php echo $page; ?></span>
+        </a>
+        <? }?>
+  <?php else: ?>
+        <b class="swchItemA"><span><?php echo $page; ?></span></b>
+  <?php endif; ?>
+<?php endforeach; ?>
+
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) > ($this->pageCount - 5) ){?>
+        <? } else {?>
+            ...
+            <a class="swchItem" href="<?php echo $baseTplPage.($this->last-1); ?>">
+        <span><?php echo ($this->last-1); ?></span>
+    </a>
+
+    <a class="swchItem" href="<?php echo $baseTplPage.$this->last; ?>">
+        <span><?php echo $this->last; ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) == ($this->pageCount - 3) ){?>
+
+    <a class="swchItem" href="<?php echo $baseTplPage.$this->last; ?>">
+        <span><?php echo $this->last; ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+
+<?php if (isset($this->next)): ?>
+        <? if(($this->current) == ($this->pageCount - 4) ){?>
+            <a class="swchItem" href="<?php echo $baseTplPage.($this->last-1); ?>">
+        <span><?php echo ($this->last-1); ?></span>
+    </a>
+
+    <a class="swchItem" href="<?php echo $baseTplPage.$this->last; ?>">
+        <span><?php echo $this->last; ?></span>
+    </a>
+        <?} ?>
+    <? endif;?>
+
+<!-- Next page link -->
+<?php if (isset($this->next)): ?>
+    <a class="swchItem" href="<?php echo $baseTplPage.$this->next; ?>">
+        <span>»</span>
+    </a>
+<?php else: ?>
+  <span class="disabled" style="display: none;">»</span>
+<?php endif; ?>
+</span>
+<?php endif; ?>

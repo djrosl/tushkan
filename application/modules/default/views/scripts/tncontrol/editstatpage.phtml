@@ -1,0 +1,6 @@
+<script>$(document).ready(function(){CKEDITOR.instances['text'].on('key', function () { $('.btn-group ').prevAll('.control-label:first').slideUp('fast');});});</script>
+<script>$(document).ready(function(){$('.cke_s textarea').keyup(function () { $('.btn-group ').prevAll('.control-label:first').slideUp('fast');});});</script>
+<script src="/admins/statpages.js"></script>
+<script>$(document).ready(function(){$('li .active').removeClass('active');$('#statp').addClass('active');});</script>
+<script type="text/javascript" src="/admins/ckeditor/ckeditor.js"></script>
+<?php echo $this->adminforms('Редактирование страницы', 'editstatpage');?>

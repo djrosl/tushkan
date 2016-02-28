@@ -1,0 +1,88 @@
+<?
+$title = $this->headTitle();
+Zend_Registry::set("title",$title);
+$meta = $this->headMeta();
+Zend_Registry::set("meta",$meta);
+$user = Zend_Registry::get("user");
+?>
+<html>
+<head>
+<script type="text/javascript" src="/js/jquery-1.7.2.js"></script>
+<link type="text/css" rel="StyleSheet" href="/css/main.css">
+<link type="text/css" rel="StyleSheet" href="/css/layer1.css">
+<link type="text/css" rel="StyleSheet" href="/tabs/tabs.css">
+<script type="text/javascript" src="/js/chat.js"></script>
+</head>
+<body style="background: white;">
+<iframe id="mchatIfm2" name="mchat2" style="width:100%;height:600px;" frameborder="0" scrolling="auto" hspace="0" vspace="0" allowtransparency="true" src="/index/mchat/"></iframe>
+</div>
+<script type="text/javascript">
+function sbtFrmMC991(f){$('#mchatBtn').css({display:'none'});$('#mchatAjax').css({display:''});_uPostForm('MCaddFrm',{type:'POST',url:'/mchat/?950278945.274146'});}
+function countMessLength(){var rst = 500-$('#mchatMsgF').val().length;if (rst<0){rst=0;$('#mchatMsgF').val($('#mchatMsgF').val().substr(0,500));}$('#jeuwu28').html(rst);}
+var tID7174=-1;var tAct7174=false;
+function setT7174(s){var v=parseInt(s.options[s.selectedIndex].value);document.cookie="mcrtd="+s.selectedIndex+"; path=/";if(tAct7174){clearInterval(tID7174);tAct7174=false;}if(v>0){tID7174=setInterval("document.getElementById('mchatIfm2').src='/mchat/?'+Math.random();",v*1000);tAct7174=true;}}
+</script>
+<!--<form style="margin:0;padding:0;" id="MCaddFrm" action="/index/chat">-->
+<?if($user->data['is_registered']){?>
+    <table border="0" cellpadding="1" cellspacing="1" width="100%">
+        <tbody>
+        <tr>
+        <td>
+        <? $refresh_time = (array) Model_Chat::getRefreshTimeById($user->data['user_id']); ?>
+        <select id="mchatRSel" class="mchat" size="1" title="Автообновление" style="font-size:7pt;">
+            <option value="0" <? if($refresh_time['refresh_time'] == '0'){echo 'selected="selected"';} ?>>--</option>
+            <option value="15" <? if($refresh_time['refresh_time'] == '15'){echo 'selected="selected"';} ?>>15 сек</option>
+            <option value="30" <? if($refresh_time['refresh_time'] == '30'){echo 'selected="selected"';} ?>>30 сек</option>
+            <option value="60" <? if($refresh_time['refresh_time'] == '60'){echo 'selected="selected"';} ?>>1 мин</option>
+            <option value="120" <? if($refresh_time['refresh_time'] == '120'){echo 'selected="selected"';} ?>>2 мин</option>
+        </select>
+        <script>
+            $(document).ready(function(){
+                var param = <? echo $refresh_time['refresh_time'];?>;
+                if(param != 0){
+                    func_id = setInterval(function(){ refreshChat(); }, param+'000');
+                    $("#mchatRSel").attr("func_id",func_id);
+                }
+            });
+        </script>
+        </td>
+        <td width="70%" align="right">
+        <a href="/index/mchat" rel="nofollow" target="mchat2" id="refresh_chat" title="Обновить"><img alt="" border="0" align="absmiddle" src="/img/fr/mcr.gif" width="13" height="15"></a>
+        &nbsp;<a href="javascript://" rel="nofollow" id="chat_smiles" title="Вставить смайл"><img alt="" border="0" align="absmiddle" src="/img/fr/mcs.gif" width="13" height="15"></a>
+        &nbsp;<a href="javascript://" rel="nofollow" id="chat_bb_codes" title="BB-Коды"><img alt="" border="0" align="absmiddle" src="/img/fr/mcb.gif" width="13" height="15"></a>
+        <? if($user->data['group_id'] == "5" || $user->data['group_id'] == "8"){ ?>
+        &nbsp;<a href="javascript://" rel="nofollow" id="chat_settings" title="Управление сообщениями"><img alt="" border="0" align="absmiddle" src="/img/fr/mcm.gif" width="15" height="15"></a>
+        <? } ?>
+        </td>
+        </tr>
+        </tbody>
+    </table>
+    <table border="0" cellpadding="1" cellspacing="1" width="100%">
+        <tbody>
+            <tr>
+                <td width="95%" rowspan="2">
+                    <textarea name="mcmessage" class="mchat" id="mchatMsgF" title="Сообщение" onkeyup="countMessLength();" onfocus="countMessLength();" style="height:40px;width:100%;resize:none;"></textarea>
+                </td>
+                <td align="center" valign="top">
+                    <div style="font-size:10px;"><b id="jeuwu28">500</b></div>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="bottom">
+                    <div style="width:30px">
+                        <input type="submit" value="OK" class="mchat" id="mchatBtn" style="width:30px;">
+                        <img alt="" style="display:none;" id="mchatAjax" src="/img/ajax3.gif" border="0" width="16">
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+<? }else{?>
+    <div align="center">
+        <a href="javascript://" rel="nofollow" onclick="new _uWnd('LF',' ',-250,-110,{autosize:0,closeonesc:1,resize:1},{url:'/index/40'});return false;">Для добавления необходима авторизация</a>
+    </div>
+    <input type="hidden" name="numa" id="numa832" value="0"><input type="hidden" name="a" value="18"><input type="hidden" id="ajaxFlag" name="ajax" value="1">
+<?}?>
+<!--</form>-->
+</body>
+</html>

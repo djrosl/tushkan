@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <? if ($this->layout()->title){ ?>
+        <title><? echo $this->layout()->title?></title>
+    <? } else {?>
+        <title>Tushkan Admin</title>
+    <?}?>
+    <link href="/admins/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/admins/css/sb-admin.css" rel="stylesheet">
+    <link href="/admins/css/style.css" rel="stylesheet">
+    <link href="/admins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/admins//facebox/style.css" rel="stylesheet">
+    <script src="/admins/js/jquery.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+    <script type="text/javascript" src="/admins/uploader.js"></script>
+    <script type="text/javascript" src="/admins/facebox/facebox.js"></script>
+    <script src="/admins/all.js"></script>
+</head>
+<body>
+<div id="wrapper">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <? echo $this->partial('p/title.phtml');?>
+        </div>
+        <ul class="nav navbar-right top-nav">
+            <li>
+                <a href="/"><i class="fa fa-fw fa-sign-in"></i> На главную</a>
+            </li>
+                    <li>
+                        <a href="/tncontrol/logout"><i class="fa fa-fw fa-power-off"></i> Выход</a>
+                    </li>
+                </ul>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <? echo $this->partial('p/menu.phtml', array('session_id'=>$this->layout()->session_id));?>
+        </div>
+    </nav>
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <?php echo $this->layout()->content; ?>
+        </div>
+    </div>
+
+    <script src="/admins/js/bootstrap.min.js"></script>
+</body>
+</html>

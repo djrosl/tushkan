@@ -1,0 +1,64 @@
+<?php
+$memcache = Zend_Registry::get("memcache");
+$meta = ""; $meta_arr = array(); $key = 'meta_index_page';
+
+$clearTitle = explode('(', $this->title);
+$clearTitle = trim($clearTitle[0]);
+$year = explode(')', $this->title);
+$year = explode('(', $year[0]);
+$year = trim($year[1]);
+
+$this->headTitle($this->title.' скачать торрент');
+$this->headMeta()->setName('keywords', $clearTitle.', торрент, скачать, '.$year.', бесплатно, в хорошем качестве, без регистрации');
+$this->headMeta()->setName('description', $this->title.' скачать торрент без регистрации');
+
+if(($result = $memcache->get($key)) === false ) {
+    $meta_arr = Model_MetaTags::getMetaTagsByLocation("index_page");
+    $memcache->set($key, $meta_arr, false, 3600);
+} else {
+    $meta_arr = $result;
+}
+foreach($meta_arr as $item){
+    if($item['name'] == 'description' || $item['name'] == 'keywords') {
+        continue;
+    }
+    $meta .= '<meta name="'.$item['name'].'" content="'.$item['content'].'" />';
+}
+$meta .= $this->headMeta();
+Zend_Registry::set("meta", $meta);
+$parts = explode('/', $this->tfile);
+?>
+<div id="allEntries" style="width:600px;font-size:16px;padding:25px;">
+
+<div align="center">
+    <div class="news_title">
+        <font face="Arial">
+            <h1 style="margin:0;"><?php echo $this->title.' скачать торрент'; ?></h1>
+        </font>
+    </div>
+</div>
+<div style="margin-top:35px;">
+  <b>Имя:</b> <?php echo $parts[count($parts) - 1]; ?><br />
+  <b>Тип:</b> torrent<br />
+  <b>Размер:</b> <?php echo $this->tsize; ?> Kb
+  <br /><br />
+  <div id="linkt">
+  Скачивание начнется через: <span style="color:blue;" id="left">30</span> секунд(ы)
+  </div>
+  <br /><br />
+  При возникновении каких-либо проблем или вопросов, немедленно обращайтесь к администрации сайта и укажите ссылку на новость.
+  Мы разберемся с Вашей проблемой в кратчайшие сроки!
+</div>
+</div>
+<script>
+var i = setInterval(function() {
+    var s = $('#left').text();
+    $('#left').text(--s);
+    if(s == 0) {
+        $('#linkt').html('<a href="<?php echo $this->tfile; ?>">Скачать торрент</a>');
+        $('#linkt').css('text-align', 'center');
+        //window.location = '<?php echo $this->tfile; ?>';
+        clearInterval(i);
+    }
+}, 1000);
+</script>

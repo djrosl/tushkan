@@ -1,0 +1,172 @@
+<?php
+$memcache = Zend_Registry::get("memcache");
+$meta = ""; $meta_arr = array(); $key = 'meta_index_page';
+
+//$this->headTitle('Стол заказов');
+//$this->headMeta()->setName('keywords', 'смотреть кино онлайн, смотреть фильм, фильмы 2016 смотреть онлайн, фильмы онлайн бесплатно, смотреть фильмы онлайн бесплатно без регистрации, смотреть фильмы 2016 в хорошем качестве, кино в хорошем качестве, онлайн-кинотеатр');
+//$this->headMeta()->setName('description', 'Стол заказов - заказы на фильмы, игры, сериалы, мультфильмы, аниме и т.п.');
+global $news_blocks; $news_blocks = getSeoInfo();
+if($this->page_number > 0){
+    $title_str = $news_blocks['title_main']." (".$this->page_number." страница)";
+}else{
+    $title_str = $news_blocks['title_main'];
+}
+$this->headTitle($title_str);
+$this->headMeta()->setName('keywords', $news_blocks['meta_keywords']);
+$this->headMeta()->setName('description', $news_blocks['meta_description']);
+
+if(($result = $memcache->get($key)) === false ) {
+    $meta_arr = Model_MetaTags::getMetaTagsByLocation("index_page");
+    $memcache->set($key, $meta_arr, false, 3600);
+} else {
+    $meta_arr = $result;
+}
+foreach($meta_arr as $item){
+    if($item['name'] == 'description' || $item['name'] == 'keywords') {
+        continue;
+    }
+    $meta .= '<meta name="'.$item['name'].'" content="'.$item['content'].'" />';
+}
+$meta .= $this->headMeta();
+Zend_Registry::set("meta", $meta);
+$user = Zend_Registry::get("user");
+$notAdmin = (!$user || (ADMIN_GROUP != $user->data['group_id'] && MODERATOR_GROUP != $user->data['group_id']));
+?>
+<div class="cattext"><h1><?php echo $news_blocks['title_up']; ?></h1><hr></div>
+<div id="allEntries" style="font-size:16px;text-align:justify;">
+    <p>
+    Онлайн-кинотеатр Tushkan.net предлагает Вам удобную услугу по поиску желаемого
+    Вами материала.
+	<p>
+	Вам достаточно заполнить необходимые поля для поиска
+    фильма/мультфильма/сериала/игры и мы постараемся в ближайшее время
+    его найти и выложить на сайте.
+	<p>
+	Помните, чем более подробную информацию вы
+    укажете, тем быстрее фильм/мультфильм/сериал/игра будет найден
+    и выложен на сайте!
+    </p>
+    <a href="javascript:;" id="aobtn" onclick="$('#addsiterequest').slideToggle()">Добавить заказ</a>
+    <div id="addsiterequest" style="border:1px dashed #aaa;display:none;padding:10px;margin:10px 0;">
+     <?php if (!$user->data['is_registered']) { ?>
+        Только зарегистрированные пользователи могут оставлять заявки
+     <?php } else { //print_r($user); ?>
+
+        <form style="text-align:left;" id="addrequestform" action="/index/addrequest" method="post">
+            <div style="margin-bottom:5px;">
+                <label>Название</label>
+                <input style="padding:5px;width:98%;" type="text" name="title" />
+            </div>
+            <div style="margin-bottom:5px;">
+                <label>Название в оригинале (если известно)</label>
+                <input style="padding:5px;width:98%;" type="text" name="title_orig" />
+            </div>
+            <div style="float:left;">
+                <label>Год</label>
+                <input style="padding:5px;" type="number" min="1900" value="<?php echo date('Y'); ?>"  name="year" />
+                <label>Жанр</label>
+                <select style="padding:5px;" name="cat">
+                    <option>Фильм</option>
+                    <option>Сериал</option>
+                    <option>Мультфильм</option>
+                </select>
+            </div>
+            <input style="padding: 5px 20px;float:right;" type="submit" value="Добавить" />
+            <div style="clear:both;"></div>
+        </form>
+
+     <?php } ?>
+    </div>
+
+    <form action="/index/orderdesc" method="get" style="margin-top:25px;">
+          <div style="width:450px;float:left;">
+            Сортировка по
+            <select name="field">
+                <option value="date" selected>дате</option>
+                <option value="rating" <?php echo $_REQUEST['field'] == 'rating' ? 'selected' : ''; ?>>голосам</option>
+                <option value="title" <?php echo $_REQUEST['field'] == 'title' ? 'selected' : ''; ?>>названию</option>
+            </select>
+            <select name="sort">
+                <option value="desc" selected>Обратная</option>
+                <option value="asc" <?php echo $_REQUEST['sort'] == 'asc' ? 'selected' : ''; ?>>Прямая</option>
+            </select>
+            Год
+            <select name="year">
+                <option value="" selected>Все</option>
+                <?php for($i = date('Y'); $i >= 1900; --$i) { ?>
+                    <option <?php echo $_REQUEST['year'] == $i ? 'selected' : ''; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                <?php } ?>
+            </select>
+            <div style="margin-top:5px;">
+            Тип
+            <select name="cat">
+                <option value="" selected>Все</option>
+                <option <?php echo $_REQUEST['cat'] == 'Фильм' ? 'selected' : ''; ?>>Фильм</option>
+                <option <?php echo $_REQUEST['cat'] == 'Сериал' ? 'selected' : ''; ?>>Сериал</option>
+                <option <?php echo $_REQUEST['cat'] == 'Мультфильм' ? 'selected' : ''; ?>>Мультфильм</option>
+            </select>
+            Статус
+            <select name="status">
+                <option value="" selected>Любой</option>
+                <option value="true" <?php echo $_REQUEST['status'] == 'true' ? 'selected' : ''; ?>>Найден</option>
+                <option value="false" <?php echo $_REQUEST['status'] == 'false' ? 'selected' : ''; ?>>Ожидает</option>
+            </select>
+            <?php if(!empty($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 1) { ?>
+                <input type="hidden" value="<?php echo $_GET['page']; ?>" name="page" />
+            <?php } ?>
+            </div>
+        </div>
+        <div style="float:right;">
+            <input style="padding: 5px 20px;" type="submit" value="Показать" />
+        </div>
+        <div style="clear:both;"></div>
+    </form>
+
+    <?php if(count($this->rows) == 0) { ?>
+        <div style="text-align:center;margin:20px 0;font-weight:bold;">По Вашему запросу ничего не найдено</div>
+    <?php } else { ?>
+
+    <table id="userorders" style="margin-top:5px;" class="orderdesc" width="100%">
+        <thead><tr>
+            <th>Название</th>
+            <th width="80">Категория</th>
+            <th width="100">Заказчик</th>
+            <th width="90">Дата заказа</th>
+            <th width="30">Год</th>
+            <th width="50">Голоса</th>
+            <?php if(!$notAdmin) { ?><th width="50">Действие</th><?php } ?>
+        </tr></thead>
+        <tbody>
+        <?php $idx = 0; foreach($this->rows as $row) { ?>
+        <tr class="<?php echo $idx++ % 2 == 0 ? 'n2row': 'nrow';?>" align="center" id="orderdesc-<?php echo $row['id']; ?>">
+            <td class="link"><?php
+            $title = '<b>'.$row['title'].'</b>'.($row['title_orig'] != '' ? '<br />'.$row['title_orig'] : '');
+            if($row['link'] != '') {
+                echo '<a href="'.$row['link'].'" title="Смотреть '.$row['title'].'" target="_blank">'.$title.'</a>';
+            } else {
+                echo $title;
+            } ?></td>
+            <td><?php echo $row['category']; ?></td>
+            <td><a title="Профиль пользователя" href="/index/8-<?php echo $row['user']; ?>" target="_blank"><?php echo $row['login']; ?></a></td>
+            <td><?php echo $row['date']; ?></td>
+            <td><?php echo $row['year']; ?></td>
+            <td><?php if(isset($_COOKIE["orderdescvote".$row['id']]) || $row['user'] == $user->data['user_id']) {
+                echo $row['rating'];
+            } else { ?>
+                <a href="javascript:;" onclick="voteForOrderDesc(<?php echo $row['id']; ?>, this)" data-now="<?php echo $row['rating']; ?>" title="Я тоже хочу!">+<?php echo $row['rating']; ?></a></td>
+            <?php } ?>
+            <?php if(!$notAdmin) { ?>
+            <td>
+                <a href="javascript:;" onclick="orderDescSetLink(<?php echo $row['id']; ?>)">Править</a>
+                <br /><br /><a href="javascript:;" onclick="orderDescRemove(<?php echo $row['id']; ?>)">Удалить</a>
+            </td>
+            <?php } ?>
+        </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+    <div style="margin-top:20px;text-align:center;">
+    <?php echo $this->paginationControl($this->rows, 'Sliding', 'partials/paginator_news_orderdesc.phtml'); ?>
+    <?php } ?>
+    </div>
+</div>
